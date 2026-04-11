@@ -203,8 +203,11 @@ gfQs.forEach((q, qi) => {
   card.className = 'gf-card';
   card.id = 'gfCard_'+qi;
   const shuffledOpts = [...q.options].sort(() => Math.random()-0.5);
+  const sentenceText = q.sentence.replace(/^I [→]? ?/, '');
+  const [beforeBlank, afterBlank=''] = sentenceText.split('___');
+  const sentenceHtml = `I → ${beforeBlank}<span id="blank_${qi}" class="gf-blank"></span>${afterBlank}`;
   card.innerHTML = `
-    <div class="gf-q">I → <span id="blank_${qi}" class="gf-blank">___</span>${' ' + q.sentence.replace(/^I [→]? ?/, '').replace('___', '').trim()}</div>
+    <div class="gf-q">${sentenceHtml}</div>
     <div class="gf-options">${shuffledOpts.map(o => `<button class="gf-opt" onclick="selectGF(${qi},'${o}',this)">${o}</button>`).join('')}</div>
     <div class="gf-fb" id="gfFb_${qi}"></div>`;
   gfContainer.appendChild(card);
