@@ -4,7 +4,7 @@ const path = require("path");
 const rootDir = __dirname;
 
 // ⭐ Define new sessions here
-const newSessions = ["session3"]; // leave empty [] if none
+const newSessions = ["session2"]; // leave empty [] if none
 
 // Session titles
 const sessionTitles = {
@@ -109,27 +109,102 @@ function generate() {
 <title>Learning Portal</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+  :root {
+    --s1: #1a3a4a;
+    --s1-light: #e8f4f8;
+    --s1-accent: #2eb8a0;
+    --s2: #2d1a4a;
+    --s2-light: #f0ecfa;
+    --s2-accent: #9b6dff;
+    --gold: #e8a020;
+    --bg: #f7f5f0;
+    --text: #1a1a1a;
+    --muted: #666;
+    --border: #ddd;
+    --white: #fff;
+    --shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: Arial, sans-serif;
-  background: #f5f7fa;
+  background: var(--bg);
   margin: 0;
   padding: 10px;
 }
 
-h1 {
-  text-align: center;
-  font-size: 22px;
-  margin: 10px 0 15px;
-}
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--s1) 0%, var(--s2) 100%);
+    color: white;
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--s1-accent);
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+    margin-bottom: 16px;
+    max-width: 700px;
+  }
+  header h1 em { color: var(--s1-accent); font-style: italic; }
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .header-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    justify-content: space-between;
+  }
+  .header-text {
+    flex: 1;
+  }
+  .header-qr {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .header-qr img {
+    width: 140px;
+    height: 140px;
+    border-radius: 8px;
+    object-fit: contain;
+  }
 
 /* Sticky top controls */
 .top-bar {
   position: sticky;
   top: 0;
+  margin-top: 16px;
   background: #f5f7fa;
   padding-bottom: 10px;
   z-index: 100;
@@ -251,8 +326,14 @@ h1 {
 </head>
 
 <body>
-
-<h1>Learning Portal</h1>
+<header>
+  <div class="header-content">
+    <div class="header-text">
+      <div class="header-label">Learning Portal</div>
+      <h1>Speaking & Listening Programme</h1>
+    </div>
+  </div>
+</header>
 
 <div class="top-bar">
     <div class="toggle">
