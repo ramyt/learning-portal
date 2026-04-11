@@ -6,45 +6,142 @@
 <title>Learning Portal</title>
 
 <style>
-body { font-family: Arial; background:#f5f7fa; padding:20px; margin:0; }
-h1 { text-align:center; }
+* {
+  box-sizing: border-box;
+}
 
-.toggle { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+  margin: 0;
+  padding: 10px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 22px;
+  margin: 10px 0 15px;
+}
+
+/* Sticky top controls */
+.top-bar {
+  position: sticky;
+  top: 0;
+  background: #f5f7fa;
+  padding-bottom: 10px;
+  z-index: 100;
+}
+
+/* Student toggle */
+.toggle {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
 .toggle button {
-  padding:8px 18px; border:none; border-radius:20px; cursor:pointer;
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 25px;
+  background: #ddd;
+  font-size: 14px;
+  cursor: pointer;
 }
-.active { background:#4f46e5; color:white; }
 
-.search { text-align:center; margin-bottom:20px; }
+.toggle button.active {
+  background: #4f46e5;
+  color: white;
+}
+
+/* Search */
+.search {
+  text-align: center;
+}
+
 .search input {
-  padding:8px; width:300px; border-radius:20px; border:1px solid #ccc;
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
 
-.container { max-width:900px; margin:auto; }
+/* Container */
+.container {
+  max-width: 100%;
+  margin: auto;
+}
 
+/* Cards */
 .card {
-  background:white; border-radius:12px; margin-bottom:15px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  background: white;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  overflow: hidden;
 }
 
-.card.new { border-left:5px solid #f59e0b; }
+.card.new {
+  border-left: 5px solid #f59e0b;
+}
 
+/* Card header */
 .card-header {
-  padding:12px; cursor:pointer;
-  display:flex; justify-content:space-between;
+  padding: 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.card-body { padding:10px 15px; }
+.card-header h3 {
+  font-size: 15px;
+  margin: 0;
+}
 
-.pill-group { display:flex; flex-wrap:wrap; gap:8px; }
+/* Card body */
+.card-body {
+  padding: 10px;
+}
+
+/* Pills */
+.pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
 .pill {
-  padding:6px 14px;
-  background:#e0e7ff;
-  border-radius:999px;
-  text-decoration:none;
-  font-size:13px;
-  color:#1e3a8a;
+  flex: 1 1 calc(50% - 8px); /* 2 per row on mobile */
+  text-align: center;
+  padding: 10px;
+  background: #e0e7ff;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #1e3a8a;
+}
+
+/* Tablet */
+@media (min-width: 600px) {
+  .pill {
+    flex: 1 1 calc(33.33% - 8px);
+  }
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+  .container {
+    max-width: 900px;
+  }
+
+  .pill {
+    flex: unset;
+    padding: 6px 14px;
+  }
 }
 </style>
 
@@ -54,15 +151,16 @@ h1 { text-align:center; }
 
 <h1>Learning Portal</h1>
 
-<div class="toggle">
-  <button id="btn1" class="active" onclick="show('student1')">Student 1</button>
-  <button id="btn2" onclick="show('student2')">Student 2</button>
-</div>
+<div class="top-bar">
+    <div class="toggle">
+    <button id="btn1" class="active" onclick="show('student1')">Student 1</button>
+    <button id="btn2" onclick="show('student2')">Student 2</button>
+    </div>
 
-<div class="search">
-  <input type="text" placeholder="Search..." onkeyup="filter(this.value)">
+    <!--div class="search">
+    <input type="text" placeholder="Search..." onkeyup="filter(this.value)">
+    </div-->
 </div>
-
 <div class="container">
   <div id="student1">
 <div class="card ">
