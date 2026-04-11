@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Present Perfect Activity — Session 2</title>
+<style>
+  :root{--dark:#2D1A4A;--mid:#5B3A8A;--accent:#9B6DFF;--light:#EEE8FF;--gold:#D4820A;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .hdr{background:var(--dark);padding:18px 20px 14px;text-align:center;border-bottom:2px solid var(--mid);}
+  .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:4px;}
+  .hdr h1{font-size:20px;font-weight:700;}
+  .pw{display:flex;align-items:center;gap:10px;margin:12px 20px 0;}
+  .pb{flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;}
+  .pf{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
+  .pl{font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);}
+  .tb{flex:1;padding:12px 8px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tb.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .screen{display:none;padding:18px 16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+  /* GAP FILL */
+  .gcard{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .gq{font-size:15px;line-height:2;color:var(--white);margin-bottom:10px;}
+  .blank{display:inline-block;min-width:80px;border-bottom:2px solid var(--accent);color:var(--accent);font-weight:700;padding:0 4px;font-style:normal;}
+  .opts{display:flex;flex-wrap:wrap;gap:8px;}
+  .opt{padding:7px 13px;border:2px solid var(--accent);border-radius:20px;background:none;color:var(--white);font-size:13px;cursor:pointer;transition:all 0.2s;}
+  .opt.sel{background:var(--accent);color:var(--dark);font-weight:700;}
+  .opt.correct{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .opt.wrong{background:var(--wrong);border-color:var(--wrong);color:var(--white);}
+  .opt.show-c{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .opt.dis{pointer-events:none;opacity:0.6;}
+  .fb{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none;}
+  .fb.correct{background:rgba(39,174,96,0.15);border:1px solid var(--correct);color:#7defa7;display:block;}
+  .fb.wrong{background:rgba(231,76,60,0.15);border:1px solid var(--wrong);color:#ffaaaa;display:block;}
+  .sbtn{width:100%;padding:15px;background:var(--accent);border:none;border-radius:14px;color:var(--dark);font-size:16px;font-weight:700;cursor:pointer;margin-top:8px;}
+  .sbtn:disabled{opacity:0.4;pointer-events:none;}
+  /* PERFECT vs PAST */
+  .pvp-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .pvp-label{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .pvp-sentence{font-size:16px;color:var(--white);margin-bottom:14px;line-height:1.6;}
+  .pvp-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .pvp-btn{padding:14px 10px;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.2);border-radius:12px;color:var(--white);font-size:13px;font-weight:600;cursor:pointer;text-align:center;transition:all 0.2s;}
+  .pvp-btn.correct{border-color:var(--correct);background:rgba(39,174,96,0.15);color:#7defa7;}
+  .pvp-btn.wrong{border-color:var(--wrong);background:rgba(231,76,60,0.15);color:#ffaaaa;}
+  .pvp-btn.show-c{border-color:var(--correct);background:rgba(39,174,96,0.15);color:#7defa7;}
+  .pvp-btn.dis{pointer-events:none;}
+  .pvp-fb{margin-top:10px;font-size:13px;padding:10px;border-radius:8px;display:none;}
+  .pvp-fb.correct{background:rgba(39,174,96,0.12);border:1px solid var(--correct);color:#7defa7;display:block;}
+  .pvp-fb.wrong{background:rgba(231,76,60,0.12);border:1px solid var(--wrong);color:#ffaaaa;display:block;}
+  /* IDIOM */
+  .idiom-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .idiom-word{font-size:20px;font-weight:700;color:var(--accent);margin-bottom:4px;}
+  .idiom-def{font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;}
+  .idiom-q{font-size:14px;color:var(--white);margin-bottom:10px;font-style:italic;}
+  .idiom-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:15px;font-family:inherit;}
+  .idiom-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .idiom-input::placeholder{color:rgba(255,255,255,0.3);}
+  .idiom-model{background:rgba(155,109,255,0.12);border:1px solid var(--accent);border-radius:10px;padding:12px;margin-top:10px;font-size:13px;color:"DDCCFF";display:none;}
+  .idiom-model.show{display:block;}
+  .reveal-btn{padding:8px 16px;background:none;border:1px solid rgba(155,109,255,0.5);color:var(--accent);border-radius:20px;cursor:pointer;font-size:12px;margin-top:8px;}
+  .aloud{display:inline-flex;align-items:center;gap:6px;background:rgba(155,109,255,0.12);border:1px solid var(--accent);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--accent);margin-top:8px;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="lbl">SESSION 2  ·  PRESENT PERFECT ACTIVITY</div>
+  <h1>✅ Present Perfect Practice</h1>
+  <div class="pw">
+    <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+    <div class="pl" id="pl">0% complete</div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <button class="tb active" onclick="showTab('gf')" id="tabGf">Part 1: Gap-Fill</button>
+  <button class="tb" onclick="showTab('pvp')" id="tabPvp">Part 2: Perfect vs Past</button>
+  <button class="tb" onclick="showTab('id')" id="tabId">Part 3: Idioms</button>
+</div>
+
+<!-- PART 1: GAP FILL -->
+<div class="screen active" id="screenGf">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Choose the correct word. Say the full sentence aloud after each answer!</p>
+  <div id="gfContainer"></div>
+</div>
+
+<!-- PART 2: PERFECT vs PAST -->
+<div class="screen" id="screenPvp">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Which tense is correct? Choose and explain why!</p>
+  <div id="pvpContainer"></div>
+</div>
+
+<!-- PART 3: IDIOMS -->
+<div class="screen" id="screenId">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Write a sentence using each idiom. Then say it aloud to your teacher!</p>
+  <div id="idContainer"></div>
+</div>
+
+<script>
+// PART 1
+const gfQs=[
+  {q:"___ you ever been to Europe?",blank:"Have",opts:["Have","Has","Did","Are"],hint:"Use 'Have' with 'you' in present perfect questions."},
+  {q:"She ___ never tried sushi in her life.",blank:"has",opts:["has","have","did","is"],hint:"Use 'has' with he/she/it."},
+  {q:"I have ___ to Japan twice.",blank:"been",opts:["been","went","go","be"],hint:"'Been' is the past participle of 'go/be' — use it for places visited."},
+  {q:"Have you ever ___ bungee jumping?",blank:"tried",opts:["tried","try","trying","tries"],hint:"After 'have + ever', use the past participle."},
+  {q:"They have ___ finished the project.",blank:"already",opts:["already","yet","just","never"],hint:"'Already' means it happened sooner than expected — used in positives."},
+  {q:"I haven't seen that film ___.",blank:"yet",opts:["yet","already","just","ever"],hint:"'Yet' is used at the end of negative sentences and questions."},
+  {q:"He has ___ arrived — he's still in the taxi.",blank:"just",opts:["just","already","yet","ever"],hint:"'Just' means very recently — moments ago."},
+  {q:"I have ___ eaten dog meat. I never will.",blank:"never",opts:["never","ever","just","already"],hint:"'Never' in present perfect = no experience in your whole life."},
+];
+
+let gfAns=Array(gfQs.length).fill(null);
+let gfDone=false;
+const gfContainer=document.getElementById('gfContainer');
+gfQs.forEach((q,qi)=>{
+  const card=document.createElement('div');
+  card.className='gcard';
+  card.id='gc'+qi;
+  const shuffled=[...q.opts].sort(()=>Math.random()-0.5);
+  card.innerHTML=`<div class="gq"><span id="bl${qi}" class="blank">___</span> ${q.q.replace(/^___\s?/,'')}</div>
+    <div class="opts">${shuffled.map(o=>`<button class="opt" onclick="selGF(${qi},'${o}',this)">${o}</button>`).join('')}</div>
+    <div class="fb" id="gfb${qi}"></div>`;
+  gfContainer.appendChild(card);
+});
+const gfsub=document.createElement('button');
+gfsub.className='sbtn';gfsub.textContent='Check Answers ✓';gfsub.disabled=true;gfsub.onclick=submitGF;
+gfContainer.appendChild(gfsub);
+
+function selGF(qi,opt,btn){
+  if(gfDone)return;
+  document.getElementById('gc'+qi).querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  gfAns[qi]=opt;
+  document.getElementById('bl'+qi).textContent=opt;
+  gfsub.disabled=gfAns.some(a=>a===null);
+  upd();
+}
+function submitGF(){
+  gfDone=true;let sc=0;
+  gfQs.forEach((q,qi)=>{
+    const ok=gfAns[qi]===q.blank;if(ok)sc++;
+    document.getElementById('gc'+qi).querySelectorAll('.opt').forEach(btn=>{
+      btn.classList.add('dis');
+      if(btn.textContent===q.blank)btn.classList.add('show-c');
+      else if(btn.classList.contains('sel')&&!ok)btn.classList.add('wrong');
+    });
+    const fb=document.getElementById('gfb'+qi);
+    fb.className='fb '+(ok?'correct':'wrong');
+    fb.textContent=ok?'✅ Correct! '+q.hint:'❌ The answer is "'+q.blank+'". '+q.hint;
+  });
+  gfsub.style.display='none';
+  const el=document.createElement('div');
+  el.style.cssText='text-align:center;padding:18px;background:rgba(155,109,255,0.12);border-radius:14px;margin-top:14px;';
+  el.innerHTML=`<div style="font-size:30px;font-weight:700;color:var(--accent);">${sc}/${gfQs.length}</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);margin:8px 0;">${sc>=7?'🌟 Excellent! Go to Part 2 →':sc>=5?'👍 Good work! Review the explanations.':'💪 Review the hints carefully, then try Part 2.'}</div>
+    <button style="margin-top:10px;padding:10px 22px;background:var(--accent);border:none;border-radius:10px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;" onclick="showTab('pvp')">Go to Part 2 →</button>`;
+  gfContainer.appendChild(el);
+  upd();
+}
+
+// PART 2
+const pvpQs=[
+  {s:"________ you go to China last year?",perfect:"Have you been to China?",past:"Did you go to China last year?",correct:"past",reason:"'Last year' is a specific time → simple past. 'Did' is correct."},
+  {s:"I ________ sushi three times in my life.",perfect:"I have eaten sushi three times in my life.",past:"I ate sushi three times last week.",correct:"perfect",reason:"'In my life' = general experience, no specific time → present perfect."},
+  {s:"She ________ to the UK in 2018 for a conference.",perfect:"She has been to the UK.",past:"She went to the UK in 2018.",correct:"past",reason:"'In 2018' is a specific time → simple past."},
+  {s:"They ________ Thai food, but they want to try it.",perfect:"They have never eaten Thai food.",past:"They didn't eat Thai food last night.",correct:"perfect",reason:"'Never... in their life' = general experience → present perfect."},
+  {s:"I ________ my homework — it was very difficult.",perfect:"I have just done my homework.",past:"I did my homework last night.",correct:"perfect",reason:"'Just' suggests very recently → present perfect."},
+  {s:"________ you ever met a famous person?",perfect:"Have you ever met a famous person?",past:"Did you meet a famous person last year?",correct:"perfect",reason:"'Ever' with life experience = present perfect question."},
+];
+let pvpScore=0,pvpDone=0;
+const pvpContainer=document.getElementById('pvpContainer');
+pvpQs.forEach((q,qi)=>{
+  const card=document.createElement('div');
+  card.className='pvp-card';
+  card.id='pvpc'+qi;
+  card.innerHTML=`<div class="pvp-label">Which tense fits this context?</div>
+    <div class="pvp-sentence">"${q.s}"</div>
+    <div class="pvp-choices">
+      <button class="pvp-btn" onclick="answerPVP(${qi},'perfect',this)">✅ Present Perfect<br><small style="font-weight:400;font-size:11px;">${q.perfect}</small></button>
+      <button class="pvp-btn" onclick="answerPVP(${qi},'past',this)">🕐 Simple Past<br><small style="font-weight:400;font-size:11px;">${q.past}</small></button>
+    </div>
+    <div class="pvp-fb" id="pvpfb${qi}"></div>`;
+  pvpContainer.appendChild(card);
+});
+
+function answerPVP(qi,choice,btn){
+  const card=document.getElementById('pvpc'+qi);
+  if(card.querySelector('.dis'))return;
+  const q=pvpQs[qi];
+  const ok=choice===q.correct;
+  if(ok)pvpScore++;
+  pvpDone++;
+  card.querySelectorAll('.pvp-btn').forEach(b=>{
+    b.classList.add('dis');
+    const isCorrectBtn=(b.textContent.includes('Perfect')&&q.correct==='perfect')||(b.textContent.includes('Past')&&q.correct==='past');
+    if(isCorrectBtn)b.classList.add('show-c');
+    else if(b===btn&&!ok)b.classList.add('wrong');
+  });
+  const fb=document.getElementById('pvpfb'+qi);
+  fb.className='pvp-fb '+(ok?'correct':'wrong');
+  fb.textContent=ok?'✅ Correct! '+q.reason:'❌ The better answer is '+q.correct.replace('perfect','present perfect').replace('past','simple past')+'. '+q.reason;
+  upd();
+}
+
+// PART 3
+const idioms=[
+  {word:"hit it off",def:"to immediately like someone / get along well straight away",q:"Describe a time you met someone and immediately got along well.",model:"We hit it off straight away — we talked for hours and it felt like we'd known each other for years."},
+  {word:"go with the flow",def:"to accept things as they happen, without resisting or planning",q:"Describe a situation where you didn't have a plan and just let things happen.",model:"I didn't have any plans that weekend, so I just went with the flow and ended up having a great time."},
+  {word:"see eye to eye",def:"to agree with someone / share the same opinion",q:"Describe a situation where you agreed or disagreed with someone.",model:"We don't always see eye to eye on politics, but we respect each other's opinions."},
+  {word:"give it a shot",def:"to try something, especially when you're not sure about it",q:"Describe something new you tried even though you weren't sure about it.",model:"I'd never tried rock climbing before, but I decided to give it a shot — and I loved it!"},
+];
+const idContainer=document.getElementById('idContainer');
+idioms.forEach((id,i)=>{
+  const card=document.createElement('div');
+  card.className='idiom-card';
+  card.innerHTML=`<div class="idiom-word">${id.word}</div>
+    <div class="idiom-def">${id.def}</div>
+    <div class="idiom-q">✏️ ${id.q}</div>
+    <input type="text" class="idiom-input" placeholder="Write your sentence here..." oninput="upd()"/>
+    <div><span class="aloud">🗣️ Say it aloud!</span></div>
+    <button class="reveal-btn" onclick="revealIdiom(this)">👁 See model answer</button>
+    <div class="idiom-model">✅ Model: "${id.model}"</div>`;
+  idContainer.appendChild(card);
+});
+
+function revealIdiom(btn){
+  btn.nextElementSibling.classList.add('show');
+  btn.textContent='✅ Revealed — say it aloud now!';
+  btn.disabled=true;
+  upd();
+}
+
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  upd();
+}
+
+function upd(){
+  const gfDoneCount=gfAns.filter(a=>a!==null).length;
+  const pvpDoneCount=pvpDone;
+  const idDoneCount=[...document.querySelectorAll('.idiom-input')].filter(i=>i.value.trim().length>0).length;
+  const total=gfQs.length+pvpQs.length+idioms.length;
+  const done=gfDoneCount+pvpDoneCount+idDoneCount;
+  const pct=Math.round(done/total*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pl').textContent=pct+'% complete';
+}
+</script>
+</body>
+</html>

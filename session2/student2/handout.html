@@ -13,44 +13,50 @@
   .hero h1{font-size:24px;font-weight:700;margin-bottom:4px;}
   .hero p{font-size:13px;color:rgba(255,255,255,0.7);}
   .hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
-  .pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;}
+  .hero-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;}
   .content{padding:0 16px;}
   .section{margin-top:22px;}
   .st{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--mid);text-transform:uppercase;padding-bottom:6px;border-bottom:2px solid var(--light);margin-bottom:14px;}
-  .formula{background:var(--dark);border-radius:12px;padding:16px;margin-bottom:12px;text-align:center;}
-  .formula-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
-  .f-box{background:rgba(155,109,255,0.2);border:1px solid var(--accent);border-radius:8px;padding:8px 14px;color:white;font-size:13px;font-weight:700;}
-  .f-plus{font-size:18px;font-weight:700;color:var(--gold);}
-  .formula-note{font-size:12px;color:rgba(255,255,255,0.6);}
-  .ex-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px;border-left:4px solid var(--accent);}
-  .ex-en{font-size:15px;font-weight:600;color:var(--dark);margin-bottom:3px;}
-  .ex-zh{font-size:13px;color:#8B0000;font-style:italic;}
-  .contrast{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
-  .c-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;}
-  .c-head{padding:8px 12px;font-size:11px;font-weight:700;color:white;}
-  .c-body{padding:10px 12px;font-size:13px;color:var(--slate);font-style:italic;line-height:1.5;}
-  .adverb-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;}
-  .adv-word{font-size:16px;font-weight:700;color:var(--mid);min-width:70px;}
-  .adv-info{}
-  .adv-use{font-size:12px;color:var(--gray);margin-bottom:4px;}
-  .adv-ex{font-size:13px;color:var(--slate);font-style:italic;}
-  .adv-pos{font-size:11px;color:var(--gold);margin-top:3px;font-weight:600;}
-  .verb-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-  .v-card{background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:10px 12px;display:flex;align-items:center;gap:10px;}
-  .v-base{font-size:14px;font-weight:700;color:var(--dark);min-width:50px;}
-  .v-arr{color:var(--accent);font-weight:700;}
-  .v-pp{font-size:14px;font-weight:700;color:var(--mid);}
-  .target-card{background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:16px;margin-bottom:10px;border-left:4px solid var(--accent);}
-  .target-num{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--dark);font-size:13px;font-weight:700;align-items:center;justify-content:center;margin-bottom:8px;}
-  .target-lbl{font-size:12px;color:var(--mid);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;}
-  .target-input{width:100%;border:1px solid #ddd;border-radius:8px;padding:10px 12px;font-size:15px;color:var(--dark);background:var(--offwhite);font-family:inherit;resize:none;min-height:48px;}
-  .target-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .grammar-box{background:var(--white);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:12px;}
+  .gh{background:var(--dark);padding:10px 16px;color:white;font-size:13px;font-weight:700;}
+  .gb{padding:14px 16px;}
+  .formula{background:var(--light);border-radius:10px;padding:12px 16px;font-size:15px;font-weight:700;color:var(--dark);text-align:center;margin-bottom:12px;}
+  .ex-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light);}
+  .ex-row:last-child{border-bottom:none;}
+  .ex-en{font-size:14px;font-weight:600;color:var(--dark);flex:1;}
+  .ex-zh{font-size:13px;color:#8B0000;margin-top:2px;}
+  .contrast-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+  .c-card{border-radius:12px;overflow:hidden;box-shadow:var(--shadow);}
+  .c-header{padding:8px 12px;font-size:12px;font-weight:700;color:white;}
+  .c-header.perfect{background:#27ae60;}
+  .c-header.past{background:var(--mid);}
+  .c-body{padding:10px 12px;background:var(--white);font-size:13px;}
+  .c-rule{font-size:12px;color:var(--slate);margin-bottom:6px;}
+  .c-ex{font-size:13px;color:var(--dark);font-style:italic;margin-bottom:4px;}
+  .adverb-list{display:flex;flex-direction:column;gap:8px;}
+  .adv-row{display:flex;align-items:center;gap:12px;background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:10px 14px;}
+  .adv-word{font-size:17px;font-weight:700;color:var(--dark);min-width:70px;}
+  .adv-info{flex:1;}
+  .adv-use{font-size:12px;color:var(--slate);}
+  .adv-ex{font-size:13px;color:var(--mid);font-style:italic;margin-top:2px;}
+  .idiom-card{background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;margin-bottom:10px;border-left:4px solid var(--accent);}
+  .id-word{font-size:17px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+  .id-def{font-size:12px;color:var(--gray);margin-bottom:6px;}
+  .id-ex{font-size:13px;color:var(--slate);font-style:italic;padding:8px 12px;background:var(--light);border-radius:8px;}
+  .strategy-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;}
+  .s-icon{font-size:22px;flex-shrink:0;}
+  .s-title{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:2px;}
+  .s-body{font-size:13px;color:var(--slate);line-height:1.5;}
+  .rb{background:var(--goldbg);border:1px solid #f5d9a8;border-radius:14px;padding:14px 16px;margin-top:6px;border-left:4px solid var(--gold);}
+  .rb strong{display:block;color:var(--gold);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .rb ul{padding-left:18px;}
+  .rb li{font-size:14px;margin-bottom:5px;color:var(--slate);}
   .ti{background:var(--dark);color:white;padding:18px 16px;text-align:center;margin:30px -16px 0;}
   .ti h2{font-size:18px;margin-bottom:4px;}
   .ti p{font-size:13px;color:rgba(255,255,255,0.7);}
   table{width:100%;border-collapse:collapse;background:var(--white);}
   th{background:var(--mid);color:white;padding:10px 12px;text-align:left;font-size:12px;letter-spacing:0.5px;}
-  td{padding:10px 12px;border-bottom:1px solid var(--light);font-size:14px;vertical-align:middle;}
+  td{padding:10px 12px;border-bottom:1px solid var(--light);font-size:14px;vertical-align:top;}
   tr:last-child td{border-bottom:none;}
   tr:nth-child(even) td{background:var(--light);}
   .en{font-weight:600;color:var(--dark);}
@@ -61,101 +67,98 @@
 <div class="hero">
   <div class="badge">MY ENGLISH HANDOUT</div>
   <h1>Session 2 — Present Perfect</h1>
-  <p>Your reference for today's lesson and beyond. Keep this open during class.</p>
+  <p>Your reference for today's lesson. Keep this open during class.</p>
   <div class="hero-pills">
-    <span class="pill">📐 Perfect Form</span>
-    <span class="pill">⏰ ever/never/yet</span>
-    <span class="pill">🔄 vs Past Simple</span>
-    <span class="pill">🎯 My Targets</span>
+    <span class="hero-pill">✅ Present Perfect</span>
+    <span class="hero-pill">🔀 vs Simple Past</span>
+    <span class="hero-pill">⚡ Key Adverbs</span>
+    <span class="hero-pill">💬 4 Idioms</span>
   </div>
 </div>
 <div class="content">
 
   <div class="section">
-    <div class="st">📐 Present Perfect — Form</div>
-    <div class="formula">
-      <div class="formula-row">
-        <div class="f-box">Subject</div><div class="f-plus">+</div>
-        <div class="f-box">have / has</div><div class="f-plus">+</div>
-        <div class="f-box">Past Participle</div>
+    <div class="st">✅ Present Perfect — Structure</div>
+    <div class="grammar-box">
+      <div class="gh">Formation</div>
+      <div class="gb">
+        <div class="formula">Subject + have / has + past participle</div>
+        <div class="ex-row"><div><div class="ex-en">I have been to Japan.</div><div class="ex-zh">我去过日本。</div></div></div>
+        <div class="ex-row"><div><div class="ex-en">She has eaten sushi before.</div><div class="ex-zh">她以前吃过寿司。</div></div></div>
+        <div class="ex-row"><div><div class="ex-en">They have never seen snow.</div><div class="ex-zh">他们从未见过雪。</div></div></div>
+        <div class="ex-row"><div><div class="ex-en">Have you ever tried rock climbing?</div><div class="ex-zh">你有没有试过攀岩？</div></div></div>
       </div>
-      <div class="formula-note">I / You / We / They → have &nbsp;&nbsp;|&nbsp;&nbsp; He / She / It → has</div>
     </div>
-    <div class="ex-card"><div class="ex-en">I have been to Japan twice.</div><div class="ex-zh">我去过日本两次。</div></div>
-    <div class="ex-card"><div class="ex-en">She has never eaten sushi.</div><div class="ex-zh">她从来没吃过寿司。</div></div>
-    <div class="ex-card"><div class="ex-en">Have you ever tried Korean food?</div><div class="ex-zh">你试过韩国料理吗？</div></div>
+    <div class="rb"><strong>⚠️ Key Irregular Participles</strong><ul><li>go → <strong>been</strong> (for places)</li><li>see → <strong>seen</strong></li><li>eat → <strong>eaten</strong></li><li>do → <strong>done</strong></li><li>try → <strong>tried</strong></li><li>have → <strong>had</strong></li></ul></div>
   </div>
 
   <div class="section">
-    <div class="st">🔄 Present Perfect vs Past Simple</div>
-    <div class="contrast">
-      <div class="c-card"><div class="c-head" style="background:#27ae60;">✅ Present Perfect</div><div class="c-body">"I have been to Beijing." — time is NOT specified</div></div>
-      <div class="c-card"><div class="c-head" style="background:#D4820A;">📅 Past Simple</div><div class="c-body">"I went to Beijing last year." — time IS specified</div></div>
+    <div class="st">🔀 Present Perfect vs Simple Past</div>
+    <div class="contrast-grid">
+      <div class="c-card">
+        <div class="c-header perfect">✅ Present Perfect</div>
+        <div class="c-body">
+          <div class="c-rule">General experience — WHEN is not important</div>
+          <div class="c-ex">"I have been to Paris."</div>
+          <div class="c-ex">"Have you ever eaten frog?"</div>
+        </div>
+      </div>
+      <div class="c-card">
+        <div class="c-header past">🕐 Simple Past</div>
+        <div class="c-body">
+          <div class="c-rule">Specific event — WHEN IS mentioned</div>
+          <div class="c-ex">"I went to Paris in 2019."</div>
+          <div class="c-ex">"I ate frog last summer."</div>
+        </div>
+      </div>
     </div>
-    <div style="background:#EEE8FF;border-radius:10px;padding:12px 14px;font-size:13px;color:var(--dark);"><strong>Key rule:</strong> Use present perfect when you don't say exactly when. Use past simple when you know the exact time.</div>
+    <div class="rb"><strong>💡 Quick Test</strong><ul><li>Does the sentence mention WHEN? → Simple Past</li><li>Is it about life experience, no specific time? → Present Perfect</li><li>"I have been to..." vs "I went there in 2020." ← spot the difference!</li></ul></div>
   </div>
 
   <div class="section">
-    <div class="st">⏰ 5 Key Adverbs</div>
-    <div class="adverb-card"><div class="adv-word">ever</div><div class="adv-info"><div class="adv-use">In questions — any time in your life?</div><div class="adv-ex">"Have you ever been to Europe?"</div><div class="adv-pos">📍 before the past participle</div></div></div>
-    <div class="adverb-card"><div class="adv-word">never</div><div class="adv-info"><div class="adv-use">Negative — at no time in your life</div><div class="adv-ex">"I have never eaten snails."</div><div class="adv-pos">📍 before the past participle</div></div></div>
-    <div class="adverb-card"><div class="adv-word">just</div><div class="adv-info"><div class="adv-use">Very recently — a short time ago</div><div class="adv-ex">"I have just arrived home."</div><div class="adv-pos">📍 between have/has and the participle</div></div></div>
-    <div class="adverb-card"><div class="adv-word">already</div><div class="adv-info"><div class="adv-use">Before expected — sooner than expected</div><div class="adv-ex">"She has already finished the report."</div><div class="adv-pos">📍 between have/has and the participle</div></div></div>
-    <div class="adverb-card"><div class="adv-word">yet</div><div class="adv-info"><div class="adv-use">In negatives/questions — up to now</div><div class="adv-ex">"Have you eaten yet?" / "I haven't eaten yet."</div><div class="adv-pos">📍 at the end of the sentence</div></div></div>
-  </div>
-
-  <div class="section">
-    <div class="st">📚 Key Irregular Past Participles</div>
-    <div class="verb-grid">
-      <div class="v-card"><div class="v-base">go</div><div class="v-arr">→</div><div class="v-pp">gone / been</div></div>
-      <div class="v-card"><div class="v-base">see</div><div class="v-arr">→</div><div class="v-pp">seen</div></div>
-      <div class="v-card"><div class="v-base">eat</div><div class="v-arr">→</div><div class="v-pp">eaten</div></div>
-      <div class="v-card"><div class="v-base">do</div><div class="v-arr">→</div><div class="v-pp">done</div></div>
-      <div class="v-card"><div class="v-base">take</div><div class="v-arr">→</div><div class="v-pp">taken</div></div>
-      <div class="v-card"><div class="v-base">have</div><div class="v-arr">→</div><div class="v-pp">had</div></div>
-      <div class="v-card"><div class="v-base">make</div><div class="v-arr">→</div><div class="v-pp">made</div></div>
-      <div class="v-card"><div class="v-base">give</div><div class="v-arr">→</div><div class="v-pp">given</div></div>
-      <div class="v-card"><div class="v-base">meet</div><div class="v-arr">→</div><div class="v-pp">met</div></div>
-      <div class="v-card"><div class="v-base">get</div><div class="v-arr">→</div><div class="v-pp">got</div></div>
+    <div class="st">⚡ Key Adverbs</div>
+    <div class="adverb-list">
+      <div class="adv-row"><div class="adv-word">ever</div><div class="adv-info"><div class="adv-use">in questions about experience</div><div class="adv-ex">"Have you ever been to New York?"</div></div></div>
+      <div class="adv-row"><div class="adv-word">never</div><div class="adv-info"><div class="adv-use">no experience in your whole life</div><div class="adv-ex">"I have never eaten durian."</div></div></div>
+      <div class="adv-row"><div class="adv-word">just</div><div class="adv-info"><div class="adv-use">very recently — moments ago</div><div class="adv-ex">"I have just finished my coffee."</div></div></div>
+      <div class="adv-row"><div class="adv-word">already</div><div class="adv-info"><div class="adv-use">sooner than expected</div><div class="adv-ex">"She has already done the homework."</div></div></div>
+      <div class="adv-row"><div class="adv-word">yet</div><div class="adv-info"><div class="adv-use">negatives and questions — not yet happened</div><div class="adv-ex">"I haven't seen that film yet."</div></div></div>
     </div>
   </div>
 
   <div class="section">
-    <div class="st">🎯 My 3 Personal Targets — Progress Check</div>
-    <p style="font-size:13px;color:var(--gray);margin-bottom:12px;">Review these from Session 1. Have you made progress on any of them?</p>
-    <div class="target-card"><div class="target-num">1</div><div class="target-lbl">Target 1</div><textarea class="target-input" id="t1" placeholder="Your target from Session 1…"></textarea></div>
-    <div class="target-card"><div class="target-num">2</div><div class="target-lbl">Target 2</div><textarea class="target-input" id="t2" placeholder="Your target from Session 1…"></textarea></div>
-    <div class="target-card"><div class="target-num">3</div><div class="target-lbl">Target 3</div><textarea class="target-input" id="t3" placeholder="Your target from Session 1…"></textarea></div>
-    <p style="font-size:12px;color:var(--gray);margin-top:6px;text-align:center;">📸 Screenshot this page to save your targets!</p>
+    <div class="st">💬 4 New Idioms — Week 1 Set</div>
+    <div class="idiom-card"><div class="id-word">hit it off</div><div class="id-def">to immediately like someone / get along well straight away</div><div class="id-ex">"We hit it off straight away — it felt like we'd known each other for years."</div></div>
+    <div class="idiom-card"><div class="id-word">go with the flow</div><div class="id-def">to accept things as they happen, without resisting</div><div class="id-ex">"I didn't have a plan that day — I just went with the flow."</div></div>
+    <div class="idiom-card"><div class="id-word">see eye to eye</div><div class="id-def">to agree with someone / share the same opinion</div><div class="id-ex">"We don't always see eye to eye, but we respect each other."</div></div>
+    <div class="idiom-card"><div class="id-word">give it a shot</div><div class="id-def">to try something, especially when uncertain about it</div><div class="id-ex">"I've never done karaoke, but I'll give it a shot!"</div></div>
+  </div>
+
+  <div class="section">
+    <div class="st">🧠 Fluency Strategies — Extending Answers</div>
+    <div class="strategy-card"><div class="s-icon">📏</div><div><div class="s-title">Minimum 3 sentences per answer</div><div class="s-body">After "Have you ever...?", never give a one-word answer. Say: yes/no → when/where → how you felt.</div></div></div>
+    <div class="strategy-card"><div class="s-icon">🔗</div><div><div class="s-title">Switch from perfect to past for the story</div><div class="s-body">"I have been to Thailand." → Then switch: "I went there in 2021, and I ate the most amazing food I've ever tried."</div></div></div>
+    <div class="strategy-card"><div class="s-icon">💬</div><div><div class="s-title">Add a discourse marker to every answer</div><div class="s-body">Start with: "Well," / "Actually," / "To be honest," — it buys you time and sounds fluent.</div></div></div>
   </div>
 
 </div>
-<div class="ti"><h2>📖 Vocabulary Reference</h2><p>Present perfect key expressions with Chinese translations</p></div>
+<div class="ti"><h2>📖 Vocabulary & Expressions Reference</h2><p>Key language from this session with Chinese translations</p></div>
 <table>
-  <thead><tr><th>English</th><th>Use</th><th>中文</th></tr></thead>
+  <thead><tr><th>English</th><th>Use / Context</th><th>中文</th></tr></thead>
   <tbody>
-    <tr><td class="en">I have been to ___</td><td>visited and came back</td><td class="zh">我去过___</td></tr>
-    <tr><td class="en">I have never ___</td><td>at no point in life</td><td class="zh">我从来没有___</td></tr>
-    <tr><td class="en">Have you ever ___?</td><td>any time in your life?</td><td class="zh">你曾经___吗？</td></tr>
-    <tr><td class="en">Yes, I have.</td><td>short positive answer</td><td class="zh">是的，我有。</td></tr>
-    <tr><td class="en">No, I haven't.</td><td>short negative answer</td><td class="zh">不，我没有。</td></tr>
-    <tr><td class="en">I have just ___</td><td>very recently</td><td class="zh">我刚刚___</td></tr>
-    <tr><td class="en">I have already ___</td><td>sooner than expected</td><td class="zh">我已经___</td></tr>
-    <tr><td class="en">I haven't ___ yet</td><td>not done up to now</td><td class="zh">我还没有___</td></tr>
-    <tr><td class="en">ever</td><td>questions about life experience</td><td class="zh">曾经</td></tr>
-    <tr><td class="en">never</td><td>negative life experience</td><td class="zh">从来没有</td></tr>
-    <tr><td class="en">just</td><td>moments ago</td><td class="zh">刚刚</td></tr>
-    <tr><td class="en">already</td><td>sooner than expected</td><td class="zh">已经</td></tr>
-    <tr><td class="en">yet</td><td>negatives and questions</td><td class="zh">还/已经（否定/疑问）</td></tr>
+    <tr><td class="en">Have you ever…?</td><td>Asking about life experience</td><td class="zh">你有没有过…？</td></tr>
+    <tr><td class="en">I have been to…</td><td>Visited a place (experience)</td><td class="zh">我去过…</td></tr>
+    <tr><td class="en">I have never…</td><td>No experience in life</td><td class="zh">我从来没有…过</td></tr>
+    <tr><td class="en">I have just…</td><td>Very recently happened</td><td class="zh">我刚刚…</td></tr>
+    <tr><td class="en">I have already…</td><td>Done sooner than expected</td><td class="zh">我已经…了</td></tr>
+    <tr><td class="en">I haven't… yet</td><td>Not done — but might in future</td><td class="zh">我还没有…</td></tr>
+    <tr><td class="en">hit it off</td><td>Immediately get along well</td><td class="zh">一见如故</td></tr>
+    <tr><td class="en">go with the flow</td><td>Accept what happens naturally</td><td class="zh">随波逐流，顺其自然</td></tr>
+    <tr><td class="en">see eye to eye</td><td>Agree / share same opinion</td><td class="zh">意见一致</td></tr>
+    <tr><td class="en">give it a shot</td><td>Try something new</td><td class="zh">尝试一下</td></tr>
+    <tr><td class="en">past participle</td><td>The 3rd form of a verb</td><td class="zh">过去分词</td></tr>
+    <tr><td class="en">life experience</td><td>Something that happened in your life</td><td class="zh">人生经历</td></tr>
   </tbody>
 </table>
-<script>
-['t1','t2','t3'].forEach(id=>{
-  const el=document.getElementById(id);
-  const saved=sessionStorage.getItem('s2_'+id);
-  if(saved)el.value=saved;
-  el.addEventListener('input',()=>sessionStorage.setItem('s2_'+id,el.value));
-});
-</script>
 </body>
 </html>
