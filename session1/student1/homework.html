@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Homework — Session 1</title>
+<style>
+  :root {
+    --teal: #1A7A8A; --accent: #2EB8A0; --dark: #0D4F5C;
+    --light: #E0F5F2; --gold: #D4820A; --goldbg: #FFF8E7;
+    --white: #fff; --offwhite: #F7F5F0; --slate: #445566;
+    --gray: #666; --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --done: #27ae60;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--offwhite); color: #1a1a1a; padding-bottom: 50px; }
+
+  .hero {
+    background: linear-gradient(135deg, #0D4F5C 0%, #1A7A8A 100%);
+    padding: 28px 20px 22px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after { content:''; position:absolute; right:-30px; top:-30px; width:150px; height:150px; border-radius:50%; background:rgba(255,255,255,0.06); }
+  .hero .badge { font-size: 10px; letter-spacing: 3px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .hero h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .hero p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .hero-time { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 5px 14px; margin-top: 14px; font-size: 13px; font-weight: 600; }
+
+  .content { padding: 0 16px; }
+
+  .intro-note {
+    background: var(--goldbg);
+    border: 1px solid #f5d9a8;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 18px 0 0;
+    font-size: 14px;
+    color: var(--slate);
+    line-height: 1.6;
+    border-left: 4px solid var(--gold);
+  }
+  .intro-note strong { color: var(--gold); }
+
+  .task-block {
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-top: 18px;
+    overflow: hidden;
+  }
+  .task-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--dark);
+  }
+  .task-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--dark);
+    font-size: 14px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .task-header-text { flex: 1; }
+  .task-title { font-size: 15px; font-weight: 700; color: white; }
+  .task-subtitle { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+  .task-time-badge { background: rgba(255,255,255,0.12); border-radius: 10px; padding: 3px 10px; font-size: 11px; color: white; font-weight: 600; white-space: nowrap; }
+
+  .task-body { padding: 16px; }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--light);
+    cursor: pointer;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 26px; height: 26px;
+    border-radius: 6px;
+    border: 2px solid var(--accent);
+    background: var(--white);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+  .check-item.done .check-box { background: var(--done); border-color: var(--done); }
+  .check-item.done .check-box::after { content: '✓'; color: white; font-weight: 700; }
+  .check-item.done .check-text { text-decoration: line-through; color: var(--gray); }
+  .check-text { font-size: 15px; flex: 1; line-height: 1.5; }
+  .check-text em { display: block; font-size: 12px; color: var(--gray); font-style: normal; margin-top: 3px; }
+
+  .step-list { list-style: none; }
+  .step-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--light); font-size: 14px; color: var(--slate); line-height: 1.5; }
+  .step-item:last-child { border-bottom: none; }
+  .step-icon { font-size: 18px; flex-shrink: 0; width: 26px; text-align: center; }
+
+  .pair-box {
+    background: var(--light);
+    border-radius: 12px;
+    padding: 14px;
+    margin-top: 4px;
+  }
+  .pair-box .pair-title { font-size: 12px; font-weight: 700; color: var(--teal); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .pair-box ul { padding-left: 18px; }
+  .pair-box li { font-size: 14px; color: var(--slate); margin-bottom: 6px; line-height: 1.5; }
+  .pair-rule {
+    background: rgba(214,130,10,0.1);
+    border: 1px solid rgba(214,130,10,0.3);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .app-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--light);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .app-icon { font-size: 32px; flex-shrink: 0; }
+  .app-info strong { display: block; font-size: 14px; color: var(--dark); }
+  .app-info span { font-size: 12px; color: var(--gray); }
+
+  .progress-summary {
+    background: var(--dark);
+    border-radius: 16px;
+    padding: 20px 16px;
+    margin-top: 22px;
+    text-align: center;
+    color: white;
+  }
+  .progress-summary h3 { font-size: 16px; margin-bottom: 8px; color: var(--accent); }
+  .progress-summary p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+  .done-counter { font-size: 28px; font-weight: 700; color: var(--accent); margin: 10px 0 4px; }
+
+  .stars { font-size: 28px; letter-spacing: 4px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">HOMEWORK · SESSION 1</div>
+  <h1>📱 Tonight's English Tasks</h1>
+  <p>You worked hard today! Now practise at home.<br>Do your best — every minute helps!</p>
+  <div class="hero-time">⏱ Total time: about 1.5 hours</div>
+</div>
+
+<div class="content">
+
+  <div class="intro-note">
+    <strong>🌟 How to use this page:</strong> Tap each checkbox when you finish a task. Try to complete all tasks before your next class. Remember — your teacher may ask you about your homework!
+  </div>
+
+  <!-- TASK 1: VOICE MEMO -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">1</div>
+      <div class="task-header-text">
+        <div class="task-title">🎤 Record Your Introduction</div>
+        <div class="task-subtitle">Voice memo on your phone</div>
+      </div>
+      <div class="task-time-badge">15 min</div>
+    </div>
+    <div class="task-body">
+      <ul class="step-list">
+        <li class="step-item"><span class="step-icon">📱</span>Open the <strong>Voice Memo</strong> app on your phone</li>
+        <li class="step-item"><span class="step-icon">🎙</span>Press record. Say your introduction: Hello, my name is… (all 5 lines)</li>
+        <li class="step-item"><span class="step-icon">▶️</span>Stop and listen to the recording. How does it sound?</li>
+        <li class="step-item"><span class="step-icon">🔁</span>Record it again — try to sound more natural and clear</li>
+        <li class="step-item"><span class="step-icon">📤</span>Send your <strong>best recording</strong> to your teacher via WhatsApp/WeChat</li>
+      </ul>
+
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">I recorded my introduction at least 2 times
+            <em>Even if it is not perfect — send it! Your teacher wants to hear you try.</em>
+          </div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">I sent the recording to my teacher ✉️</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 2: ELSA SPEAK -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">2</div>
+      <div class="task-header-text">
+        <div class="task-title">🔊 ELSA Speak — Pronunciation</div>
+        <div class="task-subtitle">AI pronunciation practice app</div>
+      </div>
+      <div class="task-time-badge">20 min</div>
+    </div>
+    <div class="task-body">
+      <div class="app-card">
+        <div class="app-icon">🎯</div>
+        <div class="app-info">
+          <strong>ELSA Speak</strong>
+          <span>Download free from App Store or Google Play</span>
+        </div>
+      </div>
+
+      <ul class="step-list">
+        <li class="step-item"><span class="step-icon">📥</span>Download ELSA Speak if you do not have it. Create a free account.</li>
+        <li class="step-item"><span class="step-icon">🎯</span>Select: <strong>Pronunciation</strong> → <strong>Vowel Sounds</strong> or <strong>Beginner</strong></li>
+        <li class="step-item"><span class="step-icon">🗣</span>Speak clearly into your phone. Let the app listen and give you a score.</li>
+        <li class="step-item"><span class="step-icon">🔁</span>Repeat any sound that scores below 70%. Try it 3 times.</li>
+        <li class="step-item"><span class="step-icon">📊</span>What was your highest score? Remember it for next class!</li>
+      </ul>
+
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">I completed 20 minutes on ELSA Speak
+            <em>Even 15 minutes is great. Try to do a little every day.</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 3: PHONICS REVIEW -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">3</div>
+      <div class="task-header-text">
+        <div class="task-title">🔤 Phonics Activity — Review</div>
+        <div class="task-subtitle">The file from today's class</div>
+      </div>
+      <div class="task-time-badge">15 min</div>
+    </div>
+    <div class="task-body">
+      <ul class="step-list">
+        <li class="step-item"><span class="step-icon">📂</span>Open the file <a href="phonics_activity.html"><strong>Phonics Activity</strong></a> on your phone</li>
+        <li class="step-item"><span class="step-icon">🔤</span>Go through the 5 sounds again. Say each word out loud.</li>
+        <li class="step-item"><span class="step-icon">🎯</span>Do the quiz again. Try to score higher than your score in class!</li>
+        <li class="step-item"><span class="step-icon">📝</span>Which sound is hardest for you? Remember this for tomorrow.</li>
+      </ul>
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">I did the phonics activity again at home</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 4: PAIRED PRACTICE -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">4</div>
+      <div class="task-header-text">
+        <div class="task-title">🤝 Speak English with Your Partner</div>
+        <div class="task-subtitle">Together at home — English only!</div>
+      </div>
+      <div class="task-time-badge">15 min</div>
+    </div>
+    <div class="task-body">
+      <div class="pair-box">
+        <div class="pair-title">📋 What to do together</div>
+        <ul>
+          <li>Find a quiet time at home — after dinner is good</li>
+          <li><strong>Your partner asks you</strong> these questions in English:<br>
+            "What is your name?" · "Where are you from?" · "How old are you?" · "How are you?"
+          </li>
+          <li>You answer each question in English. Use your introduction script if you need help.</li>
+          <li>Then <strong>you ask your partner</strong> the same questions.</li>
+          <li>Try to have a small conversation for at least 15 minutes — only English!</li>
+        </ul>
+        <div class="pair-rule">⚠️ Rule: No Mandarin during this 15 minutes. If you don't know a word — try to explain it in English or use gestures!</div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">We spoke English together at home tonight
+            <em>Even 10 minutes is good. Try for 15!</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 5: HANDOUT REVIEW -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">5</div>
+      <div class="task-header-text">
+        <div class="task-title">📖 Review Your Handout</div>
+        <div class="task-subtitle">S1_S1_Handout.html — read before bed</div>
+      </div>
+      <div class="task-time-badge">10 min</div>
+    </div>
+    <div class="task-body">
+      <ul class="step-list">
+        <li class="step-item"><span class="step-icon">📂</span>Open your handout file: <a href="handout.html"><strong>Handout</strong></a></li>
+        <li class="step-item"><span class="step-icon">👀</span>Read the introduction script one more time. Say it out loud.</li>
+        <li class="step-item"><span class="step-icon">❓</span>Look at the 5 question words. Can you remember what each one means?</li>
+        <li class="step-item"><span class="step-icon">📖</span>Check the translation table at the end — cover the Chinese column and test yourself!</li>
+      </ul>
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">I reviewed my handout before sleeping</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS SUMMARY -->
+  <div class="progress-summary">
+    <h3>🏆 Tonight's Progress</h3>
+    <div class="done-counter" id="doneCount">0 / 6</div>
+    <div class="stars" id="starsDisplay">⭐⭐⭐⭐⭐⭐</div>
+    <p style="margin-top:12px;" id="motivMsg">Complete all tasks and come to class ready to speak!</p>
+  </div>
+
+  <div style="text-align:center; margin-top:22px; font-size:13px; color:var(--gray); padding: 0 20px; line-height:1.7;">
+    Next class: <strong>Session 2 — Daily Routines & Time</strong><br>
+    Your teacher will ask: <em>"What did you do this morning?"</em><br>
+    Think about how to answer!
+  </div>
+
+</div>
+
+<script>
+let totalChecks = 0;
+let doneChecks = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+  totalChecks = document.querySelectorAll('.check-item').length;
+  updateCounter();
+});
+
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  doneChecks = document.querySelectorAll('.check-item.done').length;
+  updateCounter();
+}
+
+function updateCounter() {
+  const el = document.getElementById('doneCount');
+  const stars = document.getElementById('starsDisplay');
+  const msg = document.getElementById('motivMsg');
+  el.textContent = doneChecks + ' / ' + totalChecks;
+
+  const pct = doneChecks / totalChecks;
+  if (pct === 0) {
+    stars.textContent = '⭐⭐⭐⭐⭐⭐';
+    msg.textContent = 'Start your homework — you can do it! 💪';
+  } else if (pct < 0.5) {
+    stars.textContent = '⭐⭐⭐⭐⭐⭐';
+    msg.textContent = 'Good start! Keep going 🙌';
+  } else if (pct < 1) {
+    stars.textContent = '🌟🌟🌟🌟🌟🌟';
+    msg.textContent = 'Almost there — fantastic effort! 🎉';
+  } else {
+    stars.textContent = '🏆🏆🏆🏆🏆🏆';
+    msg.textContent = 'All done! Amazing work today. See you next class! 🎊';
+  }
+}
+</script>
+</body>
+</html>

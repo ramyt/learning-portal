@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Homework — S2 Session 1</title>
+<style>
+  :root {
+    --dark: #2D1A4A; --mid: #5B3A8A; --accent: #9B6DFF;
+    --light: #EEE8FF; --gold: #D4820A; --goldbg: #FFF8E7;
+    --white: #fff; --offwhite: #F7F5F0; --slate: #445566;
+    --gray: #666; --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --done: #27ae60;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--offwhite); color: #1a1a1a; padding-bottom: 50px; }
+
+  .hero { background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 100%); padding: 28px 20px 22px; color: white; position: relative; overflow: hidden; }
+  .hero::after { content:''; position:absolute; right:-20px; top:-20px; width:140px; height:140px; border-radius:50%; background:rgba(255,255,255,0.05); }
+  .hero .badge { font-size: 10px; letter-spacing: 3px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .hero h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .hero p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .hero-time { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 5px 14px; margin-top: 14px; font-size: 13px; font-weight: 600; }
+
+  .content { padding: 0 16px; }
+
+  .intro-note { background: var(--goldbg); border: 1px solid #f5d9a8; border-radius: 14px; padding: 14px 16px; margin: 18px 0 0; font-size: 14px; color: var(--slate); line-height: 1.6; border-left: 4px solid var(--gold); }
+  .intro-note strong { color: var(--gold); }
+
+  .task-block { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); margin-top: 18px; overflow: hidden; }
+  .task-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--dark); }
+  .task-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--dark); font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .task-header-text { flex: 1; }
+  .task-title { font-size: 15px; font-weight: 700; color: white; }
+  .task-subtitle { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+  .task-time-badge { background: rgba(255,255,255,0.12); border-radius: 10px; padding: 3px 10px; font-size: 11px; color: white; font-weight: 600; white-space: nowrap; }
+  .task-body { padding: 16px; }
+
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--light); cursor: pointer; }
+  .check-item:last-child { border-bottom: none; }
+  .check-box { width: 26px; height: 26px; border-radius: 6px; border: 2px solid var(--accent); background: var(--white); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.2s; margin-top: 1px; }
+  .check-item.done .check-box { background: var(--done); border-color: var(--done); }
+  .check-item.done .check-box::after { content: '✓'; color: white; font-weight: 700; }
+  .check-item.done .check-text { text-decoration: line-through; color: var(--gray); }
+  .check-text { font-size: 15px; flex: 1; line-height: 1.5; }
+  .check-text em { display: block; font-size: 12px; color: var(--gray); font-style: normal; margin-top: 3px; }
+
+  .step-list { list-style: none; }
+  .step-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--light); font-size: 14px; color: var(--slate); line-height: 1.5; }
+  .step-item:last-child { border-bottom: none; }
+  .step-icon { font-size: 18px; flex-shrink: 0; width: 26px; text-align: center; }
+
+  .pair-box { background: var(--light); border-radius: 12px; padding: 14px; margin-top: 8px; }
+  .pair-box .pair-title { font-size: 12px; font-weight: 700; color: var(--mid); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .pair-box ul { padding-left: 18px; }
+  .pair-box li { font-size: 14px; color: var(--slate); margin-bottom: 6px; line-height: 1.5; }
+  .pair-rule { background: rgba(214,130,10,0.1); border: 1px solid rgba(214,130,10,0.3); border-radius: 8px; padding: 8px 12px; margin-top: 10px; font-size: 13px; color: var(--gold); font-weight: 600; }
+
+  .script-box { background: var(--light); border-radius: 12px; padding: 14px; margin-top: 10px; font-size: 14px; color: var(--slate); }
+  .script-box strong { color: var(--mid); display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .question-list { list-style: none; padding: 0; }
+  .question-list li { padding: 6px 0; border-bottom: 1px solid rgba(91,58,138,0.15); font-size: 14px; }
+  .question-list li:last-child { border-bottom: none; }
+  .question-list li::before { content: "❓ "; }
+
+  .topic-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .topic-item { background: var(--light); border-radius: 10px; padding: 10px 14px; font-size: 14px; color: var(--slate); border-left: 3px solid var(--accent); }
+  .topic-item strong { color: var(--dark); }
+
+  .progress-summary { background: var(--dark); border-radius: 16px; padding: 20px 16px; margin-top: 22px; text-align: center; color: white; }
+  .progress-summary h3 { font-size: 16px; margin-bottom: 8px; color: var(--accent); }
+  .done-counter { font-size: 28px; font-weight: 700; color: var(--accent); margin: 10px 0 4px; }
+  .stars { font-size: 26px; letter-spacing: 4px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">HOMEWORK · S2 SESSION 1</div>
+  <h1>📱 Tonight's English Tasks</h1>
+  <p>You spoke well today. Keep the momentum going at home — consistency is everything.</p>
+  <div class="hero-time">⏱ Total time: about 1.5 hours</div>
+</div>
+
+<div class="content">
+
+  <div class="intro-note">
+    <strong>🌟 Your goal tonight:</strong> The most important task is the voice note (Task 1). Your teacher will listen and give you feedback at the start of Session 2. Be honest — speak naturally, as if you're talking to a friend.
+  </div>
+
+  <!-- TASK 1: VOICE NOTE -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">1</div>
+      <div class="task-header-text">
+        <div class="task-title">🎤 Voice Note — Send to Teacher</div>
+        <div class="task-subtitle">3 minutes · speak naturally</div>
+      </div>
+      <div class="task-time-badge">15 min</div>
+    </div>
+    <div class="task-body">
+      <ul class="step-list">
+        <li class="step-item"><span class="step-icon">📱</span>Open WhatsApp. Find your teacher's chat.</li>
+        <li class="step-item"><span class="step-icon">🎙</span>Hold the microphone button. Speak for <strong>at least 3 minutes</strong> on this question:</li>
+      </ul>
+
+      <div class="script-box" style="margin: 10px 0; background: rgba(91,58,138,0.1); border-left:4px solid var(--accent);">
+        <strong>🗣 YOUR QUESTION:</strong>
+        <p style="font-size:16px; font-style:italic; color:var(--dark);">"What surprised you most about moving here — the people, the culture, the language, or everyday life? Why?"</p>
+      </div>
+
+      <ul class="step-list">
+        <li class="step-item"><span class="step-icon">🎯</span>Try to use <strong>at least 3 discourse markers</strong> from today's lesson naturally</li>
+        <li class="step-item"><span class="step-icon">🚫</span>Do NOT write notes first — speak spontaneously</li>
+        <li class="step-item"><span class="step-icon">📤</span>Send the voice note to your teacher when done</li>
+      </ul>
+
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">I recorded and sent a 3-min voice note to my teacher
+            <em>Even if it's not perfect — send it. That is the point.</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 2: BBC 6 MINUTE ENGLISH -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">2</div>
+      <div class="task-header-text">
+        <div class="task-title">🎧 BBC 6 Minute English</div>
+        <div class="task-subtitle">1 episode · active listening</div>
+      </div>
+      <div class="task-time-badge">20 min</div>
+    </div>
+    <div class="task-body">
+      <ul class="step-list">
+        <li class="step-item"><span class="step-icon">🔍</span>Search "BBC 6 Minute English" on YouTube or the BBC website. Choose any episode that interests you.</li>
+        <li class="step-item"><span class="step-icon">👂</span>Listen to the full episode — try WITHOUT subtitles first.</li>
+        <li class="step-item"><span class="step-icon">📝</span>After listening, note these 3 things in your head (or in a note app):</li>
+      </ul>
+
+      <div class="pair-box" style="margin-top:10px;">
+        <div class="pair-title">Note these 3 things after listening</div>
+        <ul>
+          <li>What was the main topic? (1 sentence)</li>
+          <li>What is one new word or phrase you heard?</li>
+          <li>Did they use any discourse markers? Which ones?</li>
+        </ul>
+      </div>
+
+      <ul class="step-list" style="margin-top:10px;">
+        <li class="step-item"><span class="step-icon">🔁</span>Listen a second time with subtitles if available — check your understanding.</li>
+        <li class="step-item"><span class="step-icon">💬</span>Be ready to tell your teacher about the episode at the start of Session 2.</li>
+      </ul>
+
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">I listened to 1 BBC 6 Minute English episode
+            <em>Note the topic — your teacher will ask you about it!</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 3: DISCOURSE ACTIVITY REPEAT -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">3</div>
+      <div class="task-header-text">
+        <div class="task-title">🔗 Discourse Activity — Repeat</div>
+        <div class="task-subtitle">Discourse Activity · aim for 100%</div>
+      </div>
+      <div class="task-time-badge">15 min</div>
+    </div>
+    <div class="task-body">
+      <ul class="step-list">
+        <li class="step-item"><span class="step-icon">📂</span>Open <a href="discourse_activity.html" target="_blank"><strong>Discourse Activity</strong></a> on your phone</li>
+        <li class="step-item"><span class="step-icon">🎯</span>Do the gap-fill (Part 1) again — try to score <strong>8/8</strong> this time</li>
+        <li class="step-item"><span class="step-icon">🗣</span>For Part 2 (Sentence Builder): read each improved sentence aloud — say it naturally</li>
+        <li class="step-item"><span class="step-icon">🏆</span>Try to do the activity without looking at the reference tab</li>
+      </ul>
+
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">I repeated the discourse activity and read answers aloud</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 4: PAIRED PRACTICE -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">4</div>
+      <div class="task-header-text">
+        <div class="task-title">🤝 English Practice with Your Partner</div>
+        <div class="task-subtitle">You lead — English only, no Mandarin</div>
+      </div>
+      <div class="task-time-badge">20 min</div>
+    </div>
+    <div class="task-body">
+
+      <div class="pair-box">
+        <div class="pair-title">📋 Your job tonight as the stronger speaker</div>
+        <ul>
+          <li>Find a quiet time — after dinner works well</li>
+          <li>Ask your partner the <strong>10 questions below</strong> in English — one at a time</li>
+          <li>Wait for her answer. Give her time — don't rush or translate for her</li>
+          <li>If she is stuck: use simpler English to help. No Mandarin.</li>
+          <li>After her answer: respond naturally in English — make it a real conversation</li>
+        </ul>
+        <div class="pair-rule">⚠️ You are a practice partner — not a teacher. Don't explain grammar. Just keep the conversation going in English.</div>
+      </div>
+
+      <div class="script-box">
+        <strong>❓ 10 Questions to Ask Her Tonight</strong>
+        <ul class="question-list">
+          <li>What is your name? Where are you from?</li>
+          <li>How old are you?</li>
+          <li>What do you like? Tell me one thing.</li>
+          <li>What do you eat for breakfast?</li>
+          <li>What time do you wake up?</li>
+          <li>Do you like living here? Why?</li>
+          <li>What is your favourite food?</li>
+          <li>How are you feeling today?</li>
+          <li>What did you do this morning?</li>
+          <li>Tell me one thing about yourself.</li>
+        </ul>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">We had a 15-min English-only conversation tonight
+            <em>Did she manage to answer in English? How did it go?</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 5: USE A DISCOURSE MARKER IN REAL LIFE -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">5</div>
+      <div class="task-header-text">
+        <div class="task-title">💬 Use 2 Markers in Real Life</div>
+        <div class="task-subtitle">In conversation — any context</div>
+      </div>
+      <div class="task-time-badge">Throughout the day</div>
+    </div>
+    <div class="task-body">
+      <p style="font-size:14px; color:var(--slate); margin-bottom:12px;">Any time you speak English today — with your partner, your teacher, or even an AI chatbot — consciously use at least 2 of today's discourse markers.</p>
+
+      <div class="topic-list">
+        <div class="topic-item"><strong>Try saying:</strong> "Well, I think…" before your next opinion</div>
+        <div class="topic-item"><strong>Try saying:</strong> "To be honest,…" before something personal</div>
+        <div class="topic-item"><strong>Try saying:</strong> "Having said that,…" after a positive statement</div>
+        <div class="topic-item"><strong>Try saying:</strong> "At the end of the day,…" to close a topic</div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">I used at least 2 discourse markers naturally today
+            <em>Which ones did you use? Tell your teacher in Session 2.</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 6: REVIEW TARGETS -->
+  <div class="task-block">
+    <div class="task-header">
+      <div class="task-num">6</div>
+      <div class="task-header-text">
+        <div class="task-title">🎯 Review Your 3 Personal Targets</div>
+        <div class="task-subtitle">Open your handout before sleeping</div>
+      </div>
+      <div class="task-time-badge">5 min</div>
+    </div>
+    <div class="task-body">
+      <ul class="step-list">
+        <li class="step-item"><span class="step-icon">📂</span>Open <a href="handout.html" target="_blank"><strong>Handout</strong></a> — go to the "My 3 Targets" section</li>
+        <li class="step-item"><span class="step-icon">👀</span>Read your 3 targets again. Are they clear? Can you measure them?</li>
+        <li class="step-item"><span class="step-icon">📸</span>Take a screenshot of your targets — save it to your camera roll</li>
+        <li class="step-item"><span class="step-icon">💭</span>Before sleeping, ask yourself: "Did I do anything today that moved me closer to these targets?"</li>
+      </ul>
+
+      <div style="margin-top:14px;">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">I reviewed my 3 targets and took a screenshot</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-summary">
+    <h3>🏆 Tonight's Progress</h3>
+    <div class="done-counter" id="doneCount">0 / 6</div>
+    <div class="stars" id="starsDisplay">⭐⭐⭐⭐⭐⭐</div>
+    <p style="margin-top:12px; font-size:13px; color:rgba(255,255,255,0.7);" id="motivMsg">Complete all tasks and come to Session 2 ready to speak!</p>
+  </div>
+
+  <div style="text-align:center; margin-top:22px; font-size:13px; color:var(--gray); padding: 0 20px; line-height:1.7;">
+    Next class: <strong>Session 2 — Present Perfect & Life Experiences</strong><br>
+    Your teacher will ask: <em>"Have you ever…?"</em><br>
+    Think of 3 interesting experiences from your life.
+  </div>
+
+</div>
+
+<script>
+let totalChecks = 0;
+let doneChecks = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+  totalChecks = document.querySelectorAll('.check-item').length;
+  updateCounter();
+});
+
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  doneChecks = document.querySelectorAll('.check-item.done').length;
+  updateCounter();
+}
+
+function updateCounter() {
+  const el = document.getElementById('doneCount');
+  const stars = document.getElementById('starsDisplay');
+  const msg = document.getElementById('motivMsg');
+  el.textContent = doneChecks + ' / ' + totalChecks;
+  const pct = doneChecks / totalChecks;
+  if (pct === 0) { stars.textContent = '⭐⭐⭐⭐⭐⭐'; msg.textContent = 'Start with Task 1 — the voice note is the most important. 🎤'; }
+  else if (pct < 0.5) { stars.textContent = '⭐⭐⭐⭐⭐⭐'; msg.textContent = 'Good start — keep going! 💪'; }
+  else if (pct < 1) { stars.textContent = '🌟🌟🌟🌟🌟🌟'; msg.textContent = 'Almost there — great effort tonight! 🎉'; }
+  else { stars.textContent = '🏆🏆🏆🏆🏆🏆'; msg.textContent = 'Everything done! You are taking this seriously. See you in Session 2! 🚀'; }
+}
+</script>
+</body>
+</html>

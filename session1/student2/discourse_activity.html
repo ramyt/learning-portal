@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Discourse Markers Activity — Session 1</title>
+<style>
+  :root {
+    --dark: #2D1A4A; --mid: #5B3A8A; --accent: #9B6DFF;
+    --light: #EEE8FF; --gold: #D4820A; --goldbg: #FFF8E7;
+    --white: #fff; --offwhite: #F7F5F0; --slate: #445566;
+    --gray: #888; --correct: #27ae60; --wrong: #e74c3c;
+    --shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--dark); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; }
+
+  .app-header { background: var(--dark); padding: 18px 20px 14px; text-align: center; border-bottom: 2px solid var(--mid); }
+  .app-header .label { font-size: 10px; letter-spacing: 3px; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .app-header h1 { font-size: 20px; font-weight: 700; }
+  .progress-wrap { display: flex; align-items: center; gap: 10px; margin: 12px 20px 0; }
+  .progress-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.4s; }
+  .progress-label { font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap; }
+
+  .tab-bar { display: flex; border-bottom: 2px solid var(--mid); }
+  .tab-btn { flex: 1; padding: 12px 8px; background: none; border: none; color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .screen { display: none; padding: 18px 16px; flex: 1; flex-direction: column; }
+  .screen.active { display: flex; }
+
+  /* REFERENCE CARD */
+  .marker-card { background: rgba(255,255,255,0.07); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; border-left: 4px solid var(--accent); }
+  .marker-word { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .marker-use { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+  .marker-ex { font-size: 13px; color: rgba(255,255,255,0.85); font-style: italic; }
+  .zh-btn { background: none; border: 1px solid rgba(139,0,0,0.4); color: #ff9999; font-size: 12px; padding: 3px 10px; border-radius: 8px; cursor: pointer; margin-top: 6px; }
+  .zh-hidden { display: none; font-size: 14px; color: #ffaaaa; font-weight: 700; margin-top: 6px; padding: 6px 10px; background: rgba(139,0,0,0.15); border-radius: 8px; }
+  .zh-hidden.shown { display: block; }
+
+  /* GAP FILL */
+  .gf-card { background: rgba(255,255,255,0.07); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+  .gf-q { font-size: 15px; line-height: 1.8; color: var(--white); margin-bottom: 12px; }
+  .gf-options { display: flex; flex-wrap: wrap; gap: 8px; }
+  .gf-opt { padding: 8px 14px; border: 2px solid var(--accent); border-radius: 20px; background: none; color: var(--white); font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .gf-opt:active { transform: scale(0.97); }
+  .gf-opt.selected { background: var(--accent); color: var(--dark); font-weight: 700; }
+  .gf-opt.correct { background: var(--correct); border-color: var(--correct); color: var(--white); }
+  .gf-opt.wrong { background: var(--wrong); border-color: var(--wrong); color: var(--white); }
+  .gf-opt.show-correct { background: var(--correct); border-color: var(--correct); color: var(--white); }
+  .gf-opt.disabled { pointer-events: none; opacity: 0.6; }
+  .gf-feedback { margin-top: 10px; padding: 10px 14px; border-radius: 10px; font-size: 13px; display: none; }
+  .gf-feedback.correct { background: rgba(39,174,96,0.15); border: 1px solid var(--correct); color: #7defa7; display: block; }
+  .gf-feedback.wrong { background: rgba(231,76,60,0.15); border: 1px solid var(--wrong); color: #ffaaaa; display: block; }
+  .gf-sentence-blank { display: inline-block; min-width: 120px; border-bottom: 2px solid var(--accent); color: var(--accent); font-weight: 700; font-style: normal; padding: 0 6px; }
+
+  /* SENTENCE BUILDER */
+  .sb-card { background: rgba(255,255,255,0.07); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+  .sb-original { font-size: 13px; color: rgba(255,255,255,0.6); font-style: italic; margin-bottom: 10px; padding: 10px; background: rgba(231,76,60,0.1); border-radius: 8px; border-left: 3px solid var(--wrong); }
+  .sb-label { font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+  .sb-suggestion { font-size: 13px; color: rgba(255,255,255,0.85); display: none; padding: 10px; background: rgba(39,174,96,0.12); border-radius: 8px; border-left: 3px solid var(--correct); font-style: italic; }
+  .sb-suggestion.shown { display: block; }
+  .reveal-btn { background: none; border: 1px solid rgba(155,109,255,0.5); color: var(--accent); font-size: 12px; padding: 6px 14px; border-radius: 20px; cursor: pointer; margin-top: 8px; }
+  .reveal-btn:active { background: rgba(155,109,255,0.15); }
+  .sb-marker-hint { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+
+  /* SCORE */
+  .score-wrap { display: flex; flex-direction: column; align-items: center; padding: 24px 16px; text-align: center; }
+  .score-circle { width: 130px; height: 130px; border-radius: 50%; background: var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 0 40px rgba(155,109,255,0.35); }
+  .score-num { font-size: 44px; font-weight: 700; color: var(--dark); }
+  .score-lbl { font-size: 12px; color: var(--dark); font-weight: 600; }
+  .score-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .score-msg { font-size: 14px; color: rgba(255,255,255,0.7); max-width: 300px; line-height: 1.6; margin-bottom: 20px; }
+  .retry-btn { padding: 14px 32px; background: var(--accent); border: none; border-radius: 14px; color: var(--dark); font-size: 16px; font-weight: 700; cursor: pointer; }
+
+  .submit-btn { width: 100%; padding: 15px; background: var(--accent); border: none; border-radius: 14px; color: var(--dark); font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+  .submit-btn:active { opacity: 0.85; }
+  .submit-btn:disabled { opacity: 0.4; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="label">SESSION 1 · DISCOURSE ACTIVITY</div>
+  <h1>🔗 Discourse Markers</h1>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-label" id="progressLabel">Part 1 of 2</div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('ref')" id="tabRef">📖 Reference</button>
+  <button class="tab-btn" onclick="showTab('gf')" id="tabGf">Part 1: Gap-Fill</button>
+  <button class="tab-btn" onclick="showTab('sb')" id="tabSb">Part 2: Rebuild</button>
+</div>
+
+<!-- REFERENCE TAB -->
+<div class="screen active" id="screenRef">
+  <p style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:14px;">Study these 8 markers before the activities. Tap 🇨🇳 to see the Chinese meaning.</p>
+  <div id="refCards"></div>
+</div>
+
+<!-- GAP FILL TAB -->
+<div class="screen" id="screenGf">
+  <p style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:14px;">Choose the best discourse marker to complete each sentence. Read your answer aloud!</p>
+  <div id="gfCards"></div>
+  <div id="gfScore" style="display:none;"></div>
+</div>
+
+<!-- SENTENCE BUILDER TAB -->
+<div class="screen" id="screenSb">
+  <p style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:14px;">These sentences sound choppy and translated. Read each one, then tap to see a better version using discourse markers. Try to say the improved version aloud!</p>
+  <div id="sbCards"></div>
+</div>
+
+<script>
+const markers = [
+  { word:"Well,", use:"Start an answer or show you're thinking", ex:'"Well, I think it depends on the situation."', zh:"嗯，（表示思考或开始回答）" },
+  { word:"Actually,", use:"Correct or add a surprising point", ex:'"Actually, I changed my mind about that."', zh:"其实，实际上" },
+  { word:"Having said that,", use:"Introduce a contrasting idea", ex:'"Having said that, there are some advantages."', zh:"话虽如此，（表示转折）" },
+  { word:"What I mean is,", use:"Clarify or rephrase your idea", ex:'"What I mean is, it\'s more complicated than it looks."', zh:"我的意思是，（用于澄清）" },
+  { word:"On the other hand,", use:"Give the opposite viewpoint", ex:'"On the other hand, some people strongly disagree."', zh:"另一方面，（表示对比）" },
+  { word:"To be honest,", use:"Express a candid or personal view", ex:'"To be honest, I find grammar quite difficult."', zh:"说实话，（表示坦诚）" },
+  { word:"As I was saying,", use:"Return to a previous point", ex:'"As I was saying, the main problem is communication."', zh:"如我所说，（回到之前的话题）" },
+  { word:"At the end of the day,", use:"Summarise or give your final opinion", ex:'"At the end of the day, it\'s your decision."', zh:"归根结底，（总结观点）" },
+];
+
+const gapFillQs = [
+  { sentence:"_____ I prefer working from home, the office has better equipment.", blank:"start", correct:"Having said that,", options:["Having said that,","Well,","As I was saying,"], explanation:"'Having said that' introduces a contrasting idea — perfect here." },
+  { sentence:"_____ I don't think money is the most important thing in life.", blank:"start", correct:"To be honest,", options:["To be honest,","At the end of the day,","Actually,"], explanation:"'To be honest' signals a candid personal opinion." },
+  { sentence:"The food was amazing. _____ the service was a bit slow.", blank:"start", correct:"On the other hand,", options:["On the other hand,","Well,","What I mean is,"], explanation:"'On the other hand' contrasts the good food with the slow service." },
+  { sentence:"_____ I enjoy both — I was just saying coffee is my favourite.", blank:"start", correct:"What I mean is,", options:["What I mean is,","Actually,","As I was saying,"], explanation:"'What I mean is' clarifies or rephrases a previous statement." },
+  { sentence:"_____ where was I? Oh yes — I was talking about my university years.", blank:"start", correct:"As I was saying,", options:["As I was saying,","Well,","To be honest,"], explanation:"'As I was saying' returns to a point after an interruption." },
+  { sentence:"_____ I expected to hate the new job, but I actually love it.", blank:"start", correct:"Actually,", options:["Actually,","Having said that,","At the end of the day,"], explanation:"'Actually' introduces a surprising or corrective point." },
+  { sentence:"The journey was long and tiring. _____ it was worth it.", blank:"start", correct:"Having said that,", options:["Having said that,","On the other hand,","Well,"], explanation:"'Having said that' acknowledges something difficult but then contrasts it." },
+  { sentence:"_____ it doesn't matter who wins — what matters is that everyone tries.", blank:"start", correct:"At the end of the day,", options:["At the end of the day,","What I mean is,","To be honest,"], explanation:"'At the end of the day' gives a final summarising opinion." },
+];
+
+const sentenceBuilds = [
+  { original:'"I like my job. Pay is okay. Hours are long. I continue working there."', marker:"Having said that, / To be honest,", suggestion:'"To be honest, the hours are quite long. Having said that, I genuinely enjoy the work, so I\'m staying."' },
+  { original:'"China is big. Many places. Some are beautiful. Some are crowded."', marker:"Well, / On the other hand,", suggestion:'"Well, China is an enormous country with so much variety. On the other hand, some of the bigger cities can feel quite overwhelming."' },
+  { original:'"Learning English is hard. I try every day. My speaking is not good. Reading is better."', marker:"To be honest, / Having said that,", suggestion:'"To be honest, I find speaking English really difficult. Having said that, my reading is improving and I practise every day."' },
+  { original:'"Technology is useful. It is also bad. People use phones too much. Communication is less."', marker:"Actually, / On the other hand,", suggestion:'"Actually, technology has genuinely improved our lives in many ways. On the other hand, I think people rely on their phones too much, which reduces real communication."' },
+  { original:'"I want to travel. Money is a problem. I will save. Maybe next year I go."', marker:"Well, / At the end of the day,", suggestion:'"Well, I really want to travel — it\'s a big goal of mine. Money is a challenge right now, but at the end of the day, I\'m going to save up and make it happen."' },
+  { original:'"She is my friend. We argue sometimes. We also laugh. She is important to me."', marker:"Having said that, / What I mean is,", suggestion:'"She\'s one of my closest friends. We argue sometimes — having said that, we always work it out. What I mean is, she\'s genuinely important to me."' },
+];
+
+// Build reference tab
+const refContainer = document.getElementById('refCards');
+markers.forEach(m => {
+  const card = document.createElement('div');
+  card.className = 'marker-card';
+  card.innerHTML = `
+    <div class="marker-word">${m.word}</div>
+    <div class="marker-use">${m.use}</div>
+    <div class="marker-ex">${m.ex}</div>
+    <button class="zh-btn" onclick="revealZhRef(this)">🇨🇳 Chinese meaning</button>
+    <div class="zh-hidden">${m.zh}</div>
+  `;
+  refContainer.appendChild(card);
+});
+
+function revealZhRef(btn) {
+  const zh = btn.nextElementSibling;
+  zh.classList.add('shown');
+  btn.style.display = 'none';
+}
+
+// Build gap-fill tab
+let gfAnswers = Array(gapFillQs.length).fill(null);
+let gfSubmitted = false;
+
+const gfContainer = document.getElementById('gfCards');
+gapFillQs.forEach((q, qi) => {
+  const card = document.createElement('div');
+  card.className = 'gf-card';
+  card.id = 'gfCard_'+qi;
+  const shuffled = [...q.options].sort(() => Math.random() - 0.5);
+  card.innerHTML = `
+    <div class="gf-q"><span class="gf-sentence-blank" id="blank_${qi}">${q.blank === 'start' ? '_____ ' : ''}</span>${q.sentence.replace(/^_____\s?/,'')}</div>
+    <div class="gf-options">
+      ${shuffled.map(opt => `<button class="gf-opt" onclick="selectGF(${qi}, '${opt.replace(/'/g,"\\'")}', this)">${opt}</button>`).join('')}
+    </div>
+    <div class="gf-feedback" id="gfFb_${qi}"></div>
+  `;
+  gfContainer.appendChild(card);
+});
+
+const submitGFBtn = document.createElement('button');
+submitGFBtn.className = 'submit-btn';
+submitGFBtn.textContent = 'Check Answers ✓';
+submitGFBtn.onclick = submitGF;
+submitGFBtn.disabled = true;
+gfContainer.appendChild(submitGFBtn);
+
+function selectGF(qi, opt, btn) {
+  if (gfSubmitted) return;
+  const card = document.getElementById('gfCard_'+qi);
+  card.querySelectorAll('.gf-opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  gfAnswers[qi] = opt;
+  document.getElementById('blank_'+qi).textContent = opt + ' ';
+  submitGFBtn.disabled = gfAnswers.some(a => a === null);
+  updateProgress();
+}
+
+function submitGF() {
+  gfSubmitted = true;
+  let score = 0;
+  gapFillQs.forEach((q, qi) => {
+    const card = document.getElementById('gfCard_'+qi);
+    const fb = document.getElementById('gfFb_'+qi);
+    const isCorrect = gfAnswers[qi] === q.correct;
+    if (isCorrect) score++;
+    card.querySelectorAll('.gf-opt').forEach(btn => {
+      btn.classList.add('disabled');
+      if (btn.textContent.trim() === q.correct) btn.classList.add('show-correct');
+      else if (btn.classList.contains('selected') && !isCorrect) btn.classList.add('wrong');
+    });
+    fb.className = 'gf-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    fb.textContent = isCorrect ? '✅ Correct! ' + q.explanation : '❌ The answer is: "' + q.correct + '" — ' + q.explanation;
+  });
+  submitGFBtn.style.display = 'none';
+  const scoreEl = document.createElement('div');
+  scoreEl.style.cssText = 'text-align:center; padding:20px; background:rgba(155,109,255,0.15); border-radius:14px; margin-top:14px;';
+  scoreEl.innerHTML = `<div style="font-size:32px; font-weight:700; color:#9B6DFF;">${score} / ${gapFillQs.length}</div>
+    <div style="font-size:14px; color:rgba(255,255,255,0.7); margin:8px 0;">
+      ${score >= 7 ? '🌟 Excellent! Now go to Part 2 →' : score >= 5 ? '👍 Good work! Review the wrong ones, then try Part 2 →' : '💪 Keep going — review the explanations, then move to Part 2 →'}
+    </div>
+    <button class="reveal-btn" onclick="document.getElementById('tabSb').click()" style="margin-top:8px;">Go to Part 2: Sentence Builder →</button>`;
+  gfContainer.appendChild(scoreEl);
+  updateProgress();
+}
+
+// Build sentence builder tab
+const sbContainer = document.getElementById('sbCards');
+sentenceBuilds.forEach((s, si) => {
+  const card = document.createElement('div');
+  card.className = 'sb-card';
+  card.innerHTML = `
+    <div class="sb-label">❌ ORIGINAL (sounds translated)</div>
+    <div class="sb-original">${s.original}</div>
+    <div class="sb-marker-hint">💡 Try using: ${s.marker}</div>
+    <div class="sb-label" style="margin-top:10px;">Say your improved version aloud, then reveal the model:</div>
+    <button class="reveal-btn" onclick="revealSB(this)">👁 Reveal model answer</button>
+    <div class="sb-suggestion">✅ ${s.suggestion}</div>
+  `;
+  sbContainer.appendChild(card);
+});
+
+function revealSB(btn) {
+  const suggestion = btn.nextElementSibling;
+  suggestion.classList.add('shown');
+  btn.textContent = '✅ Revealed — say it aloud now!';
+  btn.disabled = true;
+  updateProgress();
+}
+
+function showTab(tab) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = gfAnswers.filter(a => a !== null).length;
+  const revealed = document.querySelectorAll('.sb-suggestion.shown').length;
+  const total = gapFillQs.length + sentenceBuilds.length;
+  const done = answered + revealed;
+  document.getElementById('progressFill').style.width = Math.round(done/total*100) + '%';
+  document.getElementById('progressLabel').textContent = done + ' / ' + total + ' done';
+}
+</script>
+</body>
+</html>

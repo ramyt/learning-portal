@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>My English Handout — Session 1</title>
+<style>
+  :root {
+    --teal: #1A7A8A;
+    --accent: #2EB8A0;
+    --dark: #0D4F5C;
+    --light: #E0F5F2;
+    --gold: #D4820A;
+    --goldbg: #FFF8E7;
+    --white: #fff;
+    --offwhite: #F7F5F0;
+    --slate: #445566;
+    --gray: #666;
+    --border: #ddd;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--offwhite); color: #1a1a1a; font-size: 16px; line-height: 1.6; padding-bottom: 40px; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--teal) 100%);
+    color: white;
+    padding: 28px 20px 24px;
+  }
+  .hero .badge { font-size: 10px; letter-spacing: 3px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .hero p { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .hero-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; }
+
+  .content { padding: 0 16px; }
+
+  .section { margin-top: 22px; }
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+    color: var(--teal); text-transform: uppercase;
+    padding-bottom: 6px; border-bottom: 2px solid var(--light);
+    margin-bottom: 14px;
+  }
+
+  /* SCRIPT CARD */
+  .script-card {
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .script-card-header {
+    background: var(--dark);
+    padding: 10px 16px;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .script-lines { padding: 4px 0; }
+  .script-line {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--light);
+    gap: 12px;
+  }
+  .script-line:last-child { border-bottom: none; }
+  .line-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .line-text { flex: 1; }
+  .line-en { font-size: 17px; font-weight: 600; color: var(--dark); margin-bottom: 2px; }
+  .line-ipa { font-size: 12px; color: var(--gray); font-style: italic; }
+
+  /* VOCAB CARDS */
+  .vocab-grid { display: flex; flex-direction: column; gap: 10px; }
+  .vocab-card {
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .vocab-left {
+    background: var(--dark);
+    padding: 14px 12px;
+    min-width: 90px;
+    text-align: center;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .vocab-word { font-size: 20px; font-weight: 700; color: white; }
+  .vocab-ipa { font-size: 11px; color: var(--accent); margin-top: 3px; font-style: italic; }
+  .vocab-right { padding: 12px 14px; flex: 1; }
+  .vocab-use { font-size: 12px; color: var(--teal); font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .vocab-example { font-size: 14px; color: var(--slate); font-style: italic; margin-bottom: 4px; }
+  .vocab-note { font-size: 12px; color: var(--gray); }
+
+  /* GRAMMAR BOX */
+  .grammar-box {
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .grammar-header {
+    background: var(--teal);
+    padding: 10px 16px;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .grammar-body { padding: 14px 16px; }
+  .grammar-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--light);
+    gap: 10px;
+  }
+  .grammar-row:last-child { border-bottom: none; }
+  .grammar-pro { font-size: 14px; font-weight: 700; color: var(--slate); min-width: 90px; }
+  .grammar-verb {
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 3px 12px;
+    border-radius: 6px;
+    min-width: 50px;
+    text-align: center;
+  }
+  .grammar-ex { font-size: 13px; color: var(--gray); font-style: italic; flex: 1; }
+
+  /* SOUNDS SECTION */
+  .sounds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sound-chip {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .sound-ipa { font-size: 26px; font-weight: 700; color: var(--dark); }
+  .sound-words { font-size: 13px; color: var(--slate); margin: 4px 0; }
+  .sound-tip { font-size: 11px; color: var(--gray); font-style: italic; line-height: 1.4; }
+
+  /* PHRASES */
+  .phrase-list { display: flex; flex-direction: column; gap: 8px; }
+  .phrase-item {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 12px 16px;
+    border-left: 4px solid var(--accent);
+  }
+  .phrase-en { font-size: 16px; font-weight: 600; color: var(--dark); }
+  .phrase-use { font-size: 12px; color: var(--gray); margin-top: 3px; }
+
+  /* REMEMBER BOX */
+  .remember-box {
+    background: var(--goldbg);
+    border: 1px solid #f5d9a8;
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 6px;
+  }
+  .remember-box strong { display: block; color: var(--gold); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .remember-box ul { padding-left: 20px; }
+  .remember-box li { font-size: 14px; margin-bottom: 6px; color: var(--slate); }
+
+  /* TRANSLATION TABLE */
+  .trans-intro {
+    background: var(--dark);
+    color: white;
+    padding: 18px 16px;
+    text-align: center;
+    margin: 0 -16px;
+    margin-top: 30px;
+  }
+  .trans-intro h2 { font-size: 18px; margin-bottom: 4px; }
+  .trans-intro p { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .trans-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 0; box-shadow: var(--shadow); margin-top: 0; }
+  .trans-table th { background: var(--teal); color: white; padding: 10px 14px; text-align: left; font-size: 12px; letter-spacing: 0.5px; }
+  .trans-table td { padding: 10px 14px; border-bottom: 1px solid var(--light); font-size: 14px; vertical-align: middle; }
+  .trans-table tr:last-child td { border-bottom: none; }
+  .trans-table tr:nth-child(even) td { background: var(--light); }
+  .trans-table .td-en { font-weight: 600; color: var(--dark); }
+  .trans-table .td-zh { font-size: 16px; color: #8B0000; }
+  .trans-table .td-ipa { font-size: 11px; color: var(--gray); font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">MY ENGLISH HANDOUT</div>
+  <h1>Session 1 — Introductions</h1>
+  <p>Your reference for today's lesson. Keep this open on your phone.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">👋 Hello &amp; Introductions</span>
+    <span class="hero-pill">🔤 Vowel Sounds</span>
+    <span class="hero-pill">❓ Question Words</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- MY INTRODUCTION SCRIPT -->
+  <div class="section">
+    <div class="section-title">👋 My Introduction Script</div>
+    <div class="script-card">
+      <div class="script-card-header">📢 Say this out loud — practise until you remember it!</div>
+      <div class="script-lines">
+        <div class="script-line">
+          <div class="line-num">1</div>
+          <div class="line-text">
+            <div class="line-en">Hello! My name is ________.</div>
+          </div>
+        </div>
+        <div class="script-line">
+          <div class="line-num">2</div>
+          <div class="line-text">
+            <div class="line-en">I am from China.</div>
+          </div>
+        </div>
+        <div class="script-line">
+          <div class="line-num">3</div>
+          <div class="line-text">
+            <div class="line-en">I am ___ years old.</div>
+          </div>
+        </div>
+        <div class="script-line">
+          <div class="line-num">4</div>
+          <div class="line-text">
+            <div class="line-en">I live in ________.</div>
+          </div>
+        </div>
+        <div class="script-line">
+          <div class="line-num">5</div>
+          <div class="line-text">
+            <div class="line-en">Nice to meet you!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="remember-box">
+      <strong>💡 Remember</strong>
+      <ul>
+        <li>Say <strong>I am</strong> — not "I is" or "I are"</li>
+        <li>Your name is correct in any language — just say it clearly</li>
+        <li>Speak slowly — that is okay!</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- GRAMMAR: VERB TO BE -->
+  <div class="section">
+    <div class="section-title">📐 Grammar — Verb "to be"</div>
+    <div class="grammar-box">
+      <div class="grammar-header">am · is · are</div>
+      <div class="grammar-body">
+        <div class="grammar-row">
+          <div class="grammar-pro">I</div>
+          <div class="grammar-verb">am</div>
+          <div class="grammar-ex">"I am from China."</div>
+        </div>
+        <div class="grammar-row">
+          <div class="grammar-pro">He / She / It</div>
+          <div class="grammar-verb">is</div>
+          <div class="grammar-ex">"She is a student."</div>
+        </div>
+        <div class="grammar-row">
+          <div class="grammar-pro">We / You / They</div>
+          <div class="grammar-verb">are</div>
+          <div class="grammar-ex">"We are learning English."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTION WORDS -->
+  <div class="section">
+    <div class="section-title">❓ 5 Question Words</div>
+    <div class="vocab-grid">
+      <div class="vocab-card">
+        <div class="vocab-left"><div class="vocab-word">WHO</div></div>
+        <div class="vocab-right">
+          <div class="vocab-use">FOR PEOPLE</div>
+          <div class="vocab-example">"Who is she?"</div>
+          <div class="vocab-note">Ask about a person</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-left"><div class="vocab-word">WHAT</div></div>
+        <div class="vocab-right">
+          <div class="vocab-use">FOR THINGS</div>
+          <div class="vocab-example">"What is your name?"</div>
+          <div class="vocab-note">Ask about a thing or information</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-left"><div class="vocab-word">WHERE</div></div>
+        <div class="vocab-right">
+          <div class="vocab-use">FOR PLACES</div>
+          <div class="vocab-example">"Where are you from?"</div>
+          <div class="vocab-note">Ask about a place or location</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-left"><div class="vocab-word">WHEN</div></div>
+        <div class="vocab-right">
+          <div class="vocab-use">FOR TIME</div>
+          <div class="vocab-example">"When is your birthday?"</div>
+          <div class="vocab-note">Ask about time or date</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-left"><div class="vocab-word">HOW</div></div>
+        <div class="vocab-right">
+          <div class="vocab-use">FOR MANNER / FEELINGS</div>
+          <div class="vocab-example">"How are you?"</div>
+          <div class="vocab-note">Ask about feelings or the way something is</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USEFUL PHRASES -->
+  <div class="section">
+    <div class="section-title">💬 Useful Phrases Today</div>
+    <div class="phrase-list">
+      <div class="phrase-item">
+        <div class="phrase-en">Nice to meet you!</div>
+        <div class="phrase-use">Say this when you meet someone new</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-en">I am fine, thank you.</div>
+        <div class="phrase-use">Answer to "How are you?"</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-en">Can you repeat that please?</div>
+        <div class="phrase-use">Say this if you did not understand</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-en">I don't understand.</div>
+        <div class="phrase-use">Say this if something is confusing</div>
+      </div>
+      <div class="phrase-item">
+        <div class="phrase-en">How do you say ___ in English?</div>
+        <div class="phrase-use">Ask your teacher or partner for a word</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOUNDS -->
+  <div class="section">
+    <div class="section-title">🔤 5 Vowel Sounds</div>
+    <div class="sounds-grid">
+      <div class="sound-chip">
+        <div class="sound-words">cat · hat · man</div>
+        <div class="sound-tip">Wide open mouth, tongue low</div>
+      </div>
+      <div class="sound-chip">
+        <div class="sound-words">see · free · me</div>
+        <div class="sound-tip">Lips spread wide — like a smile</div>
+      </div>
+      <div class="sound-chip">
+        <div class="sound-words">cup · bus · sun</div>
+        <div class="sound-tip">Relaxed mouth, short sound</div>
+      </div>
+      <div class="sound-chip">
+        <div class="sound-words">hot · top · dog</div>
+        <div class="sound-tip">Round open mouth</div>
+      </div>
+      <div class="sound-chip" style="grid-column: 1 / -1;">
+        <div class="sound-words">moon · food · you</div>
+        <div class="sound-tip">Lips forward and round — long sound</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end content -->
+
+<!-- TRANSLATION TABLE -->
+<div class="trans-intro">
+  <h2>📖 Vocabulary Reference</h2>
+  <p>English → Chinese translation table for this session</p>
+</div>
+
+<table class="trans-table">
+  <thead>
+    <tr><th>English</th><th>中文</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="td-en">Hello</td><td class="td-zh">你好</td></tr>
+    <tr><td class="td-en">My name is…</td><td class="td-zh">我的名字是…</td></tr>
+    <tr><td class="td-en">I am from…</td><td class="td-zh">我来自…</td></tr>
+    <tr><td class="td-en">I am ___ years old</td><td class="td-zh">我___岁</td></tr>
+    <tr><td class="td-en">I live in…</td><td class="td-zh">我住在…</td></tr>
+    <tr><td class="td-en">Nice to meet you</td><td class="td-zh">很高兴认识你</td></tr>
+    <tr><td class="td-en">Who</td><td class="td-zh">谁</td></tr>
+    <tr><td class="td-en">What</td><td class="td-zh">什么</td></tr>
+    <tr><td class="td-en">Where</td><td class="td-zh">哪里</td></tr>
+    <tr><td class="td-en">When</td><td class="td-zh">什么时候</td></tr>
+    <tr><td class="td-en">How</td><td class="td-zh">怎么 / 如何</td></tr>
+    <tr><td class="td-en">How are you?</td><td class="td-zh">你好吗？</td></tr>
+    <tr><td class="td-en">I am fine, thank you</td><td class="td-zh">我很好，谢谢</td></tr>
+    <tr><td class="td-en">I don't understand</td><td class="td-zh">我不明白</td></tr>
+    <tr><td class="td-en">Can you repeat that?</td><td class="td-zh">你能再说一遍吗？</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

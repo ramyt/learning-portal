@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Phonics Activity — Session 1</title>
+<style>
+  :root {
+    --teal: #1A7A8A;
+    --accent: #2EB8A0;
+    --dark: #0D4F5C;
+    --light: #E0F5F2;
+    --gold: #D4820A;
+    --white: #fff;
+    --offwhite: #F7F5F0;
+    --slate: #445566;
+    --gray: #888;
+    --correct: #27ae60;
+    --wrong: #e74c3c;
+    --shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  .app-header {
+    background: var(--dark);
+    padding: 18px 20px 14px;
+    text-align: center;
+    border-bottom: 2px solid var(--teal);
+  }
+  .app-header .label { font-size: 10px; letter-spacing: 3px; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .app-header h1 { font-size: 22px; font-weight: 700; }
+  .progress-wrap { display: flex; align-items: center; gap: 10px; margin: 12px 20px 0; }
+  .progress-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.4s; }
+  .progress-label { font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap; }
+
+  /* MAIN */
+  .screen { display: none; flex-direction: column; flex: 1; padding: 20px; }
+  .screen.active { display: flex; }
+
+  /* SOUND INTRO SCREEN */
+  .sound-card {
+    background: var(--teal);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .ipa-big { font-size: 64px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .sound-desc { font-size: 14px; color: rgba(255,255,255,0.75); margin-bottom: 14px; line-height: 1.5; }
+  .mouth-tip {
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .example-words { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .example-word {
+    background: var(--dark);
+    border-radius: 12px;
+    padding: 12px 22px;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .example-word span { display: block; font-size: 12px; color: var(--accent); font-weight: 400; margin-top: 4px; text-align: center; }
+  .zh-reveal-btn {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px;
+    color: var(--white);
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+  }
+  .zh-reveal-btn:active { background: rgba(255,255,255,0.15); }
+  .zh-text { font-size: 22px; color: #ffaaaa; font-weight: 700; display: none; margin-bottom: 12px; text-align: center; padding: 10px; background: rgba(139,0,0,0.2); border-radius: 10px; }
+  .zh-text.shown { display: block; }
+  .next-btn, .try-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    border: none;
+    border-radius: 14px;
+    color: var(--dark);
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .next-btn:active, .try-btn:active { opacity: 0.85; }
+
+  /* QUIZ SCREEN */
+  .quiz-question {
+    background: var(--teal);
+    border-radius: 20px;
+    padding: 24px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .quiz-question .ipa-label { font-size: 12px; color: rgba(255,255,255,0.6); letter-spacing: 2px; margin-bottom: 8px; }
+  .quiz-question .question-text { font-size: 18px; font-weight: 600; }
+  .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .choice-btn {
+    padding: 22px 10px;
+    background: var(--white);
+    border: 3px solid transparent;
+    border-radius: 16px;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow);
+  }
+  .choice-btn:active { transform: scale(0.97); }
+  .choice-btn.correct { border-color: var(--correct); background: #eafaf1; color: var(--correct); }
+  .choice-btn.wrong { border-color: var(--wrong); background: #fdf0ef; color: var(--wrong); }
+  .choice-btn.disabled { pointer-events: none; }
+  .feedback-box {
+    border-radius: 14px;
+    padding: 14px 18px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    display: none;
+    margin-bottom: 14px;
+  }
+  .feedback-box.correct { background: #eafaf1; color: var(--correct); border: 2px solid var(--correct); display: block; }
+  .feedback-box.wrong { background: #fdf0ef; color: var(--wrong); border: 2px solid var(--wrong); display: block; }
+
+  /* SCORE SCREEN */
+  .score-screen { align-items: center; justify-content: center; text-align: center; }
+  .score-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 0 40px rgba(46,184,160,0.4);
+  }
+  .score-number { font-size: 48px; font-weight: 700; color: var(--dark); }
+  .score-label { font-size: 13px; color: var(--dark); font-weight: 600; }
+  .score-title { font-size: 26px; font-weight: 700; margin-bottom: 10px; }
+  .score-msg { font-size: 15px; color: rgba(255,255,255,0.75); max-width: 300px; margin: 0 auto 24px; line-height: 1.6; }
+  .sound-summary { display: flex; flex-direction: column; gap: 8px; width: 100%; margin-bottom: 24px; }
+  .summary-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 10px 14px;
+    gap: 12px;
+    font-size: 14px;
+  }
+  .summary-ipa { font-size: 20px; font-weight: 700; color: var(--accent); width: 48px; }
+  .summary-result { margin-left: auto; font-size: 18px; }
+
+  /* SOUND INTRO CAROUSEL */
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    transition: background 0.2s;
+  }
+  .dot.active { background: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="label">SESSION 1 · PHONICS ACTIVITY</div>
+  <h1>🔤 English Sounds</h1>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-label" id="progressLabel">0 / 10</div>
+  </div>
+</div>
+
+<!-- SCREEN 1: SOUND INTRO -->
+<div class="screen active" id="screenIntro">
+  <div style="text-align:center; margin-bottom:16px; font-size:13px; color:rgba(255,255,255,0.6);">
+    Learn 5 sounds first — then take the quiz!
+  </div>
+
+  <div class="sound-card" id="soundCard">
+    <div class="ipa-big" id="soundIPA"></div>
+    <div class="sound-desc" id="soundDesc"></div>
+    <div class="mouth-tip" id="soundTip">👄 <span id="tipText"></span></div>
+    <div class="example-words" id="soundExamples"></div>
+  </div>
+
+  <div class="dots" id="dots"></div>
+
+  <button class="zh-reveal-btn" onclick="revealZh()" id="zhBtn">👆 Tap to see Chinese / 点击查看中文</button>
+  <div class="zh-text" id="zhText"></div>
+
+  <button class="next-btn" id="nextSoundBtn" onclick="nextSound()">Next Sound →</button>
+</div>
+
+<!-- SCREEN 2: QUIZ -->
+<div class="screen" id="screenQuiz">
+  <div style="text-align:center; margin-bottom:14px; font-size:13px; color:rgba(255,255,255,0.6);">
+    Listen to your teacher say the word. Tap the correct word!
+  </div>
+  <div class="quiz-question">
+    <div class="ipa-label" id="quizIPALabel"></div>
+    <div class="question-text" id="quizQuestion"></div>
+  </div>
+  <div class="choice-grid" id="choiceGrid"></div>
+  <div class="feedback-box" id="feedbackBox"></div>
+  <button class="next-btn" id="nextQuizBtn" onclick="nextQuiz()" style="display:none;">Next →</button>
+</div>
+
+<!-- SCREEN 3: SCORE -->
+<div class="screen score-screen" id="screenScore">
+  <div class="score-circle">
+    <div class="score-number" id="scoreNum">0</div>
+    <div class="score-label">out of 10</div>
+  </div>
+  <div class="score-title" id="scoreTitle">Well done!</div>
+  <div class="score-msg" id="scoreMsg"></div>
+  <div class="sound-summary" id="soundSummary"></div>
+  <button class="next-btn" onclick="restartQuiz()">Try Again 🔄</button>
+</div>
+
+<script>
+const sounds = [
+  {
+    ipa: "/æ/",
+    desc: "A short, open vowel sound. Your mouth opens wide and your tongue sits low.",
+    tip: "Mouth open wide — like you're at the doctor saying 'Ahh' but shorter.",
+    examples: [{ word: "cat", ipa: "/kæt/" }, { word: "hat", ipa: "/hæt/" }, { word: "man", ipa: "/mæn/" }],
+    zh: "短促的'啊'音 — 嘴巴张大，舌头放低",
+    color: "#1A7A8A"
+  },
+  {
+    ipa: "/iː/",
+    desc: "A long, high vowel sound. Spread your lips like a big smile.",
+    tip: "Smile wide and say a long 'ee' sound. Lips spread sideways.",
+    examples: [{ word: "see", ipa: "/siː/" }, { word: "free", ipa: "/friː/" }, { word: "me", ipa: "/miː/" }],
+    zh: "长'依'音 — 像微笑一样张开嘴唇",
+    color: "#2d6a4f"
+  },
+  {
+    ipa: "/ʌ/",
+    desc: "A short, central vowel. Your mouth is relaxed and slightly open.",
+    tip: "Say 'uh' — quick and relaxed. Don't hold it long.",
+    examples: [{ word: "cup", ipa: "/kʌp/" }, { word: "bus", ipa: "/bʌs/" }, { word: "sun", ipa: "/sʌn/" }],
+    zh: "短促中性'啊' — 嘴巴放松，快速发音",
+    color: "#7b4f12"
+  },
+  {
+    ipa: "/ɒ/",
+    desc: "A short, open-back vowel. Your mouth is open and round.",
+    tip: "Open your mouth and make a round 'o' shape — short and quick.",
+    examples: [{ word: "hot", ipa: "/hɒt/" }, { word: "top", ipa: "/tɒp/" }, { word: "dog", ipa: "/dɒɡ/" }],
+    zh: "圆嘴短'哦'音 — 嘴唇呈圆形",
+    color: "#4a1a6a"
+  },
+  {
+    ipa: "/uː/",
+    desc: "A long, back vowel. Round your lips forward like you are blowing a kiss.",
+    tip: "Push your lips forward and round. Say a long 'oo' sound.",
+    examples: [{ word: "moon", ipa: "/muːn/" }, { word: "food", ipa: "/fuːd/" }, { word: "you", ipa: "/juː/" }],
+    zh: "长'乌'音 — 嘴唇向前突出成圆形",
+    color: "#14375e"
+  },
+];
+
+const quizQuestions = [
+  { sound:"/æ/", q:"Which has the /æ/ sound?", correct:"cat", wrong:"cut" },
+  { sound:"/iː/", q:"Which has the /iː/ sound?", correct:"sheep", wrong:"ship" },
+  { sound:"/ʌ/", q:"Which has the /ʌ/ sound?", correct:"cup", wrong:"cap" },
+  { sound:"/ɒ/", q:"Which has the /ɒ/ sound?", correct:"hot", wrong:"hat" },
+  { sound:"/uː/", q:"Which has the /uː/ sound?", correct:"pool", wrong:"pull" },
+  { sound:"/æ/ vs /ʌ/", q:"Teacher says: 'pan'. Which is it?", correct:"pan", wrong:"pun" },
+  { sound:"/iː/ vs /ɪ/", q:"Teacher says: 'sheep'. Which is it?", correct:"sheep", wrong:"ship" },
+  { sound:"/æ/ vs /e/", q:"Teacher says: 'cat'. Which is it?", correct:"cat", wrong:"met" },
+  { sound:"/uː/ vs /ʊ/", q:"Teacher says: 'food'. Which is it?", correct:"food", wrong:"foot" },
+  { sound:"/ɒ/ vs /ʌ/", q:"Teacher says: 'top'. Which is it?", correct:"top", wrong:"cup" },
+];
+
+let currentSound = 0;
+let currentQuiz = 0;
+let score = 0;
+let quizAnswered = false;
+let quizResults = Array(10).fill(null);
+
+// BUILD DOTS
+const dotsEl = document.getElementById('dots');
+sounds.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.id = 'dot' + i;
+  dotsEl.appendChild(d);
+});
+
+function showSound(idx) {
+  const s = sounds[idx];
+  document.getElementById('soundIPA').textContent = s.ipa;
+  document.getElementById('soundDesc').textContent = s.desc;
+  document.getElementById('tipText').textContent = s.tip;
+  document.getElementById('soundCard').style.background = s.color;
+  const exEl = document.getElementById('soundExamples');
+  exEl.innerHTML = '';
+  s.examples.forEach(ex => {
+    const div = document.createElement('div');
+    div.className = 'example-word';
+    div.innerHTML = ex.word + '<span>' + ex.ipa + '</span>';
+    exEl.appendChild(div);
+  });
+  document.getElementById('zhText').textContent = s.zh;
+  document.getElementById('zhText').classList.remove('shown');
+  document.getElementById('zhBtn').style.display = 'block';
+  // Dots
+  document.querySelectorAll('.dot').forEach((d,i) => {
+    d.classList.toggle('active', i === idx);
+  });
+  // Button label
+  const btn = document.getElementById('nextSoundBtn');
+  btn.textContent = idx < sounds.length - 1 ? 'Next Sound →' : 'Start Quiz! 🎯';
+  // Progress
+  updateProgress(idx, 0);
+}
+
+function revealZh() {
+  document.getElementById('zhText').classList.add('shown');
+  document.getElementById('zhBtn').style.display = 'none';
+}
+
+function nextSound() {
+  if (currentSound < sounds.length - 1) {
+    currentSound++;
+    showSound(currentSound);
+  } else {
+    // Go to quiz
+    switchScreen('screenQuiz');
+    showQuiz(0);
+  }
+}
+
+function switchScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function updateProgress(soundIdx, quizIdx) {
+  const total = sounds.length + quizQuestions.length;
+  const done = soundIdx + quizIdx;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = done + ' / ' + total;
+}
+
+function showQuiz(idx) {
+  quizAnswered = false;
+  document.getElementById('feedbackBox').className = 'feedback-box';
+  document.getElementById('nextQuizBtn').style.display = 'none';
+
+  const q = quizQuestions[idx];
+  document.getElementById('quizIPALabel').textContent = q.sound;
+  document.getElementById('quizQuestion').textContent = q.q;
+
+  // Shuffle choices
+  const choices = [q.correct, q.wrong].sort(() => Math.random() - 0.5);
+  const grid = document.getElementById('choiceGrid');
+  grid.innerHTML = '';
+  choices.forEach(ch => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = ch;
+    btn.onclick = () => answerQuiz(ch, q.correct, btn);
+    grid.appendChild(btn);
+  });
+
+  updateProgress(sounds.length, idx);
+}
+
+function answerQuiz(chosen, correct, btn) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+
+  const isCorrect = chosen === correct;
+  if (isCorrect) {
+    score++;
+    quizResults[currentQuiz] = true;
+    btn.classList.add('correct');
+    showFeedback(true, '✅ Correct! Great listening!');
+  } else {
+    quizResults[currentQuiz] = false;
+    btn.classList.add('wrong');
+    // Highlight correct
+    document.querySelectorAll('.choice-btn').forEach(b => {
+      if (b.textContent === correct) b.classList.add('correct');
+      b.classList.add('disabled');
+    });
+    showFeedback(false, '❌ Not quite — the correct answer is: ' + correct);
+  }
+
+  document.querySelectorAll('.choice-btn').forEach(b => b.classList.add('disabled'));
+  document.getElementById('nextQuizBtn').style.display = 'block';
+  document.getElementById('nextQuizBtn').textContent =
+    currentQuiz < quizQuestions.length - 1 ? 'Next Question →' : 'See My Score! 🎉';
+}
+
+function showFeedback(correct, msg) {
+  const fb = document.getElementById('feedbackBox');
+  fb.textContent = msg;
+  fb.className = 'feedback-box ' + (correct ? 'correct' : 'wrong');
+}
+
+function nextQuiz() {
+  if (currentQuiz < quizQuestions.length - 1) {
+    currentQuiz++;
+    showQuiz(currentQuiz);
+  } else {
+    showScore();
+  }
+}
+
+function showScore() {
+  switchScreen('screenScore');
+  document.getElementById('scoreNum').textContent = score;
+  const pct = score / quizQuestions.length;
+  let title, msg;
+  if (pct === 1) { title = "🌟 Perfect Score!"; msg = "Amazing! You heard every sound correctly. Your listening is excellent!"; }
+  else if (pct >= 0.7) { title = "🎉 Well Done!"; msg = "Great work! You're hearing English sounds well. Keep practising the ones you missed."; }
+  else if (pct >= 0.5) { title = "👍 Good Try!"; msg = "You're getting there! These sounds take time. Listen again and try once more."; }
+  else { title = "💪 Keep Practising!"; msg = "Don't worry — these sounds are hard at first. Listen to the examples again carefully and try the quiz once more!"; }
+
+  document.getElementById('scoreTitle').textContent = title;
+  document.getElementById('scoreMsg').textContent = msg;
+
+  const summary = document.getElementById('soundSummary');
+  summary.innerHTML = '';
+  const soundResults = {};
+  quizQuestions.forEach((q, i) => {
+    const s = q.sound.split(' ')[0];
+    if (!soundResults[s]) soundResults[s] = { correct: 0, total: 0 };
+    soundResults[s].total++;
+    if (quizResults[i]) soundResults[s].correct++;
+  });
+  sounds.forEach(s => {
+    const r = soundResults[s.ipa] || { correct: 0, total: 0 };
+    const div = document.createElement('div');
+    div.className = 'summary-item';
+    div.innerHTML = `<span class="summary-ipa">${s.ipa}</span><span>${s.examples[0].word}, ${s.examples[1].word}</span><span class="summary-result">${r.correct === r.total ? '✅' : '⚠️'}</span>`;
+    summary.appendChild(div);
+  });
+
+  updateProgress(sounds.length, quizQuestions.length);
+}
+
+function restartQuiz() {
+  score = 0;
+  currentQuiz = 0;
+  quizResults = Array(10).fill(null);
+  switchScreen('screenQuiz');
+  showQuiz(0);
+}
+
+// Init
+showSound(0);
+</script>
+</body>
+</html>

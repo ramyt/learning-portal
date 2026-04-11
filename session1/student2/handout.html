@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>My English Handout — S2 Session 1</title>
+<style>
+  :root {
+    --dark: #2D1A4A; --mid: #5B3A8A; --accent: #9B6DFF;
+    --light: #EEE8FF; --gold: #D4820A; --goldbg: #FFF8E7;
+    --white: #fff; --offwhite: #F7F5F0; --slate: #445566;
+    --gray: #666; --border: #ddd; --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --correct: #27ae60; --wrong: #e74c3c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--offwhite); color: #1a1a1a; font-size: 16px; line-height: 1.6; padding-bottom: 40px; }
+
+  .hero { background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 100%); color: white; padding: 28px 20px 24px; position: relative; overflow: hidden; }
+  .hero::after { content:''; position:absolute; right:-30px; top:-30px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.05); }
+  .hero .badge { font-size: 10px; letter-spacing: 3px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .hero h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .hero p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .hero-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; }
+
+  .content { padding: 0 16px; }
+  .section { margin-top: 22px; }
+  .section-title { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; color: var(--mid); text-transform: uppercase; padding-bottom: 6px; border-bottom: 2px solid var(--light); margin-bottom: 14px; }
+
+  /* MARKER CARDS */
+  .marker-list { display: flex; flex-direction: column; gap: 10px; }
+  .marker-card { background: var(--white); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+  .marker-header { background: var(--dark); padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+  .marker-word { font-size: 17px; font-weight: 700; color: var(--accent); flex: 1; }
+  .marker-use-badge { font-size: 10px; background: rgba(155,109,255,0.2); color: var(--accent); padding: 3px 8px; border-radius: 10px; font-weight: 600; }
+  .marker-body { padding: 10px 14px; }
+  .marker-use { font-size: 12px; color: var(--gray); margin-bottom: 6px; }
+  .marker-ex { font-size: 14px; color: var(--slate); font-style: italic; margin-bottom: 8px; padding: 8px 12px; background: var(--light); border-radius: 8px; }
+  .marker-more { font-size: 12px; color: var(--mid); }
+
+  /* COMPARISON BOX */
+  .compare-box { background: var(--white); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 12px; }
+  .compare-header { padding: 10px 14px; font-size: 13px; font-weight: 700; }
+  .compare-header.bad { background: #fdecea; color: var(--wrong); }
+  .compare-header.good { background: #eafaf1; color: var(--correct); }
+  .compare-body { padding: 12px 14px; font-size: 14px; font-style: italic; color: var(--slate); line-height: 1.6; }
+
+  /* TARGETS SECTION */
+  .target-card { background: var(--white); border-radius: 14px; box-shadow: var(--shadow); padding: 16px; margin-bottom: 10px; border-left: 4px solid var(--accent); }
+  .target-num { display: inline-flex; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--dark); font-size: 13px; font-weight: 700; align-items: center; justify-content: center; margin-bottom: 8px; }
+  .target-label { font-size: 12px; color: var(--mid); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .target-input { width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 15px; color: var(--dark); background: var(--offwhite); font-family: inherit; resize: none; min-height: 48px; }
+  .target-input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+
+  /* QUICK REFERENCE */
+  .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .quick-chip { background: var(--white); border-radius: 10px; box-shadow: var(--shadow); padding: 10px 12px; }
+  .quick-word { font-size: 14px; font-weight: 700; color: var(--dark); }
+  .quick-use { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+  /* TRANSLATION TABLE */
+  .trans-intro { background: var(--dark); color: white; padding: 18px 16px; text-align: center; margin: 0 -16px; margin-top: 30px; }
+  .trans-intro h2 { font-size: 18px; margin-bottom: 4px; }
+  .trans-intro p { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .trans-table { width: 100%; border-collapse: collapse; background: var(--white); box-shadow: var(--shadow); }
+  .trans-table th { background: var(--mid); color: white; padding: 10px 12px; text-align: left; font-size: 12px; letter-spacing: 0.5px; }
+  .trans-table td { padding: 10px 12px; border-bottom: 1px solid var(--light); font-size: 14px; vertical-align: top; }
+  .trans-table tr:last-child td { border-bottom: none; }
+  .trans-table tr:nth-child(even) td { background: var(--light); }
+  .td-en { font-weight: 700; color: var(--dark); }
+  .td-use { font-size: 12px; color: var(--gray); }
+  .td-zh { font-size: 15px; color: #8B0000; font-weight: 600; }
+
+  /* STRATEGIES */
+  .strategy-card { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start; }
+  .strategy-icon { font-size: 24px; flex-shrink: 0; }
+  .strategy-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+  .strategy-body { font-size: 13px; color: var(--slate); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">MY ENGLISH HANDOUT</div>
+  <h1>Session 1 — Discourse Markers</h1>
+  <p>Your reference for today's lesson. Keep this open during class and at home.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">🔗 8 Discourse Markers</span>
+    <span class="hero-pill">🗣️ Fluency Strategies</span>
+    <span class="hero-pill">🎯 My 3 Targets</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- THE TRANSLATION TRAP -->
+  <div class="section">
+    <div class="section-title">💡 The Key Insight — Stop Translating</div>
+    <div class="compare-box">
+      <div class="compare-header bad">❌ Translation Mode (choppy)</div>
+      <div class="compare-body">"City is big. I like city. Traffic is bad. Food is many kinds."</div>
+    </div>
+    <div class="compare-box">
+      <div class="compare-header good">✅ Fluency Mode (natural)</div>
+      <div class="compare-body">"Well, I think big cities have a lot to offer. On the other hand, the traffic can be really frustrating. At the end of the day, I still prefer city life."</div>
+    </div>
+    <p style="font-size:13px; color:var(--gray); margin-top:8px; padding:0 4px;">Same ideas. Same vocabulary. The difference is <strong style="color:var(--mid);">connectors and discourse markers.</strong></p>
+  </div>
+
+  <!-- DISCOURSE MARKERS -->
+  <div class="section">
+    <div class="section-title">🔗 8 Discourse Markers — Learn & Use</div>
+    <div class="marker-list">
+
+      <div class="marker-card">
+        <div class="marker-header"><div class="marker-word">Well,</div><div class="marker-use-badge">Starting / Thinking</div></div>
+        <div class="marker-body">
+          <div class="marker-use">Use to start an answer or show you're thinking before you speak</div>
+          <div class="marker-ex">"Well, I think it really depends on the person."</div>
+          <div class="marker-more">Also use: "Well, to be fair…" / "Well, the thing is…"</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-header"><div class="marker-word">Actually,</div><div class="marker-use-badge">Correcting / Surprising</div></div>
+        <div class="marker-body">
+          <div class="marker-use">Use to add a surprising point or gently correct a previous idea</div>
+          <div class="marker-ex">"Actually, I changed my mind about that recently."</div>
+          <div class="marker-more">Also use: "Actually, the opposite is true…"</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-header"><div class="marker-word">Having said that,</div><div class="marker-use-badge">Contrasting</div></div>
+        <div class="marker-body">
+          <div class="marker-use">Use to introduce a contrasting or balancing idea</div>
+          <div class="marker-ex">"The job is stressful. Having said that, the salary is excellent."</div>
+          <div class="marker-more">Similar to: "However," / "But then again,"</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-header"><div class="marker-word">What I mean is,</div><div class="marker-use-badge">Clarifying</div></div>
+        <div class="marker-body">
+          <div class="marker-use">Use to rephrase or clarify something you just said</div>
+          <div class="marker-ex">"It's complicated. What I mean is, there's no simple answer."</div>
+          <div class="marker-more">Use when you feel your first explanation wasn't clear enough</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-header"><div class="marker-word">On the other hand,</div><div class="marker-use-badge">Contrasting</div></div>
+        <div class="marker-body">
+          <div class="marker-use">Use to give the opposite viewpoint or a different perspective</div>
+          <div class="marker-ex">"City life is exciting. On the other hand, it can be exhausting."</div>
+          <div class="marker-more">Use when presenting two sides of an issue</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-header"><div class="marker-word">To be honest,</div><div class="marker-use-badge">Candid Opinion</div></div>
+        <div class="marker-body">
+          <div class="marker-use">Use to express a sincere or personal view — often surprising</div>
+          <div class="marker-ex">"To be honest, I find grammar quite boring — speaking is more fun."</div>
+          <div class="marker-more">Also use: "To be fair," / "Honestly speaking,"</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-header"><div class="marker-word">As I was saying,</div><div class="marker-use-badge">Returning to Topic</div></div>
+        <div class="marker-body">
+          <div class="marker-use">Use to return to a point after a digression or interruption</div>
+          <div class="marker-ex">"As I was saying, the main challenge is finding time to practise."</div>
+          <div class="marker-more">Use when you got sidetracked and want to continue your main point</div>
+        </div>
+      </div>
+
+      <div class="marker-card">
+        <div class="marker-header"><div class="marker-word">At the end of the day,</div><div class="marker-use-badge">Summarising</div></div>
+        <div class="marker-body">
+          <div class="marker-use">Use to give your final opinion or conclusion after discussing something</div>
+          <div class="marker-ex">"We've discussed all the options. At the end of the day, it's your choice."</div>
+          <div class="marker-more">Similar to: "Ultimately," / "When all is said and done,"</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE GRID -->
+  <div class="section">
+    <div class="section-title">⚡ Quick Reference — All 8 Markers</div>
+    <div class="quick-grid">
+      <div class="quick-chip"><div class="quick-word">Well,</div><div class="quick-use">Starting / thinking</div></div>
+      <div class="quick-chip"><div class="quick-word">Actually,</div><div class="quick-use">Surprising / correcting</div></div>
+      <div class="quick-chip"><div class="quick-word">Having said that,</div><div class="quick-use">Contrasting</div></div>
+      <div class="quick-chip"><div class="quick-word">What I mean is,</div><div class="quick-use">Clarifying</div></div>
+      <div class="quick-chip"><div class="quick-word">On the other hand,</div><div class="quick-use">Opposite viewpoint</div></div>
+      <div class="quick-chip"><div class="quick-word">To be honest,</div><div class="quick-use">Candid opinion</div></div>
+      <div class="quick-chip"><div class="quick-word">As I was saying,</div><div class="quick-use">Returning to topic</div></div>
+      <div class="quick-chip"><div class="quick-word">At the end of the day,</div><div class="quick-use">Final summary</div></div>
+    </div>
+  </div>
+
+  <!-- FLUENCY STRATEGIES -->
+  <div class="section">
+    <div class="section-title">🧠 Fluency Strategies — When You Get Stuck</div>
+    <div class="strategy-card">
+      <div class="strategy-icon">⏸️</div>
+      <div><div class="strategy-title">Use a filler, not silence</div><div class="strategy-body">Instead of stopping: say "Well…", "Let me think about that…", or "That's a good question — I think…"</div></div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon">🔄</div>
+      <div><div class="strategy-title">Rephrase if you can't find a word</div><div class="strategy-body">"I can't remember the word, but it's like a…" / "What I mean is something similar to…"</div></div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon">✏️</div>
+      <div><div class="strategy-title">Self-correct naturally</div><div class="strategy-body">Don't stop when you make a mistake. Just say "Sorry, I mean…" and continue. Native speakers do this constantly.</div></div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon">🎯</div>
+      <div><div class="strategy-title">Don't translate — approximate</div><div class="strategy-body">If you can't find the exact word, use a related one. "It's a kind of…", "Something like…", "Similar to…"</div></div>
+    </div>
+  </div>
+
+  <!-- MY 3 TARGETS -->
+  <div class="section">
+    <div class="section-title">🎯 My 3 Personal Course Targets</div>
+    <p style="font-size:13px; color:var(--gray); margin-bottom:12px;">Agreed with your teacher in Session 1. You will review these at Session 5 and Session 10.</p>
+
+    <div class="target-card">
+      <div class="target-num">1</div>
+      <div class="target-label">Target 1</div>
+      <textarea class="target-input" placeholder="Write your first target here…" id="t1"></textarea>
+    </div>
+    <div class="target-card">
+      <div class="target-num">2</div>
+      <div class="target-label">Target 2</div>
+      <textarea class="target-input" placeholder="Write your second target here…" id="t2"></textarea>
+    </div>
+    <div class="target-card">
+      <div class="target-num">3</div>
+      <div class="target-label">Target 3</div>
+      <textarea class="target-input" placeholder="Write your third target here…" id="t3"></textarea>
+    </div>
+    <p style="font-size:12px; color:var(--gray); margin-top:6px; text-align:center;">📸 Take a screenshot of this page to save your targets!</p>
+  </div>
+
+</div><!-- end content -->
+
+<!-- TRANSLATION TABLE -->
+<div class="trans-intro">
+  <h2>📖 Vocabulary Reference</h2>
+  <p>All 8 discourse markers with Chinese translations</p>
+</div>
+
+<table class="trans-table">
+  <thead>
+    <tr><th>English Marker</th><th>When to use it</th><th>中文</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="td-en">Well,</td><td class="td-use">Starting / buying thinking time</td><td class="td-zh">嗯，（思考）</td></tr>
+    <tr><td class="td-en">Actually,</td><td class="td-use">Correcting or surprising</td><td class="td-zh">其实，实际上</td></tr>
+    <tr><td class="td-en">Having said that,</td><td class="td-use">Contrasting — but on the other side</td><td class="td-zh">话虽如此</td></tr>
+    <tr><td class="td-en">What I mean is,</td><td class="td-use">Clarifying your previous words</td><td class="td-zh">我的意思是</td></tr>
+    <tr><td class="td-en">On the other hand,</td><td class="td-use">The opposite viewpoint</td><td class="td-zh">另一方面</td></tr>
+    <tr><td class="td-en">To be honest,</td><td class="td-use">A sincere or candid opinion</td><td class="td-zh">说实话，坦白说</td></tr>
+    <tr><td class="td-en">As I was saying,</td><td class="td-use">Return to a previous point</td><td class="td-zh">如我所说</td></tr>
+    <tr><td class="td-en">At the end of the day,</td><td class="td-use">Final summary or conclusion</td><td class="td-zh">归根结底</td></tr>
+    <tr><td class="td-en">I can't remember the word…</td><td class="td-use">Circumlocution filler</td><td class="td-zh">我想不起那个词…</td></tr>
+    <tr><td class="td-en">What I mean is something like…</td><td class="td-use">Approximating an unknown word</td><td class="td-zh">我的意思是类似于…</td></tr>
+    <tr><td class="td-en">Let me think about that…</td><td class="td-use">Buying thinking time politely</td><td class="td-zh">让我想想…</td></tr>
+    <tr><td class="td-en">That's a good question — I think…</td><td class="td-use">Warm opener before an answer</td><td class="td-zh">这是个好问题——我认为…</td></tr>
+  </tbody>
+</table>
+
+<script>
+// Auto-save targets to sessionStorage
+['t1','t2','t3'].forEach(id => {
+  const el = document.getElementById(id);
+  const saved = sessionStorage.getItem(id);
+  if (saved) el.value = saved;
+  el.addEventListener('input', () => sessionStorage.setItem(id, el.value));
+});
+</script>
+</body>
+</html>

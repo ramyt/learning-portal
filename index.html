@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Learning Portal</title>
+
+<style>
+body { font-family: Arial; background:#f5f7fa; padding:20px; margin:0; }
+h1 { text-align:center; }
+
+.toggle { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
+.toggle button {
+  padding:8px 18px; border:none; border-radius:20px; cursor:pointer;
+}
+.active { background:#4f46e5; color:white; }
+
+.search { text-align:center; margin-bottom:20px; }
+.search input {
+  padding:8px; width:300px; border-radius:20px; border:1px solid #ccc;
+}
+
+.container { max-width:900px; margin:auto; }
+
+.card {
+  background:white; border-radius:12px; margin-bottom:15px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card.new { border-left:5px solid #f59e0b; }
+
+.card-header {
+  padding:12px; cursor:pointer;
+  display:flex; justify-content:space-between;
+}
+
+.card-body { padding:10px 15px; }
+
+.pill-group { display:flex; flex-wrap:wrap; gap:8px; }
+
+.pill {
+  padding:6px 14px;
+  background:#e0e7ff;
+  border-radius:999px;
+  text-decoration:none;
+  font-size:13px;
+  color:#1e3a8a;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Learning Portal</h1>
+
+<div class="toggle">
+  <button id="btn1" class="active" onclick="show('student1')">Student 1</button>
+  <button id="btn2" onclick="show('student2')">Student 2</button>
+</div>
+
+<div class="search">
+  <input type="text" placeholder="Search..." onkeyup="filter(this.value)">
+</div>
+
+<div class="container">
+  <div id="student1">
+<div class="card ">
+  <div class="card-header" onclick="toggleCard(this)">
+    <h3>Lesson 1 - Introduction & Basics </h3>
+    <span class="toggle-icon">▼</span>
+  </div>
+  <div class="card-body" style="display:none;">
+    <div class="pill-group">
+<a class="pill" href="session1/student1/handout.html">
+   📘 Handout
+</a>
+<a class="pill" href="session1/student1/homework.html">
+   📄 Homework
+</a>
+<a class="pill" href="session1/student1/phonics_activity.html">
+   🔤 Phonics Activity
+</a>
+    </div>
+  </div>
+</div>
+<div class="card new">
+  <div class="card-header" onclick="toggleCard(this)">
+    <h3>Lesson 2 - Daily Routines ⭐</h3>
+    <span class="toggle-icon">▲</span>
+  </div>
+  <div class="card-body" style="display:block;">
+    <div class="pill-group">
+<a class="pill" href="session2/student1/handout.html">
+   📘 Handout
+</a>
+<a class="pill" href="session2/student1/homework.html">
+   📄 Homework
+</a>
+<a class="pill" href="session2/student1/routines_activity.html">
+   🎯 Routines Activity
+</a>
+    </div>
+  </div>
+</div></div>
+  <div id="student2" style="display:none;">
+<div class="card ">
+  <div class="card-header" onclick="toggleCard(this)">
+    <h3>Lesson 1 - Introduction & Basics </h3>
+    <span class="toggle-icon">▼</span>
+  </div>
+  <div class="card-body" style="display:none;">
+    <div class="pill-group">
+<a class="pill" href="session1/student2/discourse_activity.html">
+   🎯 Discourse Activity
+</a>
+<a class="pill" href="session1/student2/handout.html">
+   📘 Handout
+</a>
+<a class="pill" href="session1/student2/homework.html">
+   📄 Homework
+</a>
+    </div>
+  </div>
+</div>
+<div class="card new">
+  <div class="card-header" onclick="toggleCard(this)">
+    <h3>Lesson 2 - Daily Routines ⭐</h3>
+    <span class="toggle-icon">▲</span>
+  </div>
+  <div class="card-body" style="display:block;">
+    <div class="pill-group">
+<a class="pill" href="session2/student2/experience_activity.html">
+   🎯 Experience Activity
+</a>
+<a class="pill" href="session2/student2/handout.html">
+   📘 Handout
+</a>
+<a class="pill" href="session2/student2/homework.html">
+   📄 Homework
+</a>
+    </div>
+  </div>
+</div></div>
+</div>
+
+<script>
+
+// Toggle students
+function show(student){
+  document.getElementById("student1").style.display="none";
+  document.getElementById("student2").style.display="none";
+  document.getElementById(student).style.display="block";
+
+  btn1.classList.remove("active");
+  btn2.classList.remove("active");
+  (student==="student1"?btn1:btn2).classList.add("active");
+
+  scrollToLatest();
+}
+
+// Collapse toggle
+function toggleCard(el){
+  const body = el.nextElementSibling;
+  const icon = el.querySelector(".toggle-icon");
+
+  if(body.style.display==="none"){
+    body.style.display="block";
+    icon.textContent="▲";
+  } else {
+    body.style.display="none";
+    icon.textContent="▼";
+  }
+}
+
+// Search
+function filter(text){
+  text = text.toLowerCase();
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display = card.innerText.toLowerCase().includes(text) ? "block":"none";
+  });
+}
+
+// Auto-scroll ONLY to open (new) session
+function scrollToLatest(){
+  const openCard = document.querySelector(".card-body[style*='block']");
+  if(openCard){
+    openCard.scrollIntoView({behavior:"smooth"});
+  }
+}
+
+window.onload = function(){
+  scrollToLatest();
+};
+
+</script>
+
+</body>
+</html>

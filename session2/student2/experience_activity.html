@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Present Perfect Activity — S2 Session 2</title>
+<style>
+  :root{--dark:#2D1A4A;--mid:#5B3A8A;--accent:#9B6DFF;--light:#EEE8FF;--gold:#D4820A;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .app-header{background:var(--dark);padding:18px 20px 14px;text-align:center;border-bottom:2px solid var(--mid);}
+  .app-header .label{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:4px;}
+  .app-header h1{font-size:20px;font-weight:700;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;margin:12px 20px 0;}
+  .progress-bar{flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
+  .progress-label{font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);}
+  .tab-btn{flex:1;padding:12px 8px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .screen{display:none;padding:18px 16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+  .gf-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .gf-q{font-size:15px;line-height:1.9;color:var(--white);margin-bottom:10px;}
+  .gf-blank{display:inline-block;min-width:90px;border-bottom:2px solid var(--accent);color:var(--accent);font-weight:700;padding:0 4px;}
+  .gf-options{display:flex;flex-wrap:wrap;gap:8px;}
+  .gf-opt{padding:8px 14px;border:2px solid var(--accent);border-radius:20px;background:none;color:var(--white);font-size:13px;cursor:pointer;transition:all 0.2s;}
+  .gf-opt.selected{background:var(--accent);color:var(--dark);font-weight:700;}
+  .gf-opt.correct{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .gf-opt.wrong{background:var(--wrong);border-color:var(--wrong);color:var(--white);}
+  .gf-opt.show-correct{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .gf-opt.disabled{pointer-events:none;opacity:0.6;}
+  .gf-fb{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none;}
+  .gf-fb.correct{background:rgba(39,174,96,0.15);border:1px solid var(--correct);color:#7defa7;display:block;}
+  .gf-fb.wrong{background:rgba(231,76,60,0.15);border:1px solid var(--wrong);color:#ffaaaa;display:block;}
+  .submit-btn{width:100%;padding:15px;background:var(--accent);border:none;border-radius:14px;color:var(--dark);font-size:16px;font-weight:700;cursor:pointer;margin-top:8px;}
+  .submit-btn:disabled{opacity:0.4;pointer-events:none;}
+  .build-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .build-label{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+  .build-prompt{font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:10px;font-style:italic;}
+  .build-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:15px;font-family:inherit;}
+  .build-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .build-input::placeholder{color:rgba(255,255,255,0.3);}
+  .reveal-btn{background:none;border:1px solid rgba(155,109,255,0.5);color:var(--accent);font-size:12px;padding:6px 14px;border-radius:20px;cursor:pointer;margin-top:8px;}
+  .model-answer{display:none;margin-top:8px;padding:10px;background:rgba(39,174,96,0.12);border-radius:8px;border-left:3px solid var(--correct);font-size:13px;color:#7defa7;font-style:italic;}
+  .model-answer.shown{display:block;}
+  .aloud{display:inline-flex;align-items:center;gap:6px;background:rgba(155,109,255,0.15);border:1px solid var(--accent);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--accent);margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="app-header">
+  <div class="label">SESSION 2  ·  PRESENT PERFECT ACTIVITY</div>
+  <h1>📐 Present Perfect Practice</h1>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-label" id="progressLabel">0% complete</div>
+  </div>
+</div>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('p1')" id="tabP1">Part 1: Form</button>
+  <button class="tab-btn" onclick="showTab('p2')" id="tabP2">Part 2: Adverbs</button>
+  <button class="tab-btn" onclick="showTab('p3')" id="tabP3">Part 3: My Life</button>
+</div>
+
+<!-- PART 1: FORM PRACTICE -->
+<div class="screen active" id="screenP1">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Choose the correct have/has and past participle. Say each sentence aloud!</p>
+  <div id="p1Container"></div>
+</div>
+
+<!-- PART 2: ADVERB GAP FILL -->
+<div class="screen" id="screenP2">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Choose the correct adverb: ever / never / just / already / yet. Say the full sentence aloud!</p>
+  <div id="p2Container"></div>
+</div>
+
+<!-- PART 3: MY LIFE -->
+<div class="screen" id="screenP3">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Write real sentences about your own life using the present perfect. Then say them aloud to your teacher!</p>
+  <div id="p3Container"></div>
+</div>
+
+<script>
+// PART 1: FORM
+const p1Qs = [
+  {q:"She ___ visited many countries in her life.", blank:"has", opts:["have","has","is","was"], hint:"She = he/she/it → use 'has'"},
+  {q:"We ___ never tried sushi before.", blank:"have", opts:["has","have","had","are"], hint:"We = plural → use 'have'"},
+  {q:"He has ___ to Japan twice.", blank:"been", opts:["went","gone","been","go"], hint:"'have been to' = visited and came back"},
+  {q:"I have ___ all my homework already.", blank:"done", opts:["did","do","doing","done"], hint:"Past participle of 'do' = done"},
+  {q:"They ___ just arrived at the airport.", blank:"have", opts:["have","has","had","are"], hint:"They = plural → use 'have'"},
+  {q:"She has ___ that film three times.", blank:"seen", opts:["saw","see","seen","seeing"], hint:"Past participle of 'see' = seen"},
+  {q:"I ___ never eaten Korean food.", blank:"have", opts:["has","have","had","was"], hint:"I → use 'have'"},
+  {q:"He has ___ his keys somewhere.", blank:"lost", opts:["lose","losing","lost","losted"], hint:"Past participle of 'lose' = lost"},
+];
+
+let p1Answers = Array(p1Qs.length).fill(null);
+let p1Submitted = false;
+const p1Container = document.getElementById('p1Container');
+
+p1Qs.forEach((q, qi) => {
+  const card = document.createElement('div');
+  card.className = 'gf-card';
+  card.id = 'p1Card_'+qi;
+  const shuffled = [...q.opts].sort(()=>Math.random()-0.5);
+  const sentence = q.q.replace('___', `<span class="gf-blank" id="p1blank_${qi}">___</span>`);
+  card.innerHTML = `<div class="gf-q">${sentence}</div>
+    <div class="gf-options">${shuffled.map(o=>`<button class="gf-opt" onclick="selectP1(${qi},'${o}',this)">${o}</button>`).join('')}</div>
+    <div class="gf-fb" id="p1fb_${qi}"></div>`;
+  p1Container.appendChild(card);
+});
+
+const p1SubmitBtn = document.createElement('button');
+p1SubmitBtn.className='submit-btn';p1SubmitBtn.textContent='Check Answers ✓';p1SubmitBtn.disabled=true;
+p1SubmitBtn.onclick=()=>submitP1();
+p1Container.appendChild(p1SubmitBtn);
+
+function selectP1(qi,opt,btn){
+  if(p1Submitted)return;
+  document.getElementById('p1Card_'+qi).querySelectorAll('.gf-opt').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  p1Answers[qi]=opt;
+  document.getElementById('p1blank_'+qi).textContent=opt;
+  p1SubmitBtn.disabled=p1Answers.some(a=>a===null);
+  updateProgress();
+}
+
+function submitP1(){
+  p1Submitted=true;let score=0;
+  p1Qs.forEach((q,qi)=>{
+    const isC=p1Answers[qi]===q.blank;if(isC)score++;
+    document.getElementById('p1Card_'+qi).querySelectorAll('.gf-opt').forEach(btn=>{
+      btn.classList.add('disabled');
+      if(btn.textContent===q.blank)btn.classList.add('show-correct');
+      else if(btn.classList.contains('selected')&&!isC)btn.classList.add('wrong');
+    });
+    const fb=document.getElementById('p1fb_'+qi);
+    fb.className='gf-fb '+(isC?'correct':'wrong');
+    fb.textContent=isC?'✅ Correct! '+q.hint:'❌ The answer is "'+q.blank+'". '+q.hint;
+  });
+  p1SubmitBtn.style.display='none';
+  const el=document.createElement('div');
+  el.style.cssText='text-align:center;padding:18px;background:rgba(155,109,255,0.12);border-radius:14px;margin-top:14px;';
+  el.innerHTML=`<div style="font-size:30px;font-weight:700;color:var(--accent);">${score} / ${p1Qs.length}</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:8px;">${score>=7?'🌟 Excellent! Go to Part 2 →':score>=5?'👍 Good — check explanations, then go to Part 2':' 💪 Review the hints carefully, then try Part 2'}</div>
+    <button style="margin-top:12px;padding:10px 24px;background:var(--accent);border:none;border-radius:10px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;" onclick="showTab('p2')">Go to Part 2: Adverbs →</button>`;
+  p1Container.appendChild(el);
+  updateProgress();
+}
+
+// PART 2: ADVERBS
+const p2Qs = [
+  {q:"Have you ___ tried ramen noodles?", blank:"ever", opts:["ever","never","just","already","yet"], hint:"'ever' is used in questions about life experience."},
+  {q:"I have ___ eaten snails — they look horrible!", blank:"never", opts:["ever","never","just","already","yet"], hint:"'never' means at no time in your life."},
+  {q:"I have ___ finished my coffee — it's still hot!", blank:"just", opts:["ever","never","just","already","yet"], hint:"'just' means a moment ago."},
+  {q:"She has ___ booked the flights — she did it this morning.", blank:"already", opts:["ever","never","just","already","yet"], hint:"'already' means sooner than expected."},
+  {q:"Have you packed your bag ___?", blank:"yet", opts:["ever","never","just","already","yet"], hint:"'yet' goes at the end of questions and negatives."},
+  {q:"He has ___ been to Europe — it's his dream to go.", blank:"never", opts:["ever","never","just","already","yet"], hint:"'never' for something that has not happened."},
+  {q:"I have ___ sent the email — you should have it now.", blank:"just", opts:["ever","never","just","already","yet"], hint:"'just' = very recently completed."},
+  {q:"Has she arrived ___? I've been waiting for an hour.", blank:"yet", opts:["ever","never","just","already","yet"], hint:"'yet' in a question = up to now, has it happened?"},
+];
+
+let p2Answers=Array(p2Qs.length).fill(null);let p2Submitted=false;
+const p2Container=document.getElementById('p2Container');
+p2Qs.forEach((q,qi)=>{
+  const card=document.createElement('div');card.className='gf-card';card.id='p2Card_'+qi;
+  const shuffled=[...q.opts].sort(()=>Math.random()-0.5);
+  const sentence=q.q.replace('___',`<span class="gf-blank" id="p2blank_${qi}">___</span>`);
+  card.innerHTML=`<div class="gf-q">${sentence}</div>
+    <div class="gf-options">${shuffled.map(o=>`<button class="gf-opt" onclick="selectP2(${qi},'${o}',this)">${o}</button>`).join('')}</div>
+    <div class="gf-fb" id="p2fb_${qi}"></div>`;
+  p2Container.appendChild(card);
+});
+const p2Btn=document.createElement('button');p2Btn.className='submit-btn';p2Btn.textContent='Check Answers ✓';p2Btn.disabled=true;p2Btn.onclick=()=>submitP2();p2Container.appendChild(p2Btn);
+
+function selectP2(qi,opt,btn){
+  if(p2Submitted)return;
+  document.getElementById('p2Card_'+qi).querySelectorAll('.gf-opt').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');p2Answers[qi]=opt;
+  document.getElementById('p2blank_'+qi).textContent=opt;
+  p2Btn.disabled=p2Answers.some(a=>a===null);updateProgress();
+}
+function submitP2(){
+  p2Submitted=true;let score=0;
+  p2Qs.forEach((q,qi)=>{
+    const isC=p2Answers[qi]===q.blank;if(isC)score++;
+    document.getElementById('p2Card_'+qi).querySelectorAll('.gf-opt').forEach(btn=>{
+      btn.classList.add('disabled');
+      if(btn.textContent===q.blank)btn.classList.add('show-correct');
+      else if(btn.classList.contains('selected')&&!isC)btn.classList.add('wrong');
+    });
+    const fb=document.getElementById('p2fb_'+qi);
+    fb.className='gf-fb '+(isC?'correct':'wrong');
+    fb.textContent=isC?'✅ Correct! '+q.hint:'❌ The answer is "'+q.blank+'". '+q.hint;
+  });
+  p2Btn.style.display='none';
+  const el=document.createElement('div');
+  el.style.cssText='text-align:center;padding:18px;background:rgba(155,109,255,0.12);border-radius:14px;margin-top:14px;';
+  el.innerHTML=`<div style="font-size:30px;font-weight:700;color:var(--accent);">${score} / ${p2Qs.length}</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:8px;">${score>=7?'🌟 Excellent! Go to Part 3 →':'👍 Good work! Go to Part 3 →'}</div>
+    <button style="margin-top:12px;padding:10px 24px;background:var(--accent);border:none;border-radius:10px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;" onclick="showTab('p3')">Go to Part 3: My Life →</button>`;
+  p2Container.appendChild(el);updateProgress();
+}
+
+// PART 3: MY LIFE
+const p3Prompts = [
+  {label:"A place you have visited", prompt:"Have you ever been to ___?", placeholder:"I have been to ___ . I went there in ___ and it was ___ ."},
+  {label:"A food you have tried", prompt:"Have you ever eaten ___?", placeholder:"I have tried ___ . I had it in ___ . It tasted ___ ."},
+  {label:"Something you have never done", prompt:"What have you never done that you want to try?", placeholder:"I have never ___ , but I would really like to ___ ."},
+  {label:"Something you have just done / recently done", prompt:"What have you just done or recently completed?", placeholder:"I have just ___ . I finished it ___ ."},
+  {label:"Something you haven't done yet", prompt:"What haven't you done yet that you want to do?", placeholder:"I haven't ___ yet , but I plan to ___ ."},
+];
+const p3Container=document.getElementById('p3Container');
+p3Prompts.forEach((p,i)=>{
+  const card=document.createElement('div');card.className='build-card';
+  card.innerHTML=`<div class="build-label">${i+1}. ${p.label}</div>
+    <div class="build-prompt">💬 ${p.prompt}</div>
+    <input type="text" class="build-input" placeholder="${p.placeholder}" oninput="updateProgress()"/>
+    <div class="aloud">🗣️ Say this sentence aloud to your teacher!</div>`;
+  p3Container.appendChild(card);
+});
+
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  updateProgress();
+}
+
+function updateProgress(){
+  const p1done=p1Answers.filter(a=>a!==null).length;
+  const p2done=p2Answers.filter(a=>a!==null).length;
+  const p3done=[...document.querySelectorAll('#p3Container .build-input')].filter(i=>i.value.trim().length>0).length;
+  const total=p1Qs.length+p2Qs.length+p3Prompts.length;
+  const done=p1done+p2done+p3done;
+  const pct=Math.round(done/total*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent=pct+'% complete';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>My English Handout — S2 Session 2</title>
+<style>
+  :root{--dark:#2D1A4A;--mid:#5B3A8A;--accent:#9B6DFF;--light:#EEE8FF;--gold:#D4820A;--goldbg:#FFF8E7;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#666;--shadow:0 2px 12px rgba(0,0,0,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--offwhite);color:#1a1a1a;padding-bottom:40px;}
+  .hero{background:linear-gradient(135deg,var(--dark) 0%,var(--mid) 100%);color:white;padding:28px 20px 24px;}
+  .hero .badge{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:6px;}
+  .hero h1{font-size:24px;font-weight:700;margin-bottom:4px;}
+  .hero p{font-size:13px;color:rgba(255,255,255,0.7);}
+  .hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;}
+  .content{padding:0 16px;}
+  .section{margin-top:22px;}
+  .st{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--mid);text-transform:uppercase;padding-bottom:6px;border-bottom:2px solid var(--light);margin-bottom:14px;}
+  .formula{background:var(--dark);border-radius:12px;padding:16px;margin-bottom:12px;text-align:center;}
+  .formula-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+  .f-box{background:rgba(155,109,255,0.2);border:1px solid var(--accent);border-radius:8px;padding:8px 14px;color:white;font-size:13px;font-weight:700;}
+  .f-plus{font-size:18px;font-weight:700;color:var(--gold);}
+  .formula-note{font-size:12px;color:rgba(255,255,255,0.6);}
+  .ex-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px;border-left:4px solid var(--accent);}
+  .ex-en{font-size:15px;font-weight:600;color:var(--dark);margin-bottom:3px;}
+  .ex-zh{font-size:13px;color:#8B0000;font-style:italic;}
+  .contrast{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+  .c-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;}
+  .c-head{padding:8px 12px;font-size:11px;font-weight:700;color:white;}
+  .c-body{padding:10px 12px;font-size:13px;color:var(--slate);font-style:italic;line-height:1.5;}
+  .adverb-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;}
+  .adv-word{font-size:16px;font-weight:700;color:var(--mid);min-width:70px;}
+  .adv-info{}
+  .adv-use{font-size:12px;color:var(--gray);margin-bottom:4px;}
+  .adv-ex{font-size:13px;color:var(--slate);font-style:italic;}
+  .adv-pos{font-size:11px;color:var(--gold);margin-top:3px;font-weight:600;}
+  .verb-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .v-card{background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:10px 12px;display:flex;align-items:center;gap:10px;}
+  .v-base{font-size:14px;font-weight:700;color:var(--dark);min-width:50px;}
+  .v-arr{color:var(--accent);font-weight:700;}
+  .v-pp{font-size:14px;font-weight:700;color:var(--mid);}
+  .target-card{background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:16px;margin-bottom:10px;border-left:4px solid var(--accent);}
+  .target-num{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--dark);font-size:13px;font-weight:700;align-items:center;justify-content:center;margin-bottom:8px;}
+  .target-lbl{font-size:12px;color:var(--mid);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;}
+  .target-input{width:100%;border:1px solid #ddd;border-radius:8px;padding:10px 12px;font-size:15px;color:var(--dark);background:var(--offwhite);font-family:inherit;resize:none;min-height:48px;}
+  .target-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .ti{background:var(--dark);color:white;padding:18px 16px;text-align:center;margin:30px -16px 0;}
+  .ti h2{font-size:18px;margin-bottom:4px;}
+  .ti p{font-size:13px;color:rgba(255,255,255,0.7);}
+  table{width:100%;border-collapse:collapse;background:var(--white);}
+  th{background:var(--mid);color:white;padding:10px 12px;text-align:left;font-size:12px;letter-spacing:0.5px;}
+  td{padding:10px 12px;border-bottom:1px solid var(--light);font-size:14px;vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  tr:nth-child(even) td{background:var(--light);}
+  .en{font-weight:600;color:var(--dark);}
+  .zh{font-size:15px;color:#8B0000;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="badge">MY ENGLISH HANDOUT</div>
+  <h1>Session 2 — Present Perfect</h1>
+  <p>Your reference for today's lesson and beyond. Keep this open during class.</p>
+  <div class="hero-pills">
+    <span class="pill">📐 Perfect Form</span>
+    <span class="pill">⏰ ever/never/yet</span>
+    <span class="pill">🔄 vs Past Simple</span>
+    <span class="pill">🎯 My Targets</span>
+  </div>
+</div>
+<div class="content">
+
+  <div class="section">
+    <div class="st">📐 Present Perfect — Form</div>
+    <div class="formula">
+      <div class="formula-row">
+        <div class="f-box">Subject</div><div class="f-plus">+</div>
+        <div class="f-box">have / has</div><div class="f-plus">+</div>
+        <div class="f-box">Past Participle</div>
+      </div>
+      <div class="formula-note">I / You / We / They → have &nbsp;&nbsp;|&nbsp;&nbsp; He / She / It → has</div>
+    </div>
+    <div class="ex-card"><div class="ex-en">I have been to Japan twice.</div><div class="ex-zh">我去过日本两次。</div></div>
+    <div class="ex-card"><div class="ex-en">She has never eaten sushi.</div><div class="ex-zh">她从来没吃过寿司。</div></div>
+    <div class="ex-card"><div class="ex-en">Have you ever tried Korean food?</div><div class="ex-zh">你试过韩国料理吗？</div></div>
+  </div>
+
+  <div class="section">
+    <div class="st">🔄 Present Perfect vs Past Simple</div>
+    <div class="contrast">
+      <div class="c-card"><div class="c-head" style="background:#27ae60;">✅ Present Perfect</div><div class="c-body">"I have been to Beijing." — time is NOT specified</div></div>
+      <div class="c-card"><div class="c-head" style="background:#D4820A;">📅 Past Simple</div><div class="c-body">"I went to Beijing last year." — time IS specified</div></div>
+    </div>
+    <div style="background:#EEE8FF;border-radius:10px;padding:12px 14px;font-size:13px;color:var(--dark);"><strong>Key rule:</strong> Use present perfect when you don't say exactly when. Use past simple when you know the exact time.</div>
+  </div>
+
+  <div class="section">
+    <div class="st">⏰ 5 Key Adverbs</div>
+    <div class="adverb-card"><div class="adv-word">ever</div><div class="adv-info"><div class="adv-use">In questions — any time in your life?</div><div class="adv-ex">"Have you ever been to Europe?"</div><div class="adv-pos">📍 before the past participle</div></div></div>
+    <div class="adverb-card"><div class="adv-word">never</div><div class="adv-info"><div class="adv-use">Negative — at no time in your life</div><div class="adv-ex">"I have never eaten snails."</div><div class="adv-pos">📍 before the past participle</div></div></div>
+    <div class="adverb-card"><div class="adv-word">just</div><div class="adv-info"><div class="adv-use">Very recently — a short time ago</div><div class="adv-ex">"I have just arrived home."</div><div class="adv-pos">📍 between have/has and the participle</div></div></div>
+    <div class="adverb-card"><div class="adv-word">already</div><div class="adv-info"><div class="adv-use">Before expected — sooner than expected</div><div class="adv-ex">"She has already finished the report."</div><div class="adv-pos">📍 between have/has and the participle</div></div></div>
+    <div class="adverb-card"><div class="adv-word">yet</div><div class="adv-info"><div class="adv-use">In negatives/questions — up to now</div><div class="adv-ex">"Have you eaten yet?" / "I haven't eaten yet."</div><div class="adv-pos">📍 at the end of the sentence</div></div></div>
+  </div>
+
+  <div class="section">
+    <div class="st">📚 Key Irregular Past Participles</div>
+    <div class="verb-grid">
+      <div class="v-card"><div class="v-base">go</div><div class="v-arr">→</div><div class="v-pp">gone / been</div></div>
+      <div class="v-card"><div class="v-base">see</div><div class="v-arr">→</div><div class="v-pp">seen</div></div>
+      <div class="v-card"><div class="v-base">eat</div><div class="v-arr">→</div><div class="v-pp">eaten</div></div>
+      <div class="v-card"><div class="v-base">do</div><div class="v-arr">→</div><div class="v-pp">done</div></div>
+      <div class="v-card"><div class="v-base">take</div><div class="v-arr">→</div><div class="v-pp">taken</div></div>
+      <div class="v-card"><div class="v-base">have</div><div class="v-arr">→</div><div class="v-pp">had</div></div>
+      <div class="v-card"><div class="v-base">make</div><div class="v-arr">→</div><div class="v-pp">made</div></div>
+      <div class="v-card"><div class="v-base">give</div><div class="v-arr">→</div><div class="v-pp">given</div></div>
+      <div class="v-card"><div class="v-base">meet</div><div class="v-arr">→</div><div class="v-pp">met</div></div>
+      <div class="v-card"><div class="v-base">get</div><div class="v-arr">→</div><div class="v-pp">got</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="st">🎯 My 3 Personal Targets — Progress Check</div>
+    <p style="font-size:13px;color:var(--gray);margin-bottom:12px;">Review these from Session 1. Have you made progress on any of them?</p>
+    <div class="target-card"><div class="target-num">1</div><div class="target-lbl">Target 1</div><textarea class="target-input" id="t1" placeholder="Your target from Session 1…"></textarea></div>
+    <div class="target-card"><div class="target-num">2</div><div class="target-lbl">Target 2</div><textarea class="target-input" id="t2" placeholder="Your target from Session 1…"></textarea></div>
+    <div class="target-card"><div class="target-num">3</div><div class="target-lbl">Target 3</div><textarea class="target-input" id="t3" placeholder="Your target from Session 1…"></textarea></div>
+    <p style="font-size:12px;color:var(--gray);margin-top:6px;text-align:center;">📸 Screenshot this page to save your targets!</p>
+  </div>
+
+</div>
+<div class="ti"><h2>📖 Vocabulary Reference</h2><p>Present perfect key expressions with Chinese translations</p></div>
+<table>
+  <thead><tr><th>English</th><th>Use</th><th>中文</th></tr></thead>
+  <tbody>
+    <tr><td class="en">I have been to ___</td><td>visited and came back</td><td class="zh">我去过___</td></tr>
+    <tr><td class="en">I have never ___</td><td>at no point in life</td><td class="zh">我从来没有___</td></tr>
+    <tr><td class="en">Have you ever ___?</td><td>any time in your life?</td><td class="zh">你曾经___吗？</td></tr>
+    <tr><td class="en">Yes, I have.</td><td>short positive answer</td><td class="zh">是的，我有。</td></tr>
+    <tr><td class="en">No, I haven't.</td><td>short negative answer</td><td class="zh">不，我没有。</td></tr>
+    <tr><td class="en">I have just ___</td><td>very recently</td><td class="zh">我刚刚___</td></tr>
+    <tr><td class="en">I have already ___</td><td>sooner than expected</td><td class="zh">我已经___</td></tr>
+    <tr><td class="en">I haven't ___ yet</td><td>not done up to now</td><td class="zh">我还没有___</td></tr>
+    <tr><td class="en">ever</td><td>questions about life experience</td><td class="zh">曾经</td></tr>
+    <tr><td class="en">never</td><td>negative life experience</td><td class="zh">从来没有</td></tr>
+    <tr><td class="en">just</td><td>moments ago</td><td class="zh">刚刚</td></tr>
+    <tr><td class="en">already</td><td>sooner than expected</td><td class="zh">已经</td></tr>
+    <tr><td class="en">yet</td><td>negatives and questions</td><td class="zh">还/已经（否定/疑问）</td></tr>
+  </tbody>
+</table>
+<script>
+['t1','t2','t3'].forEach(id=>{
+  const el=document.getElementById(id);
+  const saved=sessionStorage.getItem('s2_'+id);
+  if(saved)el.value=saved;
+  el.addEventListener('input',()=>sessionStorage.setItem('s2_'+id,el.value));
+});
+</script>
+</body>
+</html>
