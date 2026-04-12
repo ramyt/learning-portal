@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Learning Portal</title>
 
 <style>
@@ -204,6 +205,31 @@ body {
 @media (min-width: 600px) {
   .pill {
     flex: 1 1 calc(33.33% - 8px);
+  }
+}
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  header {
+    padding: 28px 18px 24px;
+  }
+
+  .header-label {
+    font-size: 10px;
+    margin-bottom: 10px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .pill {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .top-bar {
+    padding: 10px 0 8px;
   }
 }
 
