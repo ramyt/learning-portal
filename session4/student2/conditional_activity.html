@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Conditional Activity — S4 Session 4</title>
+<style>
+  :root{--dark:#2D1A4A;--mid:#5B3A8A;--accent:#9B6DFF;--light:#EEE8FF;--gold:#D4820A;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .hdr{padding:16px 20px 12px;text-align:center;border-bottom:2px solid var(--mid);background:var(--dark);}
+  .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:4px;}
+  .hdr h1{font-size:20px;font-weight:700;}
+  .pw{display:flex;align-items:center;gap:10px;margin:10px 20px 0;}
+  .pb{flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;}
+  .pf{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
+  .pl{font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);}
+  .tb{flex:1;padding:12px 6px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tb.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .screen{display:none;padding:16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+  /* GAP FILL */
+  .gf-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;}
+  .gf-q{font-size:15px;line-height:2;color:var(--white);margin-bottom:10px;}
+  .blank{display:inline-block;min-width:100px;border-bottom:2px solid var(--accent);color:var(--accent);font-weight:700;padding:0 4px;}
+  .opts{display:flex;flex-wrap:wrap;gap:8px;}
+  .opt{padding:7px 13px;border:2px solid var(--accent);border-radius:20px;background:none;color:var(--white);font-size:13px;cursor:pointer;transition:all 0.2s;}
+  .opt.sel{background:var(--accent);color:var(--dark);font-weight:700;}
+  .opt.correct{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .opt.wrong{background:var(--wrong);border-color:var(--wrong);color:var(--white);}
+  .opt.show-c{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .opt.dis{pointer-events:none;opacity:0.6;}
+  .gf-fb{margin-top:8px;padding:10px;border-radius:10px;font-size:13px;display:none;}
+  .gf-fb.correct{background:rgba(39,174,96,0.15);border:1px solid var(--correct);color:#7defa7;display:block;}
+  .gf-fb.wrong{background:rgba(231,76,60,0.15);border:1px solid var(--wrong);color:#ffaaaa;display:block;}
+  .sbtn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:14px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;}
+  .sbtn:disabled{opacity:0.4;pointer-events:none;}
+  /* COMPLETION */
+  .comp-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;}
+  .comp-label{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;}
+  .comp-starter{font-size:16px;color:var(--white);font-weight:700;margin-bottom:10px;padding:10px 12px;background:rgba(155,109,255,0.1);border-radius:8px;}
+  .comp-type{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+  .type-btn{padding:6px 14px;border:2px solid var(--mid);border-radius:20px;background:none;color:rgba(255,255,255,0.6);font-size:12px;cursor:pointer;transition:all 0.2s;}
+  .type-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(155,109,255,0.1);}
+  .comp-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:15px;font-family:inherit;}
+  .comp-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .comp-input::placeholder{color:rgba(255,255,255,0.3);}
+  .comp-model{background:rgba(155,109,255,0.1);border:1px solid var(--accent);border-radius:10px;padding:10px;margin-top:8px;font-size:13px;color:var(--white);display:none;}
+  .comp-model.show{display:block;}
+  .reveal-btn{padding:7px 16px;background:none;border:1px solid rgba(155,109,255,0.4);color:var(--accent);border-radius:20px;cursor:pointer;font-size:12px;margin-top:8px;}
+  .aloud{display:inline-flex;align-items:center;gap:6px;background:rgba(155,109,255,0.1);border:1px solid var(--accent);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--accent);margin-top:6px;}
+  /* PLANNER */
+  .plan-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;}
+  .plan-icon{font-size:28px;margin-bottom:6px;}
+  .plan-area{font-size:12px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .plan-prompt{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:10px;font-style:italic;}
+  .connector-choice{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+  .cc-btn{padding:6px 14px;border:2px solid var(--mid);border-radius:20px;background:none;color:rgba(255,255,255,0.6);font-size:12px;cursor:pointer;transition:all 0.2s;}
+  .cc-btn.sel{border-color:var(--gold);color:var(--gold);background:rgba(212,130,10,0.1);}
+  .plan-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:14px;font-family:inherit;}
+  .plan-input:focus{outline:2px solid var(--accent);}
+  .plan-input::placeholder{color:rgba(255,255,255,0.3);}
+  .plan-result{background:rgba(155,109,255,0.08);border:1px solid rgba(155,109,255,0.3);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--white);min-height:44px;margin-top:8px;font-style:italic;}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="lbl">SESSION 4  ·  CONDITIONAL ACTIVITY</div>
+  <h1>📐 First Conditional Practice</h1>
+  <div class="pw">
+    <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+    <div class="pl" id="pl">0% complete</div>
+  </div>
+</div>
+<div class="tab-bar">
+  <button class="tb active" onclick="showTab('gf')" id="tabGf">Part 1: Gap-Fill</button>
+  <button class="tb" onclick="showTab('comp')" id="tabComp">Part 2: Complete</button>
+  <button class="tb" onclick="showTab('plan')" id="tabPlan">Part 3: My Plans</button>
+</div>
+
+<!-- PART 1: GAP FILL -->
+<div class="screen active" id="screenGf">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Choose the correct word. Say the full sentence aloud after answering!</p>
+  <div id="gfContainer"></div>
+</div>
+
+<!-- PART 2: SENTENCE COMPLETION -->
+<div class="screen" id="screenComp">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Complete the sentence using first conditional. Choose the connector type, then write. Say it aloud!</p>
+  <div id="compContainer"></div>
+</div>
+
+<!-- PART 3: MY PLANS PLANNER -->
+<div class="screen" id="screenPlan">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Write a real conditional sentence about YOUR life plans. Choose the connector, then write!</p>
+  <div id="planContainer"></div>
+</div>
+
+<script>
+// PART 1
+const gfQs=[
+  {q:"If I ___ enough money this year, I will travel to Japan.",blank:"save",opts:["save","will save","saved","saving"],hint:"First conditional: 'if' clause uses present simple, NOT will."},
+  {q:"She will pass the exam ___ she studies every day.",blank:"as long as",opts:["as long as","unless","if not","until"],hint:"'As long as' = 'only if' — she'll pass on the condition she studies."},
+  {q:"___ you call me, I won't know you arrived safely.",blank:"Unless",opts:["Unless","If","As long as","Provided"],hint:"'Unless' = 'if not' — I won't know UNLESS (= if you don't) call me."},
+  {q:"I will accept the offer ___ the salary is competitive.",blank:"provided that",opts:["provided that","unless","even if","as long"],hint:"'Provided that' = 'only if / on condition that' — formal alternative to 'if'."},
+  {q:"If the weather ___ good this weekend, we will go hiking.",blank:"is",opts:["is","will be","was","be"],hint:"Present simple in the if-clause: 'if the weather IS good' — not 'will be'."},
+  {q:"He ___ move to London if he gets the job offer.",blank:"will",opts:["will","would","is","does"],hint:"Main clause uses 'will' + infinitive: 'he WILL move'."},
+  {q:"___ she doesn't improve her English, she won't get promoted.",blank:"Unless",opts:["Unless","If","As long as","Provided that"],hint:"'Unless she improves' = 'if she doesn't improve' — unless makes it negative."},
+  {q:"They will sign the contract ___ both parties agree to the terms.",blank:"provided that",opts:["provided that","unless","if not","as soon"],hint:"'Provided that both parties agree' = formal conditional — contract language."},
+];
+let gfAns=Array(gfQs.length).fill(null),gfDone=false;
+const gfCont=document.getElementById('gfContainer');
+gfQs.forEach((q,qi)=>{
+  const card=document.createElement('div');card.className='gf-card';card.id='gc'+qi;
+  const shuffled=[...q.opts].sort(()=>Math.random()-0.5);
+  card.innerHTML=`<div class="gf-q">${q.q.replace('___',`<span id="bl${qi}" class="blank">___</span>`)}</div>
+    <div class="opts">${shuffled.map(o=>`<button class="opt" onclick="selGF(${qi},'${o.replace(/'/g,"\\'")}',this)">${o}</button>`).join('')}</div>
+    <div class="gf-fb" id="gfb${qi}"></div>`;
+  gfCont.appendChild(card);
+});
+const gfSub=document.createElement('button');
+gfSub.className='sbtn';gfSub.textContent='Check Answers ✓';gfSub.disabled=true;gfSub.onclick=submitGF;
+gfCont.appendChild(gfSub);
+
+function selGF(qi,opt,btn){
+  if(gfDone)return;
+  document.getElementById('gc'+qi).querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');gfAns[qi]=opt;
+  document.getElementById('bl'+qi).textContent=opt;
+  gfSub.disabled=gfAns.some(a=>a===null);upd();
+}
+function submitGF(){
+  gfDone=true;let sc=0;
+  gfQs.forEach((q,qi)=>{
+    const ok=gfAns[qi]===q.blank;if(ok)sc++;
+    document.getElementById('gc'+qi).querySelectorAll('.opt').forEach(b=>{
+      b.classList.add('dis');
+      if(b.textContent===q.blank)b.classList.add('show-c');
+      else if(b.classList.contains('sel')&&!ok)b.classList.add('wrong');
+    });
+    const fb=document.getElementById('gfb'+qi);
+    fb.className='gf-fb '+(ok?'correct':'wrong');
+    fb.textContent=ok?'✅ Correct! '+q.hint:'❌ Answer: "'+q.blank+'". '+q.hint;
+  });
+  gfSub.style.display='none';
+  const el=document.createElement('div');
+  el.style.cssText='text-align:center;padding:16px;background:rgba(155,109,255,0.12);border-radius:14px;margin-top:12px;';
+  el.innerHTML=`<div style="font-size:28px;font-weight:700;color:var(--accent);">${sc}/${gfQs.length}</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);margin:8px 0;">${sc>=7?'🌟 Excellent! Go to Part 2 →':sc>=5?'👍 Review the hints, then try Part 2.':'💪 Read each hint carefully before Part 2.'}</div>
+    <button style="margin-top:8px;padding:10px 22px;background:var(--accent);border:none;border-radius:10px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;" onclick="showTab('comp')">Go to Part 2 →</button>`;
+  gfCont.appendChild(el);upd();
+}
+
+// PART 2
+const compItems=[
+  {starter:"If I don't get a promotion by the end of the year...",type:"if",model:"...I will start looking for opportunities at other companies."},
+  {starter:"I will move to a new city...",type:"unless",model:"...unless my current job becomes more interesting and the pay improves significantly."},
+  {starter:"She will accept the job offer...",type:"as long as",model:"...as long as she can negotiate a flexible working schedule."},
+  {starter:"They won't sign the deal...",type:"unless",model:"...unless both sides agree on the key terms by Friday."},
+  {starter:"If my English reaches a professional level...",type:"if",model:"...I will apply for the international management position in Singapore."},
+  {starter:"I'll go the extra mile at work...",type:"provided that",model:"...provided that my effort is recognised and rewarded in the next performance review."},
+];
+let compDone=Array(compItems.length).fill(false);
+const compCont=document.getElementById('compContainer');
+compItems.forEach((c,ci)=>{
+  const card=document.createElement('div');card.className='comp-card';
+  card.innerHTML=`
+    <div class="comp-label">Complete using: ${c.type}</div>
+    <div class="comp-starter">${c.starter}</div>
+    <input type="text" class="comp-input" placeholder="...${c.type} ___" oninput="upd()"/>
+    <div><button class="reveal-btn" onclick="revealComp(this)">👁 Show model answer</button></div>
+    <div class="comp-model">✅ Model: "${c.model}"</div>
+    <div><span class="aloud">🗣️ Say the FULL sentence aloud!</span></div>`;
+  compCont.appendChild(card);
+});
+function revealComp(btn){
+  btn.nextElementSibling.classList.add('show');
+  btn.textContent='✅ Revealed';btn.disabled=true;
+  compDone[compItems.findIndex((_,i)=>btn.closest('.comp-card')===compCont.children[i])]=true;
+  upd();
+}
+
+// PART 3
+const planAreas=[
+  {icon:"💼",area:"Career",prompt:"What is your most important career plan? What condition must be met?",connectors:["if","as long as","unless","provided that"]},
+  {icon:"✈️",area:"Travel",prompt:"Where do you want to go? What needs to happen first?",connectors:["if","as long as","unless","provided that"]},
+  {icon:"📚",area:"English",prompt:"What will you do when your English improves? What's the condition?",connectors:["if","as long as","unless","provided that"]},
+  {icon:"🏠",area:"Living",prompt:"Do you plan to move? What conditions affect this?",connectors:["if","as long as","unless","provided that"]},
+];
+let planData=planAreas.map(()=>({connector:null,text:""}));
+const planCont=document.getElementById('planContainer');
+planAreas.forEach((p,pi)=>{
+  const card=document.createElement('div');card.className='plan-card';
+  card.innerHTML=`
+    <div class="plan-icon">${p.icon}</div>
+    <div class="plan-area">${p.area}</div>
+    <div class="plan-prompt">${p.prompt}</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px;">Choose your connector:</div>
+    <div class="connector-choice">${p.connectors.map(c=>`<button class="cc-btn" onclick="selConn(${pi},'${c}',this)">${c}</button>`).join('')}</div>
+    <input type="text" class="plan-input" id="pi${pi}" placeholder="Write your conditional sentence here..." oninput="updatePlan(${pi},this.value)"/>
+    <div class="plan-result" id="pr${pi}">Your sentence will appear here...</div>
+    <div><span class="aloud">🗣️ Say your sentence aloud to your teacher!</span></div>`;
+  planCont.appendChild(card);
+});
+function selConn(pi,conn,btn){
+  planData[pi].connector=conn;
+  document.querySelectorAll('.plan-card')[pi].querySelectorAll('.cc-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  updatePlan(pi,document.getElementById('pi'+pi).value);upd();
+}
+function updatePlan(pi,val){
+  planData[pi].text=val;
+  const el=document.getElementById('pr'+pi);
+  if(val.trim()&&planData[pi].connector){
+    el.textContent=val.trim();
+    el.style.borderColor='var(--accent)';
+  } else {
+    el.textContent='Your sentence will appear here...';
+    el.style.borderColor='rgba(255,255,255,0.1)';
+  }
+  upd();
+}
+
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');upd();
+}
+function upd(){
+  const gfN=gfAns.filter(a=>a!==null).length;
+  const compN=[...document.querySelectorAll('.comp-input')].filter(i=>i.value.trim().length>0).length;
+  const planN=planData.filter(d=>d.connector&&d.text.trim()).length;
+  const total=gfQs.length+compItems.length+planAreas.length;
+  const done=gfN+compN+planN;
+  const pct=Math.round(done/total*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pl').textContent=pct+'% complete';
+}
+</script>
+</body>
+</html>

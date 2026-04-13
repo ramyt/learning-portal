@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>My English Handout — S4 Session 4</title>
+<style>
+  :root{--dark:#2D1A4A;--mid:#5B3A8A;--accent:#9B6DFF;--light:#EEE8FF;--gold:#D4820A;--goldbg:#FFF8E7;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#666;--shadow:0 2px 12px rgba(0,0,0,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--offwhite);color:#1a1a1a;padding-bottom:40px;}
+  .hero{background:linear-gradient(135deg,var(--dark) 0%,var(--mid) 100%);color:white;padding:28px 20px 24px;}
+  .hero .badge{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:6px;}
+  .hero h1{font-size:24px;font-weight:700;margin-bottom:4px;}
+  .hero p{font-size:13px;color:rgba(255,255,255,0.7);}
+  .hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .hero-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;}
+  .content{padding:0 16px;}
+  .section{margin-top:22px;}
+  .st{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--mid);text-transform:uppercase;padding-bottom:6px;border-bottom:2px solid var(--light);margin-bottom:14px;}
+  .grammar-box{background:var(--white);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:12px;}
+  .gh{background:var(--dark);padding:10px 16px;color:white;font-size:13px;font-weight:700;}
+  .gb{padding:14px 16px;}
+  .formula{background:var(--light);border-radius:10px;padding:12px 16px;font-size:15px;font-weight:700;color:var(--dark);text-align:center;margin-bottom:12px;}
+  .error-box{background:#fdecea;border-radius:10px;padding:10px 14px;margin-bottom:8px;border-left:4px solid #c0392b;}
+  .error-box .label{font-size:10px;font-weight:700;color:#c0392b;letter-spacing:1px;margin-bottom:4px;}
+  .correct-box{background:#eafaf1;border-radius:10px;padding:10px 14px;margin-bottom:8px;border-left:4px solid #27ae60;}
+  .correct-box .label{font-size:10px;font-weight:700;color:#27ae60;letter-spacing:1px;margin-bottom:4px;}
+  .ex-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light);}
+  .ex-row:last-child{border-bottom:none;}
+  .alt-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:8px;border-left:4px solid;}
+  .alt-word{font-size:17px;font-weight:700;color:var(--dark);margin-bottom:3px;}
+  .alt-meaning{font-size:12px;color:var(--gray);margin-bottom:5px;}
+  .alt-ex{font-size:13px;color:var(--slate);font-style:italic;padding:6px 10px;background:var(--light);border-radius:6px;}
+  .idiom-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:8px;border-left:4px solid var(--accent);}
+  .id-word{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:3px;}
+  .id-def{font-size:12px;color:var(--gray);margin-bottom:5px;}
+  .id-ex{font-size:13px;color:var(--slate);font-style:italic;}
+  .target-card{background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;margin-bottom:10px;border-left:4px solid var(--accent);}
+  .target-num{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--dark);font-size:12px;font-weight:700;align-items:center;justify-content:center;margin-bottom:6px;}
+  .target-label{font-size:12px;color:var(--mid);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;}
+  .target-input{width:100%;border:1px solid #ddd;border-radius:8px;padding:10px 12px;font-size:15px;color:var(--dark);background:var(--offwhite);font-family:inherit;}
+  .target-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .rb{background:var(--goldbg);border:1px solid #f5d9a8;border-radius:14px;padding:14px 16px;margin-top:6px;border-left:4px solid var(--gold);}
+  .rb strong{display:block;color:var(--gold);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .rb ul{padding-left:18px;}
+  .rb li{font-size:14px;margin-bottom:5px;color:var(--slate);}
+  .ti{background:var(--dark);color:white;padding:18px 16px;text-align:center;margin:30px -16px 0;}
+  .ti h2{font-size:18px;margin-bottom:4px;}
+  .ti p{font-size:13px;color:rgba(255,255,255,0.7);}
+  table{width:100%;border-collapse:collapse;background:var(--white);}
+  th{background:var(--mid);color:white;padding:10px 12px;text-align:left;font-size:12px;}
+  td{padding:10px 12px;border-bottom:1px solid var(--light);font-size:14px;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  tr:nth-child(even) td{background:var(--light);}
+  .en{font-weight:600;color:var(--dark);}
+  .zh{font-size:15px;color:#8B0000;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="badge">MY ENGLISH HANDOUT · WEEK 2 BEGINS</div>
+  <h1>Session 4 — First Conditional</h1>
+  <p>Real plans, real conditions, real English.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">📐 If + Will</span>
+    <span class="hero-pill">🔀 Unless / As Long As</span>
+    <span class="hero-pill">💼 4 New Idioms</span>
+    <span class="hero-pill">🎯 My Targets</span>
+  </div>
+</div>
+<div class="content">
+
+  <div class="section">
+    <div class="st">📐 First Conditional — Structure</div>
+    <div class="grammar-box">
+      <div class="gh">If + present simple , will + infinitive</div>
+      <div class="gb">
+        <div class="formula">If I get a job → I will move to the city.</div>
+        <div class="error-box"><div class="label">❌ COMMON ERROR</div>"If I <strong>will get</strong> a job..." — WRONG! No 'will' in the if-clause.</div>
+        <div class="correct-box"><div class="label">✅ CORRECT</div>"If I <strong>get</strong> a job..." — present simple after 'if'.</div>
+        <div class="ex-row"><div><div style="font-size:14px;font-weight:600;color:var(--dark);font-style:italic;">"If I save enough money, I will travel to Japan."</div></div></div>
+        <div class="ex-row"><div><div style="font-size:14px;font-weight:600;color:var(--dark);font-style:italic;">"She will call you if she has time."</div></div></div>
+        <div class="ex-row"><div><div style="font-size:14px;font-weight:600;color:var(--dark);font-style:italic;">"If it rains, we will cancel the trip."</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="st">🔀 Conditional Alternatives</div>
+    <div class="alt-card" style="border-color:#c0392b;">
+      <div class="alt-word">unless</div>
+      <div class="alt-meaning">= if NOT / except if</div>
+      <div class="alt-ex">"I'll come unless I'm too tired." (= if I'm not too tired)</div>
+    </div>
+    <div class="alt-card" style="border-color:var(--mid);">
+      <div class="alt-word">as long as</div>
+      <div class="alt-meaning">= only if / on condition that</div>
+      <div class="alt-ex">"I'll help as long as you help me too."</div>
+    </div>
+    <div class="alt-card" style="border-color:var(--gold);">
+      <div class="alt-word">provided that</div>
+      <div class="alt-meaning">= only if (more formal / written)</div>
+      <div class="alt-ex">"I'll sign provided that the salary is competitive."</div>
+    </div>
+    <div class="rb"><strong>💡 Key Rule</strong><ul><li><strong>unless</strong> = negative condition — don't add 'not': "Unless I study" NOT "Unless I don't study"</li><li><strong>as long as</strong> = condition must be met</li><li><strong>provided that</strong> = formal written/spoken contexts</li></ul></div>
+  </div>
+
+  <div class="section">
+    <div class="st">💼 Week 2 Idioms — First 4</div>
+    <div class="idiom-card"><div class="id-word">hit the ground running</div><div class="id-def">start something quickly with energy and enthusiasm</div><div class="id-ex">"She hit the ground running — 5 client calls on day one."</div></div>
+    <div class="idiom-card"><div class="id-word">bite the bullet</div><div class="id-def">accept a difficult situation with courage</div><div class="id-ex">"The salary was low, but I bit the bullet and took the job."</div></div>
+    <div class="idiom-card"><div class="id-word">the ball is in your court</div><div class="id-def">it is your responsibility to decide or act next</div><div class="id-ex">"I've made my offer. The ball is in your court now."</div></div>
+    <div class="idiom-card"><div class="id-word">go the extra mile</div><div class="id-def">do more than what is required; make extra effort</div><div class="id-ex">"To stand out at work, you need to go the extra mile."</div></div>
+  </div>
+
+  <div class="section">
+    <div class="st">🎯 My 3 Personal Targets — Week 2 Check-In</div>
+    <p style="font-size:13px;color:var(--gray);margin-bottom:12px;">Review your targets from Session 1. How are you doing? Update your notes here.</p>
+    <div class="target-card">
+      <div class="target-num">1</div>
+      <div class="target-label">Target 1 — Progress?</div>
+      <textarea class="target-input" placeholder="How is Target 1 going? What have you improved?" rows="2"></textarea>
+    </div>
+    <div class="target-card">
+      <div class="target-num">2</div>
+      <div class="target-label">Target 2 — Progress?</div>
+      <textarea class="target-input" placeholder="How is Target 2 going? What still needs work?" rows="2"></textarea>
+    </div>
+    <div class="target-card">
+      <div class="target-num">3</div>
+      <div class="target-label">Target 3 — Progress?</div>
+      <textarea class="target-input" placeholder="How is Target 3 going? What is your plan for Week 2?" rows="2"></textarea>
+    </div>
+    <p style="font-size:12px;color:var(--gray);margin-top:6px;text-align:center;">📸 Screenshot your notes to save them!</p>
+  </div>
+
+</div>
+<div class="ti"><h2>📖 Vocabulary Reference</h2><p>Session 4 key language with Chinese translations</p></div>
+<table>
+  <thead><tr><th>English</th><th>Use</th><th>中文</th></tr></thead>
+  <tbody>
+    <tr><td class="en">If + present simple, will + inf.</td><td>First conditional structure</td><td class="zh">第一条件句结构</td></tr>
+    <tr><td class="en">unless</td><td>= if not / except if</td><td class="zh">除非，如果不</td></tr>
+    <tr><td class="en">as long as</td><td>= only if / on condition that</td><td class="zh">只要，在…的条件下</td></tr>
+    <tr><td class="en">provided that</td><td>= only if (formal)</td><td class="zh">只要，条件是（正式）</td></tr>
+    <tr><td class="en">hit the ground running</td><td>Start fast with energy</td><td class="zh">迅速进入状态</td></tr>
+    <tr><td class="en">bite the bullet</td><td>Accept difficulty with courage</td><td class="zh">咬紧牙关，硬撑</td></tr>
+    <tr><td class="en">the ball is in your court</td><td>Your turn to decide / act</td><td class="zh">主动权在你手里</td></tr>
+    <tr><td class="en">go the extra mile</td><td>Do more than required</td><td class="zh">加倍努力，做出额外付出</td></tr>
+    <tr><td class="en">contingency</td><td>A backup plan for if things go wrong</td><td class="zh">应急计划，备用方案</td></tr>
+    <tr><td class="en">if-clause</td><td>The part of a sentence starting with 'if'</td><td class="zh">条件从句</td></tr>
+    <tr><td class="en">main clause</td><td>The result part: 'I will...'</td><td class="zh">主句</td></tr>
+  </tbody>
+</table>
+</body>
+</html>
