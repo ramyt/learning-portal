@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Plans Activity — Session 5</title>
+<style>
+  :root{--dark:#0D4F5C;--mid:#1A7A8A;--accent:#2EB8A0;--light:#E0F5F2;--gold:#D4820A;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .hdr{padding:16px 20px 12px;text-align:left;border-bottom:2px solid var(--mid);background:var(--dark);}
+  .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:4px;}
+  .hdr h1{font-size:20px;font-weight:700;}
+  .pw{display:flex;align-items:center;gap:10px;margin:10px 20px 0;}
+  .pb{flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;}
+  .pf{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
+  .pl{font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);}
+  .tb{flex:1;padding:12px 6px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tb.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .screen{display:none;padding:16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+  /* MATCHING */
+  .mc{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;}
+  .mc-sentence{font-size:15px;color:var(--white);margin-bottom:12px;line-height:1.6;}
+  .mc-opts{display:flex;flex-direction:column;gap:8px;}
+  .mc-opt{padding:10px 14px;background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.15);border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;transition:all 0.2s;}
+  .mc-opt.sel{border-color:var(--accent);background:rgba(46,184,160,0.15);}
+  .mc-opt.correct{border-color:var(--correct);background:rgba(39,174,96,0.15);color:#7defa7;pointer-events:none;}
+  .mc-opt.wrong{border-color:var(--wrong);background:rgba(231,76,60,0.15);color:#ffaaaa;}
+  .mc-opt.show-c{border-color:var(--correct);background:rgba(39,174,96,0.15);color:#7defa7;pointer-events:none;}
+  .mc-fb{margin-top:8px;font-size:13px;display:none;padding:8px 12px;border-radius:8px;}
+  .mc-fb.correct{background:rgba(39,174,96,0.12);color:#7defa7;display:block;}
+  .mc-fb.wrong{background:rgba(231,76,60,0.12);color:#ffaaaa;display:block;}
+  .sbtn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:14px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;}
+  .sbtn:disabled{opacity:0.4;pointer-events:none;}
+  /* BUILDER */
+  .bc{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;}
+  .bc-topic{font-size:18px;font-weight:700;margin-bottom:10px;}
+  .bc-lbl{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:0.5px;margin-bottom:6px;}
+  .struct-opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+  .so{padding:7px 14px;border:2px solid var(--mid);border-radius:20px;background:none;color:rgba(255,255,255,0.6);font-size:12px;cursor:pointer;transition:all 0.2s;}
+  .so.sel{border-color:var(--accent);color:var(--accent);background:rgba(46,184,160,0.1);}
+  .time-opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+  .to{padding:6px 12px;border:2px solid rgba(212,130,10,0.4);border-radius:20px;background:none;color:rgba(212,130,10,0.8);font-size:12px;cursor:pointer;transition:all 0.2s;}
+  .to.sel{border-color:var(--gold);color:var(--gold);background:rgba(212,130,10,0.1);}
+  .plan-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:14px;font-family:inherit;}
+  .plan-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .plan-input::placeholder{color:rgba(255,255,255,0.3);}
+  .plan-preview{background:rgba(46,184,160,0.08);border:1px solid rgba(46,184,160,0.3);border-radius:10px;padding:10px 12px;font-size:14px;min-height:44px;margin-top:8px;font-style:italic;}
+  .aloud{display:inline-flex;align-items:center;gap:6px;background:rgba(46,184,160,0.1);border:1px solid var(--accent);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--accent);margin-top:6px;}
+
+  /* HERO */
+  .hero {background: linear-gradient(135deg, var(--dark) 0%, var(--teal) 100%);color: white;padding: 28px 20px 24px;}
+  .hero .badge {font-size: 10px;letter-spacing: 3px;color: var(--accent);font-weight: 700;margin-bottom: 6px;}
+  .hero h1 {font-size: 24px;font-weight: 700;margin-bottom: 4px;}
+  .hero p {font-size: 13px;color: rgba(255, 255, 255, 0.7);}
+  .hero-pills {display: flex;flex-wrap: wrap;gap: 8px;margin-top: 14px;}
+  .hero-pill {background: rgba(255, 255, 255, 0.12);border: 1px solid rgba(255, 255, 255, 0.2);border-radius: 20px;padding: 4px 12px;font-size: 12px;font-weight: 600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
+
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hero">
+    <a class="hero-home" href="../../index.html" aria-label="Go to home">
+      <span>🏠</span>
+      Home
+    </a>
+  <div class="lbl">SESSION 5  ·  PLANS ACTIVITY</div>
+  <h1>🌟 Future Plans Practice</h1>
+  <div class="pw">
+    <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+    <div class="pl" id="pl">0% complete</div>
+  </div>
+</div>
+  </div>
+<div class="tab-bar">
+  <button class="tb active" onclick="showTab('match')" id="tabMatch">Part 1: Choose the Structure</button>
+  <button class="tb" onclick="showTab('build')" id="tabBuild">Part 2: Build My Plans</button>
+</div>
+
+<!-- PART 1 -->
+<div class="screen active" id="screenMatch">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Choose the best structure for each sentence. Say it aloud after!</p>
+  <div id="matchContainer"></div>
+</div>
+
+<!-- PART 2 -->
+<div class="screen" id="screenBuild">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Build YOUR real plan sentences. Choose a structure, a time word, then write!</p>
+  <div id="buildContainer"></div>
+</div>
+
+<script>
+const matchQs=[
+  {sentence:"_____ visit Japan next summer — the flights are already booked!",
+   opts:["I want to","I hope to","I am going to","I would like to"],
+   correct:"I am going to",
+   hint:"'Going to' = already decided and planned. The flights are booked — it IS happening!"},
+  {sentence:"She _____ become a doctor one day, but it will take many years.",
+   opts:["is going to","hopes to","want to","would like to"],
+   correct:"hopes to",
+   hint:"'Hope to' = a wish that is uncertain. 'One day' signals it's a dream, not a firm plan."},
+  {sentence:"I _____ speak to the manager about a pay rise, if that's okay.",
+   opts:["am going to","hope to","would like to","want to"],
+   correct:"would like to",
+   hint:"'Would like to' is polite and formal — perfect for requests and workplace situations."},
+  {sentence:"They _____ move to a bigger apartment next year.",
+   opts:["hope to","would like to","are going to","wants to"],
+   correct:"are going to",
+   hint:"'Are going to' = a decided plan for the near future."},
+  {sentence:"I _____ improve my cooking skills this year — I've been watching recipes online!",
+   opts:["hope to","am going to","would like to","is going to"],
+   correct:"want to",
+   hint:"'Want to' = a personal desire or goal. Casual and direct."},
+  {sentence:"He _____ travel the world before he turns 30.",
+   opts:["is going to","hopes to","want to","would like to"],
+   correct:"hopes to",
+   hint:"'Hopes to' = a dream he has but isn't certain about yet."},
+  {sentence:"I _____ reserve a table for dinner on Saturday, please.",
+   opts:["want to","am going to","hope to","would like to"],
+   correct:"would like to",
+   hint:"'Would like to' is the polite form — used in requests, restaurants, and formal situations."},
+  {sentence:"We _____ visit my parents this weekend — they're expecting us.",
+   opts:["hope to","would like to","are going to","want to"],
+   correct:"are going to",
+   hint:"'Are going to' = a confirmed plan. 'They're expecting us' confirms it is decided."},
+];
+
+let mAnswers=Array(matchQs.length).fill(null),mDone=false;
+const mCont=document.getElementById('matchContainer');
+matchQs.forEach((q,qi)=>{
+  const card=document.createElement('div');card.className='mc';card.id='mc'+qi;
+  const shuffled=[...q.opts].sort(()=>Math.random()-0.5);
+  card.innerHTML=`<div class="mc-sentence">"${q.sentence.replace('_____','<strong style="color:var(--accent)">_____</strong>')}"</div>
+    <div class="mc-opts">${shuffled.map(o=>`<button class="mc-opt" onclick="selM(${qi},'${o.replace(/'/g,"\\'")}',this)">${o}</button>`).join('')}</div>
+    <div class="mc-fb" id="mfb${qi}"></div>`;
+  mCont.appendChild(card);
+});
+const mSub=document.createElement('button');
+mSub.className='sbtn';mSub.textContent='Check Answers ✓';mSub.disabled=true;mSub.onclick=submitM;
+mCont.appendChild(mSub);
+
+function selM(qi,opt,btn){
+  if(mDone)return;
+  document.getElementById('mc'+qi).querySelectorAll('.mc-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');mAnswers[qi]=opt;
+  mSub.disabled=mAnswers.some(a=>a===null);upd();
+}
+function submitM(){
+  mDone=true;let sc=0;
+  matchQs.forEach((q,qi)=>{
+    const ok=mAnswers[qi]===q.correct;if(ok)sc++;
+    document.getElementById('mc'+qi).querySelectorAll('.mc-opt').forEach(b=>{
+      if(b.textContent===q.correct)b.classList.add('show-c');
+      else if(b.classList.contains('sel')&&!ok)b.classList.add('wrong');
+      b.classList.remove('sel');
+      b.style.pointerEvents='none';
+    });
+    const fb=document.getElementById('mfb'+qi);
+    fb.className='mc-fb '+(ok?'correct':'wrong');
+    fb.textContent=ok?'✅ Correct! '+q.hint:'❌ Best answer: "'+q.correct+'". '+q.hint;
+  });
+  mSub.style.display='none';
+  const el=document.createElement('div');
+  el.style.cssText='text-align:center;padding:18px;background:rgba(46,184,160,0.1);border-radius:14px;margin-top:12px;';
+  el.innerHTML=`<div style="font-size:28px;font-weight:700;color:var(--accent);">${sc}/${matchQs.length}</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);margin:8px 0;">${sc>=7?'🌟 Excellent! Go to Part 2 →':sc>=5?'👍 Good work! Review the hints, then try Part 2.':'💪 Read each hint carefully before Part 2.'}</div>
+    <button style="margin-top:8px;padding:10px 22px;background:var(--accent);border:none;border-radius:10px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;" onclick="showTab('build')">Go to Part 2 →</button>`;
+  mCont.appendChild(el);upd();
+}
+
+// PART 2
+const buildTopics=[
+  {emoji:"✈️",topic:"Travel",prompt:"Where do you want to go?"},
+  {emoji:"💼",topic:"Work / Career",prompt:"What do you want to do with your career?"},
+  {emoji:"📚",topic:"Learning",prompt:"What do you want to learn?"},
+  {emoji:"👨‍👩‍👧",topic:"Family & Life",prompt:"What do you hope for in your personal life?"},
+  {emoji:"🏠",topic:"Home",prompt:"What are your plans for your living situation?"},
+];
+const structures=["want to","would like to","am going to","hope to"];
+const timeWords=["tomorrow","this weekend","next week","next month","next year","this year","one day","someday","in the future"];
+let buildData=buildTopics.map(()=>({struct:null,time:null,text:""}));
+
+const bc=document.getElementById('buildContainer');
+buildTopics.forEach((t,ti)=>{
+  const card=document.createElement('div');card.className='bc';
+  card.innerHTML=`
+    <div class="bc-topic">${t.emoji} ${t.topic}</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;font-style:italic;">${t.prompt}</div>
+    <div class="bc-lbl">Choose a structure:</div>
+    <div class="struct-opts">${structures.map(s=>`<button class="so" onclick="selStruct(${ti},'${s}',this)">${s}</button>`).join('')}</div>
+    <div class="bc-lbl">Choose a time word:</div>
+    <div class="time-opts">${timeWords.map(w=>`<button class="to" onclick="selTime(${ti},'${w}',this)">${w}</button>`).join('')}</div>
+    <input type="text" class="plan-input" placeholder="Write the rest of your sentence here..." oninput="updatePlan(${ti},this.value)"/>
+    <div class="plan-preview" id="pp${ti}">Your plan will appear here...</div>
+    <div><span class="aloud">🗣️ Say your full sentence aloud!</span></div>`;
+  bc.appendChild(card);
+});
+
+function selStruct(ti,s,btn){
+  buildData[ti].struct=s;
+  bc.querySelectorAll('.bc')[ti].querySelectorAll('.so').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');updatePlan(ti,bc.querySelectorAll('.bc')[ti].querySelector('.plan-input').value);upd();
+}
+function selTime(ti,t,btn){
+  buildData[ti].time=t;
+  bc.querySelectorAll('.bc')[ti].querySelectorAll('.to').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');updatePlan(ti,bc.querySelectorAll('.bc')[ti].querySelector('.plan-input').value);upd();
+}
+function updatePlan(ti,val){
+  buildData[ti].text=val;
+  const el=document.getElementById('pp'+ti);
+  const d=buildData[ti];
+  if(d.struct&&val.trim()){
+    const subject=ti===0?"I":"I";
+    const verb=d.struct==="am going to"?"am going to":d.struct;
+    const time=d.time?" "+d.time:"";
+    el.textContent=`I ${verb} ${val.trim()}${time}.`;
+    el.style.color='var(--white)';
+  } else {
+    el.textContent='Your plan will appear here...';
+    el.style.color='rgba(255,255,255,0.3)';
+  }
+  upd();
+}
+
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');upd();
+}
+function upd(){
+  const mDoneN=mAnswers.filter(a=>a!==null).length;
+  const bDoneN=buildData.filter(d=>d.struct&&d.text.trim()).length;
+  const total=matchQs.length+buildTopics.length;
+  const pct=Math.round((mDoneN+bDoneN)/total*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pl').textContent=pct+'% complete';
+}
+</script>
+</body>
+</html>

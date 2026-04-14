@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Phonics — Session 5</title>
+<style>
+  :root{
+    --dark:#0D4F5C;--mid:#1A7A8A;--accent:#2EB8A0;--light:#E0F5F2;
+    --gold:#D4820A;--white:#fff;--gray:#888;
+    --correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);
+    --red:#C0392B;--redL:#FFC9C9;--redBg:#FDECEA;
+    --green:#1A7A3A;--greenL:#A8E6BC;--greenBg:#EAF7EE;
+    --blue:#1A5C8A;--blueL:#A8C8E8;--blueBg:#EAF2FB;
+    --orange:#C45E00;--orangeL:#FFD8A8;--orangeBg:#FFF3E0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .hdr{padding:14px 20px 10px;text-align:left;border-bottom:3px solid var(--gold);background:var(--dark);}
+  .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--gold);font-weight:700;margin-bottom:4px;}
+  .hdr h1{font-size:20px;font-weight:700;}
+  .hdr p{font-size:12px;color:rgba(255,255,255,0.6);margin-top:3px;}
+  .pw{display:flex;align-items:center;gap:10px;margin:8px 20px 0;}
+  .pb{flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;}
+  .pf{height:100%;background:var(--gold);border-radius:3px;transition:width 0.4s;}
+  .pl{font-size:12px;color:var(--gold);font-weight:600;white-space:nowrap;}
+  .path-banner{display:flex;gap:10px;padding:10px 16px;background:rgba(212,130,10,0.15);border-bottom:1px solid rgba(212,130,10,0.3);}
+  .path-btn{flex:1;padding:10px 8px;border-radius:10px;border:2px solid;font-size:12px;font-weight:700;cursor:pointer;text-align:center;transition:all 0.2s;}
+  .path-btn.a{border-color:var(--orange);color:var(--orange);background:none;}
+  .path-btn.b{border-color:var(--accent);color:var(--accent);background:none;}
+  .path-btn.sel-a{background:var(--orangeBg);color:var(--orange);}
+  .path-btn.sel-b{background:rgba(46,184,160,0.15);color:var(--accent);}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);overflow-x:auto;}
+  .tb{flex-shrink:0;padding:10px 12px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;}
+  .tb.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .screen{display:none;padding:14px 16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+  .sound-card{border-radius:14px;padding:18px 16px;margin-bottom:12px;text-align:center;box-shadow:var(--shadow);}
+  .sound-card.red{background:var(--red);border:2px solid var(--redL);}
+  .sound-card.green{background:var(--green);border:2px solid var(--greenL);}
+  .sound-card.blue{background:var(--blue);border:2px solid var(--blueL);}
+  .sound-card.orange{background:var(--orange);border:2px solid var(--orangeL);}
+  .s-badge{display:inline-block;padding:4px 16px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:6px;background:rgba(0,0,0,0.2);color:var(--white);}
+  .s-name{font-size:26px;font-weight:700;color:var(--white);margin-bottom:6px;}
+  .s-tip{font-size:13px;color:rgba(255,255,255,0.9);line-height:1.5;margin-bottom:12px;padding:10px 12px;background:rgba(0,0,0,0.15);border-radius:10px;}
+  .s-words{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:10px;}
+  .s-word{background:rgba(0,0,0,0.2);border-radius:10px;padding:7px 14px;font-size:15px;font-weight:700;}
+  .s-word.food-word{border:2px solid rgba(255,255,255,0.4);}
+  .s-lbl{font-size:10px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .new-badge{display:inline-block;background:var(--gold);color:var(--dark);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:8px;}
+  .zh-btn{background:none;border:1px solid rgba(255,200,200,0.5);color:#ffcccc;font-size:12px;padding:5px 14px;border-radius:20px;cursor:pointer;margin-bottom:8px;}
+  .zh-text{font-size:18px;color:#ffcccc;font-weight:700;padding:8px 14px;background:rgba(0,0,0,0.2);border-radius:10px;display:none;margin-bottom:10px;}
+  .zh-text.show{display:block;}
+  .next-btn{width:100%;padding:14px;background:var(--gold);border:none;border-radius:14px;color:var(--dark);font-size:16px;font-weight:700;cursor:pointer;}
+  .dots{display:flex;justify-content:center;gap:10px;margin:10px 0;}
+  .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);transition:all 0.2s;}
+  .sort-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;}
+  .sort-word{font-size:28px;font-weight:700;color:var(--gold);margin-bottom:6px;}
+  .sort-hint{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;}
+  .sort-opts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+  .sort-opt{padding:10px 18px;border:3px solid transparent;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+  .so-red{background:var(--redBg);color:var(--red);border-color:var(--red);}
+  .so-green{background:var(--greenBg);color:var(--green);border-color:var(--green);}
+  .so-blue{background:var(--blueBg);color:var(--blue);border-color:var(--blue);}
+  .so-orange{background:var(--orangeBg);color:var(--orange);border-color:var(--orange);}
+  .so-correct{transform:scale(1.06);box-shadow:0 0 0 3px rgba(39,174,96,0.5);pointer-events:none;}
+  .so-wrong{opacity:0.35;pointer-events:none;}
+  .sort-fb{margin-top:8px;font-size:13px;display:none;padding:8px 12px;border-radius:8px;}
+  .sort-fb.correct{background:rgba(39,174,96,0.12);color:#7defa7;display:block;}
+  .sort-fb.wrong{background:rgba(231,76,60,0.12);color:#ffaaaa;display:block;}
+
+  /* HERO */
+  .hero {background: linear-gradient(135deg, var(--dark) 0%, var(--teal) 100%);color: white;padding: 28px 20px 24px;}
+  .hero .badge {font-size: 10px;letter-spacing: 3px;color: var(--accent);font-weight: 700;margin-bottom: 6px;}
+  .hero h1 {font-size: 24px;font-weight: 700;margin-bottom: 4px;}
+  .hero p {font-size: 13px;color: rgba(255, 255, 255, 0.7);}
+  .hero-pills {display: flex;flex-wrap: wrap;gap: 8px;margin-top: 14px;}
+  .hero-pill {background: rgba(255, 255, 255, 0.12);border: 1px solid rgba(255, 255, 255, 0.2);border-radius: 20px;padding: 4px 12px;font-size: 12px;font-weight: 600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
+</style>
+</head>
+<body>
+    <div class="hdr">
+  <div class="hero">
+    <a class="hero-home" href="../../index.html" aria-label="Go to home">
+      <span>🏠</span>
+      Home
+    </a>
+      <div class="lbl">SESSION 5  ·  PHONICS</div>
+      <h1>🔤 Sound Warm-Up</h1>
+      <p>Review your sounds + one new one if you're ready!</p>
+      <div class="pw">
+        <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+        <div class="pl" id="pl">Start →</div>
+      </div>
+    </div>
+  </div>
+
+<div class="path-banner">
+  <button class="path-btn a" id="btnA" onclick="setPath('A')">🟠 PATH A — Learn Short U (new!)</button>
+  <button class="path-btn b" id="btnB" onclick="setPath('B')">🔁 PATH B — Recap 3 sounds first</button>
+</div>
+
+<div class="tab-bar">
+  <button class="tb active" onclick="showTab('sounds')" id="tabSounds">📖 Sounds</button>
+  <button class="tb" onclick="showTab('sort')" id="tabSort">🎯 Sound Sorting</button>
+</div>
+
+<div class="screen active" id="screenSounds">
+  <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:12px;text-align:center;">Select a path above, then work through each sound card with your teacher.</p>
+  <div id="soundCards"></div>
+  <div class="dots" id="dots"></div>
+  <button class="zh-btn" id="zhBtn" onclick="revealZh()">🇨🇳 Chinese description</button>
+  <div class="zh-text" id="zhText"></div>
+  <button class="next-btn" id="nextBtn" onclick="nextSound()">Next Sound →</button>
+</div>
+
+<div class="screen" id="screenSort">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;text-align:center;">Your teacher says each word. Tap the correct colour group!</p>
+  <div id="sortContainer"></div>
+</div>
+
+<script>
+const allSounds=[
+  {id:"red",color:"red",dotCol:"var(--redL)",badge:"🔴 Short A",name:"Short A",
+   tip:"Wide open mouth — tongue LOW and FLAT. Short and quick.",
+   general:["cat","hat","pan","bag"],extra:["travel","plan","back","family"],
+   foodLife:["sandwich","salad","jam"],zh:"短促'啊'音 — 嘴巴张大，舌头低平",isNew:false},
+  {id:"green",color:"green",dotCol:"var(--greenL)",badge:"🟢 Long EE",name:"Long EE",
+   tip:"Spread lips WIDE like a big smile. Hold the sound longer.",
+   general:["see","free","me","he"],extra:["dream","teach","clean","sleep"],
+   foodLife:["tea","meat","pea"],zh:"长'依'音 — 像微笑张开嘴唇，发长音",isNew:false},
+  {id:"blue",color:"blue",dotCol:"var(--blueL)",badge:"🔵 Short O",name:"Short O",
+   tip:"Round lips like a small circle. Short and quick.",
+   general:["hot","top","pot","dog"],extra:["job","shop","stop","not"],
+   foodLife:["coffee","pot"],zh:"圆嘴短'哦'音 — 嘴唇呈小圆形，短促",isNew:false},
+  {id:"orange",color:"orange",dotCol:"var(--orangeL)",badge:"🟠 Short U",name:"Short U",
+   tip:"Relaxed mouth — not too open, not too closed. A very natural, quick sound. Like a small grunt!",
+   general:["cup","bus","fun","run"],extra:["study","lunch","but","come"],
+   foodLife:["butter","muffin","cut"],zh:"短促'啊'音（松弛）— 嘴巴自然微开，快速轻松发音",isNew:true},
+];
+
+const sortWords=[
+  {word:"hat",correct:"red"},{word:"tea",correct:"green"},{word:"cup",correct:"orange"},
+  {word:"hot",correct:"blue"},{word:"pea",correct:"green"},{word:"bus",correct:"orange"},
+  {word:"cat",correct:"red"},{word:"pot",correct:"blue"},{word:"lunch",correct:"orange"},
+  {word:"sandwich",correct:"red"},{word:"meat",correct:"green"},{word:"coffee",correct:"blue"},
+  {word:"study",correct:"orange"},{word:"salad",correct:"red"},{word:"sleep",correct:"green"},
+];
+
+let currentPath="A";
+let currentSoundIdx=0;
+let activeSounds=[];
+let sortAnswers=Array(sortWords.length).fill(null);
+
+function setPath(path){
+  currentPath=path;
+  document.getElementById('btnA').className='path-btn a'+(path==="A"?" sel-a":"");
+  document.getElementById('btnB').className='path-btn b'+(path==="B"?" sel-b":"");
+  // Path A: all 4 sounds (recap 3 + new Short U)
+  // Path B: only 3 existing sounds (recap only)
+  activeSounds = path==="A" ? allSounds : allSounds.slice(0,3);
+  currentSoundIdx=0;
+  buildDots();
+  buildCard(0);
+}
+
+function buildDots(){
+  const dc=document.getElementById('dots');
+  dc.innerHTML=activeSounds.map((_,i)=>`<div class="dot" id="dot${i}" style="background:${i===0?activeSounds[i].dotCol:'rgba(255,255,255,0.2)'}"></div>`).join('');
+}
+
+function buildCard(i){
+  const s=activeSounds[i];
+  document.getElementById('soundCards').innerHTML=`
+    <div class="sound-card ${s.color}">
+      <div class="s-badge">${s.badge}${s.isNew?'<span class="new-badge">✨ NEW</span>':''}</div>
+      <div class="s-name">${s.name} Sound</div>
+      <div class="s-tip">👄 ${s.tip}</div>
+      <div class="s-lbl">Practise these words:</div>
+      <div class="s-words">${s.general.map(w=>`<div class="s-word">${w}</div>`).join('')}</div>
+      <div class="s-lbl">Also try:</div>
+      <div class="s-words">${s.extra.map(w=>`<div class="s-word">${w}</div>`).join('')}</div>
+      <div class="s-lbl">🍽️ In today's vocabulary:</div>
+      <div class="s-words">${s.foodLife.map(w=>`<div class="s-word food-word">${w}</div>`).join('')}</div>
+    </div>`;
+  document.getElementById('zhText').textContent=s.zh;
+  document.getElementById('zhText').classList.remove('show');
+  document.getElementById('zhBtn').style.display='block';
+  activeSounds.forEach((_,j)=>{
+    const d=document.getElementById('dot'+j);
+    if(d)d.style.background=j===i?activeSounds[j].dotCol:'rgba(255,255,255,0.2)';
+  });
+  document.getElementById('nextBtn').textContent=i<activeSounds.length-1?'Next Sound →':'Go to Sound Sorting! 🎯';
+  upd();
+}
+
+function revealZh(){
+  document.getElementById('zhText').classList.add('show');
+  document.getElementById('zhBtn').style.display='none';
+}
+function nextSound(){
+  if(currentSoundIdx<activeSounds.length-1){currentSoundIdx++;buildCard(currentSoundIdx);}
+  else showTab('sort');
+}
+
+// Build sort exercise
+const sortCont=document.getElementById('sortContainer');
+// Determine which colour options to show based on path
+function buildSortCards(){
+  sortCont.innerHTML='';
+  const wordsToUse = currentPath==="A" ? sortWords : sortWords.filter(w=>w.correct!=="orange");
+  wordsToUse.forEach((q,fi)=>{
+    const card=document.createElement('div');card.className='sort-card';
+    const opts = currentPath==="A"
+      ? [{cls:"so-red",col:"red",label:"🔴 Short A"},{cls:"so-green",col:"green",label:"🟢 Long EE"},{cls:"so-blue",col:"blue",label:"🔵 Short O"},{cls:"so-orange",col:"orange",label:"🟠 Short U"}]
+      : [{cls:"so-red",col:"red",label:"🔴 Short A"},{cls:"so-green",col:"green",label:"🟢 Long EE"},{cls:"so-blue",col:"blue",label:"🔵 Short O"}];
+    card.innerHTML=`
+      <div class="sort-word">${q.word}</div>
+      <div class="sort-hint">Which sound group does this word belong to?</div>
+      <div class="sort-opts">${opts.map(o=>`<button class="sort-opt ${o.cls}" onclick="ansSort(${fi},'${o.col}',this,'${q.correct}')">${o.label}</button>`).join('')}</div>
+      <div class="sort-fb" id="sfb${fi}"></div>`;
+    sortCont.appendChild(card);
+  });
+}
+
+function ansSort(fi,color,btn,correct){
+  if(sortAnswers[fi]!==null)return;
+  sortAnswers[fi]=color;
+  const ok=color===correct;
+  btn.closest('.sort-opts').querySelectorAll('.sort-opt').forEach(b=>{
+    const bc=b.className.includes('red')?"red":b.className.includes('green')?"green":b.className.includes('blue')?"blue":"orange";
+    if(bc===correct)b.classList.add('so-correct');
+    else if(b===btn&&!ok)b.classList.add('so-wrong');
+  });
+  const hint=sortWords.find(w=>w.word===btn.closest('.sort-card').querySelector('.sort-word').textContent);
+  const fb=document.getElementById('sfb'+fi);
+  fb.className='sort-fb '+(ok?'correct':'wrong');
+  fb.textContent=ok?'✅ Correct!':'❌ Listen again — what sound do you hear in "'+btn.closest('.sort-card').querySelector('.sort-word').textContent+'"?';
+  upd();
+}
+
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  if(tab==='sort')buildSortCards();
+  upd();
+}
+
+function upd(){
+  const sDone=currentSoundIdx;
+  const sortDone=sortAnswers.filter(a=>a!==null).length;
+  const total=activeSounds.length+(currentPath==="A"?sortWords.length:sortWords.filter(w=>w.correct!=="orange").length);
+  const pct=Math.round((sDone+sortDone)/total*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pl').textContent=pct+'% done';
+}
+
+// Default: Path A
+setPath('A');
+</script>
+</body>
+</html>

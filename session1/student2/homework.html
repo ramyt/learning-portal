@@ -16,11 +16,13 @@
   body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--offwhite); color: #1a1a1a; padding-bottom: 50px; }
 
   .hero { background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 100%); padding: 28px 20px 22px; color: white; position: relative; overflow: hidden; }
-  .hero::after { content:''; position:absolute; right:-20px; top:-20px; width:140px; height:140px; border-radius:50%; background:rgba(255,255,255,0.05); }
   .hero .badge { font-size: 10px; letter-spacing: 3px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
   .hero h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
   .hero p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; }
   .hero-time { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 5px 14px; margin-top: 14px; font-size: 13px; font-weight: 600; }
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
 
   .content { padding: 0 16px; }
 
@@ -76,7 +78,11 @@
 <body>
 
 <div class="hero">
-  <div class="badge">HOMEWORK · S2 SESSION 1</div>
+      <a class="hero-home" href="../../index.html" aria-label="Go to home">
+      <span>🏠</span>
+      Home
+    </a>
+<div class="badge">HOMEWORK · S2 SESSION 1</div>
   <h1>📱 Tonight's English Tasks</h1>
   <p>You spoke well today. Keep the momentum going at home — consistency is everything.</p>
   <div class="hero-time">⏱ Total time: about 1.5 hours</div>

@@ -4,7 +4,7 @@ const path = require("path");
 const rootDir = __dirname;
 
 // ⭐ Define new sessions here
-const newSessions = ["session4"]; // leave empty [] if none
+const newSessions = ["session5"]; // leave empty [] if none
 
 // Session titles
 const sessionTitles = {
@@ -69,7 +69,7 @@ function generateStudentContent(student) {
     const isNew = newSessions.includes(session);
 
     html += `
-<div class="card ${isNew ? "new" : ""}">
+<div class="card ${isNew ? "new" : ""}" data-session="${session}">
   <div class="card-header" onclick="toggleCard(this)">
     <h3>${title} ${isNew ? "⭐" : ""}</h3>
     <span class="toggle-icon">${isNew ? "▲" : "▼"}</span>
@@ -378,6 +378,21 @@ body {
 
 <script>
 
+function getIndexState() {
+  return JSON.parse(localStorage.getItem("indexState") || '{"selectedStudent":"student1","openSessions":{}}');
+}
+
+function saveIndexState(state) {
+  localStorage.setItem("indexState", JSON.stringify(state));
+}
+
+function setCardState(card, open) {
+  const body = card.querySelector(".card-body");
+  const icon = card.querySelector(".toggle-icon");
+  body.style.display = open ? "block" : "none";
+  icon.textContent = open ? "▲" : "▼";
+}
+
 // Toggle students
 function show(student){
   document.getElementById("student1").style.display="none";
@@ -388,21 +403,32 @@ function show(student){
   btn2.classList.remove("active");
   (student==="student1"?btn1:btn2).classList.add("active");
 
+  const state = getIndexState();
+  state.selectedStudent = student;
+  saveIndexState(state);
   scrollToLatest();
 }
 
-// Collapse toggle
 function toggleCard(el){
-  const body = el.nextElementSibling;
-  const icon = el.querySelector(".toggle-icon");
+  const card = el.closest(".card");
+  const body = card.querySelector(".card-body");
+  const open = body.style.display === "none";
+  const student = card.closest("#student1") ? "student1" : "student2";
+  const sessionId = card.dataset.session;
+  if (!sessionId) return;
 
-  if(body.style.display==="none"){
-    body.style.display="block";
-    icon.textContent="▲";
+  document.querySelectorAll('#' + student + ' .card').forEach(c => {
+    setCardState(c, c === card ? open : false);
+  });
+
+  const state = getIndexState();
+  state.openSessions = state.openSessions || {};
+  if (open) {
+    state.openSessions[student] = sessionId;
   } else {
-    body.style.display="none";
-    icon.textContent="▼";
+    delete state.openSessions[student];
   }
+  saveIndexState(state);
 }
 
 // Search
@@ -422,6 +448,23 @@ function scrollToLatest(){
 }
 
 window.onload = function(){
+  const state = getIndexState();
+  const student = state.selectedStudent || "student1";
+  show(student);
+
+  const studentState = state.openSessions ? state.openSessions[student] : null;
+  let sessionId = null;
+  if (typeof studentState === 'string') {
+    sessionId = studentState;
+  } else if (studentState && typeof studentState === 'object') {
+    sessionId = Object.keys(studentState).find(id => studentState[id]);
+  }
+
+  if (sessionId) {
+    document.querySelectorAll('#' + student + ' .card').forEach(card => {
+      setCardState(card, card.dataset.session === sessionId);
+    });
+  }
   scrollToLatest();
 };
 

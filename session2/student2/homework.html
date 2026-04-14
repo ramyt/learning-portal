@@ -13,6 +13,9 @@
   .hero h1{font-size:24px;font-weight:700;margin-bottom:4px;}
   .hero p{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5;}
   .hero-time{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border-radius:20px;padding:5px 14px;margin-top:14px;font-size:13px;font-weight:600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
   .content{padding:0 16px;}
   .intro{background:var(--goldbg);border:1px solid #f5d9a8;border-radius:14px;padding:14px 16px;margin:18px 0 0;font-size:14px;color:var(--slate);line-height:1.6;border-left:4px solid var(--gold);}
   .intro strong{color:var(--gold);}
@@ -50,6 +53,10 @@
 </head>
 <body>
 <div class="hero">
+  <a class="hero-home" href="../../index.html" aria-label="Go to home">
+    <span>🏠</span>
+    Home
+  </a>
   <div class="badge">HOMEWORK · S2 SESSION 2</div>
   <h1>📱 Tonight's English Tasks</h1>
   <p>Strong session today. Now lock in what you learned with focused home practice.</p>

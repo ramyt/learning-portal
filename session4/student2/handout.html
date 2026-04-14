@@ -14,6 +14,9 @@
   .hero p{font-size:13px;color:rgba(255,255,255,0.7);}
   .hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
   .hero-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
   .content{padding:0 16px;}
   .section{margin-top:22px;}
   .st{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--mid);text-transform:uppercase;padding-bottom:6px;border-bottom:2px solid var(--light);margin-bottom:14px;}
@@ -58,6 +61,10 @@
 </head>
 <body>
 <div class="hero">
+  <a class="hero-home" href="../../index.html" aria-label="Go to home">
+    <span>🏠</span>
+    Home
+  </a>
   <div class="badge">MY ENGLISH HANDOUT · WEEK 2 BEGINS</div>
   <h1>Session 4 — First Conditional</h1>
   <p>Real plans, real conditions, real English.</p>

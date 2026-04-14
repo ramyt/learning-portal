@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Hypothetical Activity — S5 Session 5</title>
+<style>
+  :root{--dark:#2D1A4A;--mid:#5B3A8A;--accent:#9B6DFF;--light:#EEE8FF;--gold:#D4820A;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .hdr{padding:16px 20px 12px;text-align:left;border-bottom:2px solid var(--mid);}
+  .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:4px;}
+  .hdr h1{font-size:20px;font-weight:700;}
+  .pw{display:flex;align-items:center;gap:10px;margin:10px 20px 0;}
+  .pb{flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;}
+  .pf{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
+  .pl{font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);}
+  .tb{flex:1;padding:12px 6px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tb.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .screen{display:none;padding:16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+
+  /* PART 1 — IDENTIFY */
+  .id-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .id-sentence{font-size:16px;color:var(--white);margin-bottom:14px;line-height:1.5;font-style:italic;padding:12px;background:rgba(255,255,255,0.05);border-radius:10px;}
+  .id-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .id-btn{padding:16px 10px;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:12px;color:var(--white);font-size:13px;font-weight:700;cursor:pointer;text-align:center;transition:all 0.2s;}
+  .id-btn.first{border-color:var(--correct);}
+  .id-btn.second{border-color:var(--accent);}
+  .id-btn.chosen-correct{background:rgba(39,174,96,0.2);border-color:var(--correct);}
+  .id-btn.chosen-wrong{background:rgba(231,76,60,0.2);border-color:var(--wrong);}
+  .id-btn.highlight{background:rgba(39,174,96,0.15);}
+  .id-btn.dis{pointer-events:none;}
+  .id-fb{margin-top:10px;padding:10px;border-radius:10px;font-size:13px;display:none;}
+  .id-fb.correct{background:rgba(39,174,96,0.15);border:1px solid var(--correct);color:#7defa7;display:block;}
+  .id-fb.wrong{background:rgba(231,76,60,0.15);border:1px solid var(--wrong);color:#ffaaaa;display:block;}
+
+  /* PART 2 — COMPLETION */
+  .comp-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .comp-label{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .comp-starter{font-size:16px;color:var(--white);font-weight:600;margin-bottom:12px;padding:10px 12px;background:rgba(155,109,255,0.1);border-radius:8px;}
+  .comp-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:15px;font-family:inherit;}
+  .comp-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .comp-input::placeholder{color:rgba(255,255,255,0.3);}
+  .reveal-btn{padding:7px 16px;background:none;border:1px solid rgba(155,109,255,0.4);color:var(--accent);border-radius:20px;cursor:pointer;font-size:12px;margin-top:8px;}
+  .model-ans{background:rgba(155,109,255,0.1);border:1px solid var(--accent);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:13px;color:var(--white);display:none;}
+  .model-ans.show{display:block;}
+  .aloud{display:inline-flex;align-items:center;gap:6px;background:rgba(155,109,255,0.1);border:1px solid var(--accent);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--accent);margin-top:6px;}
+
+  /* PART 3 — IDIOMS */
+  .idc{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:12px;}
+  .idiom-name{font-size:18px;font-weight:700;color:var(--accent);margin-bottom:4px;}
+  .idiom-def{font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:10px;}
+  .idiom-situation{font-size:14px;color:rgba(255,255,255,0.85);margin-bottom:10px;font-style:italic;padding:10px;background:rgba(255,255,255,0.05);border-radius:8px;}
+  .idiom-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:14px;font-family:inherit;}
+  .idiom-input:focus{outline:2px solid var(--accent);}
+  .idiom-input::placeholder{color:rgba(255,255,255,0.3);}
+
+  /* HERO */
+  .hero {background: linear-gradient(135deg, var(--dark) 0%, var(--teal) 100%);color: white;padding: 28px 20px 24px;}
+  .hero .badge {font-size: 10px;letter-spacing: 3px;color: var(--accent);font-weight: 700;margin-bottom: 6px;}
+  .hero h1 {font-size: 24px;font-weight: 700;margin-bottom: 4px;}
+  .hero p {font-size: 13px;color: rgba(255, 255, 255, 0.7);}
+  .hero-pills {display: flex;flex-wrap: wrap;gap: 8px;margin-top: 14px;}
+  .hero-pill {background: rgba(255, 255, 255, 0.12);border: 1px solid rgba(255, 255, 255, 0.2);border-radius: 20px;padding: 4px 12px;font-size: 12px;font-weight: 600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
+
+</style>
+</head>
+<body>
+    <div class="hdr">
+  <div class="hero">
+    <a class="hero-home" href="../../index.html" aria-label="Go to home">
+      <span>🏠</span>
+      Home
+    </a>
+      <div class="lbl">SESSION 5  ·  HYPOTHETICAL ACTIVITY</div>
+      <h1>💭 Second Conditional Practice</h1>
+      <div class="pw">
+        <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+        <div class="pl" id="pl">0% complete</div>
+      </div>
+    </div>
+    </div>
+<div class="tab-bar">
+  <button class="tb active" onclick="showTab('id')" id="tabId">Part 1: 1st or 2nd?</button>
+  <button class="tb" onclick="showTab('comp')" id="tabComp">Part 2: Complete</button>
+  <button class="tb" onclick="showTab('idiom')" id="tabIdiom">Part 3: Idioms</button>
+</div>
+
+<!-- PART 1 -->
+<div class="screen active" id="screenId">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Is each sentence first conditional (real) or second conditional (imaginary)? Say it aloud after!</p>
+  <div id="idContainer"></div>
+</div>
+
+<!-- PART 2 -->
+<div class="screen" id="screenComp">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Complete each sentence using the second conditional. Reveal the model — then say yours aloud!</p>
+  <div id="compContainer"></div>
+</div>
+
+<!-- PART 3 -->
+<div class="screen" id="screenIdiom">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Write a sentence using each of the 4 new idioms in the given situation. Say it aloud!</p>
+  <div id="idiomContainer"></div>
+</div>
+
+<script>
+// PART 1
+const idQs=[
+  {sentence:"If it rains this afternoon, I will cancel the outdoor meeting.",correct:"first",reason:"'This afternoon' is real and possible. First conditional: if + present simple + will."},
+  {sentence:"If I were a musician, I would write a song about this city.",correct:"second",reason:"Being a musician is imaginary/hypothetical. Second conditional: if + past simple + would."},
+  {sentence:"I would travel to 50 countries if I had unlimited money.",correct:"second",reason:"Unlimited money is hypothetical — not real. Second conditional."},
+  {sentence:"If you study hard, you will pass the exam next month.",correct:"first",reason:"Studying and passing are possible. First conditional: if + present simple + will."},
+  {sentence:"If I were invisible for a day, I would explore the most restricted places on earth.",correct:"second",reason:"Being invisible is impossible. Second conditional: if + past simple + would."},
+  {sentence:"She will call you if she finishes early.",correct:"first",reason:"Finishing early is possible. First conditional: if + present simple + will."},
+  {sentence:"If you could live anywhere, where would you choose?",correct:"second",reason:"'Could' signals this is hypothetical. Second conditional: if + past simple + would."},
+  {sentence:"If they don't fix the server today, we will lose the data.",correct:"first",reason:"A real and immediate concern. First conditional: if + present simple + will."},
+];
+let idAnswers=Array(idQs.length).fill(null);
+const idCont=document.getElementById('idContainer');
+idQs.forEach((q,qi)=>{
+  const card=document.createElement('div');card.className='id-card';card.id='idc'+qi;
+  card.innerHTML=`<div class="id-sentence">"${q.sentence}"</div>
+    <div class="id-choices">
+      <button class="id-btn first" onclick="ansId(${qi},'first',this)">✅ First Conditional<br><small style="font-weight:400;font-size:11px;">Real / Possible</small></button>
+      <button class="id-btn second" onclick="ansId(${qi},'second',this)">💭 Second Conditional<br><small style="font-weight:400;font-size:11px;">Imaginary / Unreal</small></button>
+    </div>
+    <div class="id-fb" id="idfb${qi}"></div>`;
+  idCont.appendChild(card);
+});
+function ansId(qi,choice,btn){
+  if(idAnswers[qi]!==null)return;
+  idAnswers[qi]=choice;
+  const ok=choice===idQs[qi].correct;
+  document.getElementById('idc'+qi).querySelectorAll('.id-btn').forEach(b=>{
+    b.classList.add('dis');
+    const bc=b.classList.contains('first')?'first':'second';
+    if(bc===idQs[qi].correct)b.classList.add('highlight');
+    else if(b===btn&&!ok)b.classList.add('chosen-wrong');
+  });
+  const fb=document.getElementById('idfb'+qi);
+  fb.className='id-fb '+(ok?'correct':'wrong');
+  fb.textContent=(ok?'✅ Correct! ':'❌ This is '+idQs[qi].correct+' conditional. ')+idQs[qi].reason;
+  upd();
+}
+
+// PART 2
+const compItems=[
+  {starter:"If I could change one thing about my city,",type:"2nd conditional",model:"...I would improve the public transport system completely."},
+  {starter:"I would study medicine",type:"2nd conditional",model:"...if I had started university again and chosen differently."},
+  {starter:"If you were offered your dream job in another country,",type:"2nd conditional",model:"...would you take it, or would you stay close to your family?"},
+  {starter:"She wouldn't be in this situation",type:"2nd conditional",model:"...if she had made different choices earlier in her career."},
+  {starter:"If I were completely fluent in English,",type:"2nd conditional",model:"...I would apply for an international management position immediately."},
+  {starter:"What would you do if you found out a close friend",type:"2nd conditional",model:"...had been lying to you for years? I would confront them directly."},
+];
+const compCont=document.getElementById('compContainer');
+compItems.forEach((c,ci)=>{
+  const card=document.createElement('div');card.className='comp-card';
+  card.innerHTML=`
+    <div class="comp-label">Complete using: ${c.type}</div>
+    <div class="comp-starter">${c.starter}</div>
+    <input type="text" class="comp-input" placeholder="...would / had / were ___" oninput="upd()"/>
+    <div><button class="reveal-btn" onclick="revealComp(this)">👁 Show model answer</button></div>
+    <div class="model-ans">✅ Model: "${c.model}"</div>
+    <div><span class="aloud">🗣️ Say the FULL sentence aloud!</span></div>`;
+  compCont.appendChild(card);
+});
+function revealComp(btn){
+  btn.nextElementSibling.classList.add('show');
+  btn.textContent='✅ Revealed — now say yours aloud!';btn.disabled=true;upd();
+}
+
+// PART 3
+const idioms=[
+  {name:"keep your options open",def:"to not make a final decision; stay flexible",sit:"You've been offered a job but are waiting to hear about a potentially better one.",model:"I've decided to keep my options open — I'll wait until I hear back from the other company before I decide."},
+  {name:"think outside the box",def:"to approach problems creatively and unconventionally",sit:"Your team has been using the same strategy for years with declining results.",model:"We need to think outside the box here — the old approach clearly isn't working anymore."},
+  {name:"a blessing in disguise",def:"something that seems bad at first but turns out to be good",sit:"You lost a job you were sad to leave, but it led to a much better opportunity.",model:"Losing that job was a blessing in disguise — I never would have found this position otherwise."},
+  {name:"take it with a grain of salt",def:"to treat information with scepticism; not completely believe it",sit:"Your friend tells you about an amazing investment opportunity he read about online.",model:"I'd take that with a grain of salt — these kinds of investments often sound too good to be true."},
+];
+const idiomsContainer=document.getElementById('idiomContainer');
+idioms.forEach((id,i)=>{
+  const card=document.createElement('div');card.className='idc';
+  card.innerHTML=`
+    <div class="idiom-name">${id.name}</div>
+    <div class="idiom-def">${id.def}</div>
+    <div class="idiom-situation">📌 Situation: ${id.sit}</div>
+    <input type="text" class="idiom-input" placeholder="Write your sentence using '${id.name}'..." oninput="upd()"/>
+    <div><button class="reveal-btn" onclick="revealIdiom(this)">👁 See model answer</button></div>
+    <div class="model-ans">✅ Model: "${id.model}"</div>
+    <div><span class="aloud">🗣️ Say your sentence aloud to your teacher!</span></div>`;
+  idiomsContainer.appendChild(card);
+});
+function revealIdiom(btn){
+  btn.nextElementSibling.classList.add('show');
+  btn.textContent='✅ Revealed';btn.disabled=true;upd();
+}
+
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');upd();
+}
+function upd(){
+  const id=idAnswers.filter(a=>a!==null).length;
+  const comp=[...document.querySelectorAll('.comp-input')].filter(i=>i.value.trim().length>0).length;
+  const idm=[...document.querySelectorAll('.idiom-input')].filter(i=>i.value.trim().length>0).length;
+  const total=idQs.length+compItems.length+idioms.length;
+  const pct=Math.round((id+comp+idm)/total*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pl').textContent=pct+'% complete';
+}
+</script>
+</body>
+</html>

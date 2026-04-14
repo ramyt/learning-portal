@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>My English Handout — Session 5</title>
+  <style>
+    :root {
+      --teal: #1A7A8A;
+      --accent: #2EB8A0;
+      --dark: #0D4F5C;
+      --light: #E0F5F2;
+      --gold: #D4820A;
+      --goldbg: #FFF8E7;
+      --white: #fff;
+      --offwhite: #F7F5F0;
+      --slate: #445566;
+      --gray: #666;
+      --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, 'Segoe UI', sans-serif;
+      background: var(--offwhite);
+      color: #1a1a1a;
+      padding-bottom: 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--teal) 100%);
+      color: white;
+      padding: 28px 20px 24px;
+    }
+
+    .hero .badge {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .hero h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .hero p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .hero-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .hero-home {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 999px;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 0.2s ease;
+    }
+    .hero-home:hover {
+      background: rgba(255,255,255,0.28);
+    }
+    .hero-home span {
+      font-size: 1.05rem;
+    }
+
+    .content {
+      padding: 0 16px;
+    }
+
+    .section {
+      margin-top: 22px;
+    }
+
+    .st {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      color: var(--teal);
+      text-transform: uppercase;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--light);
+      margin-bottom: 14px;
+    }
+
+    .struct-table {
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .struct-header {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr 1.5fr;
+      background: var(--dark);
+      padding: 10px 14px;
+    }
+
+    .sh {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .struct-row {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr 1.5fr;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--light);
+      align-items: start;
+    }
+
+    .struct-row:last-child {
+      border-bottom: none;
+    }
+
+    .struct-row:nth-child(even) {
+      background: var(--light);
+    }
+
+    .s-name {
+      font-size: 15px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .s-want {
+      background: #EEE8FF;
+      color: #5B3A8A;
+    }
+
+    .s-wlike {
+      background: #E0F5F2;
+      color: #0D4F5C;
+    }
+
+    .s-going {
+      background: #EAF7EE;
+      color: #1A7A3A;
+    }
+
+    .s-hope {
+      background: #FFF8E7;
+      color: #7A4500;
+    }
+
+    .s-use {
+      font-size: 12px;
+      color: var(--slate);
+      line-height: 1.5;
+    }
+
+    .s-ex {
+      font-size: 12px;
+      color: var(--dark);
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .tc {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+    }
+
+    .tw {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .tz {
+      font-size: 13px;
+      color: #8B0000;
+      margin-top: 2px;
+    }
+
+    .tex {
+      font-size: 11px;
+      color: var(--slate);
+      font-style: italic;
+      margin-top: 3px;
+    }
+
+    .rb {
+      background: var(--goldbg);
+      border: 1px solid #f5d9a8;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-top: 8px;
+      border-left: 4px solid var(--gold);
+    }
+
+    .rb strong {
+      display: block;
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .rb ul {
+      padding-left: 18px;
+    }
+
+    .rb li {
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: var(--slate);
+    }
+
+    .ti {
+      background: var(--dark);
+      color: white;
+      padding: 18px 16px;
+      text-align: center;
+      margin: 30px -16px 0;
+    }
+
+    .ti h2 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .ti p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+    }
+
+    th {
+      background: var(--teal);
+      color: white;
+      padding: 10px 12px;
+      text-align: left;
+      font-size: 12px;
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--light);
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:nth-child(even) td {
+      background: var(--light);
+    }
+
+    .en {
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .zh {
+      font-size: 15px;
+      color: #8B0000;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hero">
+    <a class="hero-home" href="../../index.html" aria-label="Go to home">
+      <span>🏠</span>
+      Home
+    </a>
+    <div class="badge">MY ENGLISH HANDOUT</div>
+    <h1>Session 5 — Future Plans & Dreams</h1>
+    <p>Your reference for today's lesson. Keep this open on your phone.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">🌟 Want To</span>
+      <span class="hero-pill">🎩 Would Like To</span>
+      <span class="hero-pill">🗓️ Going To</span>
+      <span class="hero-pill">💭 Hope To</span>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="section">
+      <div class="st">📐 4 Future Plan Structures</div>
+      <div class="struct-table">
+        <div class="struct-header">
+          <div class="sh">Structure</div>
+          <div class="sh">When to use</div>
+          <div class="sh">Example</div>
+        </div>
+        <div class="struct-row">
+          <div>
+            <div class="s-name s-want">want to</div>
+          </div>
+          <div class="s-use">Casual desire or personal goal</div>
+          <div class="s-ex">"I want to travel to Japan next year."</div>
+        </div>
+        <div class="struct-row">
+          <div>
+            <div class="s-name s-wlike">would like to</div>
+          </div>
+          <div class="s-use">Polite or formal — interviews, requests</div>
+          <div class="s-ex">"I would like to find a new job."</div>
+        </div>
+        <div class="struct-row">
+          <div>
+            <div class="s-name s-going">going to</div>
+          </div>
+          <div class="s-use">Already decided — a firm plan</div>
+          <div class="s-ex">"I am going to study tomorrow."</div>
+        </div>
+        <div class="struct-row">
+          <div>
+            <div class="s-name s-hope">hope to</div>
+          </div>
+          <div class="s-use">A wish — not certain yet</div>
+          <div class="s-ex">"I hope to visit Paris one day."</div>
+        </div>
+      </div>
+      <div class="rb"><strong>💡 Key Difference</strong>
+        <ul>
+          <li><strong>going to</strong> = you have decided. It WILL happen.</li>
+          <li><strong>hope to</strong> = you wish for it. It might happen.</li>
+          <li><strong>want to / would like to</strong> = your desire. 'Would like to' is more polite.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="st">⏰ Time Expressions</div>
+      <div class="time-grid">
+        <div class="tc">
+          <div class="tw">tomorrow</div>
+          <div class="tz">明天</div>
+        </div>
+        <div class="tc">
+          <div class="tw">this weekend</div>
+          <div class="tz">这个周末</div>
+        </div>
+        <div class="tc">
+          <div class="tw">next week</div>
+          <div class="tz">下周</div>
+        </div>
+        <div class="tc">
+          <div class="tw">next month</div>
+          <div class="tz">下个月</div>
+        </div>
+        <div class="tc">
+          <div class="tw">next year</div>
+          <div class="tz">明年</div>
+        </div>
+        <div class="tc">
+          <div class="tw">this year</div>
+          <div class="tz">今年</div>
+        </div>
+        <div class="tc">
+          <div class="tw">one day</div>
+          <div class="tz">有朝一日</div>
+        </div>
+        <div class="tc">
+          <div class="tw">in the future</div>
+          <div class="tz">在未来</div>
+        </div>
+        <div class="tc">
+          <div class="tw">someday</div>
+          <div class="tz">某一天</div>
+        </div>
+        <div class="tc">
+          <div class="tw">soon</div>
+          <div class="tz">很快，不久</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="st">📝 Sentence Frames — Use These!</div>
+      <div class="rb"><strong>My Plan Sentence Frames</strong>
+        <ul>
+          <li>"I want to ___ [time expression]."</li>
+          <li>"I would like to ___ in the future."</li>
+          <li>"I am going to ___ [time expression]."</li>
+          <li>"I hope to ___ one day / someday."</li>
+          <li>"I want to ___ because ___."</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div class="ti">
+    <h2>📖 Vocabulary Reference</h2>
+    <p>Session 5 key vocabulary with Chinese translations</p>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>English</th>
+        <th>Example</th>
+        <th>中文</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="en">want to + verb</td>
+        <td>"I want to travel."</td>
+        <td class="zh">想要做…</td>
+      </tr>
+      <tr>
+        <td class="en">would like to + verb</td>
+        <td>"I would like to learn."</td>
+        <td class="zh">想要做…（礼貌）</td>
+      </tr>
+      <tr>
+        <td class="en">going to + verb</td>
+        <td>"I am going to study."</td>
+        <td class="zh">打算，要做…（已决定）</td>
+      </tr>
+      <tr>
+        <td class="en">hope to + verb</td>
+        <td>"I hope to visit Paris."</td>
+        <td class="zh">希望做…（不确定）</td>
+      </tr>
+      <tr>
+        <td class="en">travel</td>
+        <td>"I want to travel next year."</td>
+        <td class="zh">旅行，旅游</td>
+      </tr>
+      <tr>
+        <td class="en">improve</td>
+        <td>"I want to improve my English."</td>
+        <td class="zh">提高，改善</td>
+      </tr>
+      <tr>
+        <td class="en">move</td>
+        <td>"We are going to move next month."</td>
+        <td class="zh">搬家，移动</td>
+      </tr>
+      <tr>
+        <td class="en">someday</td>
+        <td>"I hope to go someday."</td>
+        <td class="zh">某一天，总有一天</td>
+      </tr>
+      <tr>
+        <td class="en">in the future</td>
+        <td>"I would like to own a café in the future."</td>
+        <td class="zh">在未来，将来</td>
+      </tr>
+      <tr>
+        <td class="en">dream</td>
+        <td>"My dream is to live by the sea."</td>
+        <td class="zh">梦想，梦</td>
+      </tr>
+      <tr>
+        <td class="en">plan</td>
+        <td>"What is your plan for next year?"</td>
+        <td class="zh">计划，打算</td>
+      </tr>
+      <tr>
+        <td class="en">goal</td>
+        <td>"My goal is to speak English fluently."</td>
+        <td class="zh">目标</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

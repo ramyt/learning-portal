@@ -16,12 +16,34 @@
   body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--offwhite); color: #1a1a1a; font-size: 16px; line-height: 1.6; padding-bottom: 40px; }
 
   .hero { background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 100%); color: white; padding: 28px 20px 24px; position: relative; overflow: hidden; }
-  .hero::after { content:''; position:absolute; right:-30px; top:-30px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.05); }
   .hero .badge { font-size: 10px; letter-spacing: 3px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
   .hero h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
   .hero p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; }
   .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
   .hero-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; }
+  .hero-home {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.28);
+    border-radius: 999px;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background 0.2s ease;
+  }
+  .hero-home:hover {
+    background: rgba(255,255,255,0.28);
+  }
+  .hero-home span {
+    font-size: 1.05rem;
+  }
 
   .content { padding: 0 16px; }
   .section { margin-top: 22px; }
@@ -81,6 +103,10 @@
 <body>
 
 <div class="hero">
+  <a class="hero-home" href="../../index.html" aria-label="Go to home">
+    <span>🏠</span>
+    Home
+  </a>
   <div class="badge">MY ENGLISH HANDOUT</div>
   <h1>Session 1 — Discourse Markers</h1>
   <p>Your reference for today's lesson. Keep this open during class and at home.</p>

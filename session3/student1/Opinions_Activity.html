@@ -62,15 +62,31 @@
   .ad-reason.show{display:block;}
   .ad-reason:focus{outline:2px solid var(--accent);}
   .ad-reason::placeholder{color:rgba(255,255,255,0.3);}
+  /* HERO */
+  .hero {background: linear-gradient(135deg, var(--dark) 0%, var(--teal) 100%);color: white;padding: 28px 20px 24px;}
+  .hero .badge {font-size: 10px;letter-spacing: 3px;color: var(--accent);font-weight: 700;margin-bottom: 6px;}
+  .hero h1 {font-size: 24px;font-weight: 700;margin-bottom: 4px;}
+  .hero p {font-size: 13px;color: rgba(255, 255, 255, 0.7);}
+  .hero-pills {display: flex;flex-wrap: wrap;gap: 8px;margin-top: 14px;}
+  .hero-pill {background: rgba(255, 255, 255, 0.12);border: 1px solid rgba(255, 255, 255, 0.2);border-radius: 20px;padding: 4px 12px;font-size: 12px;font-weight: 600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
 </style>
 </head>
 <body>
 <div class="hdr">
+  <div class="hero">
+    <a class="hero-home" href="../../index.html" aria-label="Go to home">
+      <span>🏠</span>
+      Home
+    </a>
   <div class="lbl">SESSION 3  ·  OPINIONS ACTIVITY</div>
   <h1>❤️ Likes, Dislikes & Opinions</h1>
   <div class="pw">
     <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
     <div class="pl" id="pl">0% complete</div>
+  </div>
   </div>
 </div>
 <div class="tab-bar">
