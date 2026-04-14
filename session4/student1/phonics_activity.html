@@ -5,17 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <title>Phonics — Session 4 (Food Sounds)</title>
 <style>
-  :root{
-    --dark:#0D4F5C;--mid:#1A7A8A;--accent:#2EB8A0;--light:#E0F5F2;
-    --gold:#D4820A;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;
-    --gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);
-    --red:#C0392B;--red-bg:#FDECEA;--red-light:#FFC9C9;
-    --green:#1A7A3A;--green-bg:#EAF7EE;--green-light:#A8E6BC;
-    --blue:#1A5C8A;--blue-bg:#EAF2FB;--blue-light:#A8C8E8;
-  }
+  :root{--dark:#0D4F5C;--mid:#1A7A8A;--accent:#2EB8A0;--light:#E0F5F2;--gold:#D4820A;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
-  .hdr{background:var(--dark);padding:16px 20px 12px;text-align:center;border-bottom:3px solid var(--gold);}
+  .hdr{background:var(--dark);padding:16px 20px 12px;text-align:center;border-bottom:2px solid var(--gold);}
   .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--gold);font-weight:700;margin-bottom:4px;}
   .hdr h1{font-size:20px;font-weight:700;}
   .hdr p{font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px;}
@@ -29,41 +22,29 @@
   .screen{display:none;padding:16px;flex:1;flex-direction:column;}
   .screen.active{display:flex;}
 
-  /* COLOUR LEGEND */
-  .legend{display:flex;gap:10px;margin-bottom:16px;justify-content:center;flex-wrap:wrap;}
-  .legend-item{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;}
-  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
-
   /* SOUND CARDS */
   .sound-card{border-radius:16px;padding:22px 18px;margin-bottom:14px;text-align:center;box-shadow:var(--shadow);}
-  .sound-card.red{background:var(--red);border:2px solid var(--red-light);}
-  .sound-card.green{background:var(--green);border:2px solid var(--green-light);}
-  .sound-card.blue{background:var(--blue);border:2px solid var(--blue-light);}
-  .s-badge{display:inline-block;padding:5px 18px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:8px;}
-  .red .s-badge{background:rgba(0,0,0,0.25);color:var(--red-light);}
-  .green .s-badge{background:rgba(0,0,0,0.25);color:var(--green-light);}
-  .blue .s-badge{background:rgba(0,0,0,0.25);color:var(--blue-light);}
-  .s-name{font-size:28px;font-weight:700;color:var(--white);margin-bottom:6px;}
-  .s-tip{font-size:13px;color:rgba(255,255,255,0.88);line-height:1.5;margin-bottom:14px;padding:10px 14px;background:rgba(0,0,0,0.15);border-radius:10px;}
+  .s-ipa{font-size:56px;font-weight:700;margin-bottom:4px;}
+  .s-name{font-size:14px;font-weight:600;opacity:0.8;margin-bottom:12px;}
+  .s-tip{font-size:13px;opacity:0.85;line-height:1.5;margin-bottom:14px;padding:10px 14px;background:rgba(0,0,0,0.15);border-radius:10px;}
   .s-words{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:12px;}
-  .s-word{background:rgba(0,0,0,0.2);border-radius:10px;padding:8px 16px;font-size:16px;font-weight:700;color:var(--white);}
-  .s-word.food-word{border:2px solid rgba(255,255,255,0.5);}
-  .s-section-label{font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
-  .zh-btn{background:none;border:1px solid rgba(255,200,200,0.5);color:#ffcccc;font-size:12px;padding:5px 14px;border-radius:20px;cursor:pointer;margin-bottom:8px;}
-  .zh-text{font-size:20px;color:#ffcccc;font-weight:700;padding:8px 14px;background:rgba(0,0,0,0.2);border-radius:10px;display:none;margin-bottom:10px;}
+  .s-word{background:rgba(0,0,0,0.2);border-radius:10px;padding:8px 16px;font-size:16px;font-weight:700;}
+  .s-word.food{border:2px solid rgba(255,255,255,0.4);}
+  .food-label{font-size:10px;opacity:0.6;margin-top:2px;}
+  .zh-btn{background:none;border:1px solid rgba(255,0,0,0.4);color:#ffaaaa;font-size:12px;padding:5px 14px;border-radius:20px;cursor:pointer;margin-bottom:8px;}
+  .zh-text{font-size:20px;color:#ffaaaa;font-weight:700;padding:8px 14px;background:rgba(139,0,0,0.2);border-radius:10px;display:none;margin-bottom:10px;}
   .zh-text.show{display:block;}
-  .next-btn{width:100%;padding:15px;background:var(--gold);border:none;border-radius:14px;color:var(--dark);font-size:16px;font-weight:700;cursor:pointer;}
-  .dots{display:flex;justify-content:center;gap:10px;margin:10px 0;}
-  .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);transition:all 0.2s;}
-  .dot.active-red{background:var(--red-light);}
-  .dot.active-green{background:var(--green-light);}
-  .dot.active-blue{background:var(--blue-light);}
+  .next-btn,.start-btn{width:100%;padding:15px;background:var(--gold);border:none;border-radius:14px;color:var(--dark);font-size:16px;font-weight:700;cursor:pointer;}
+  .dots{display:flex;justify-content:center;gap:8px;margin:10px 0;}
+  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.25);transition:background 0.2s;}
+  .dot.active{background:var(--gold);}
 
-  /* QUIZ */
+  /* MINIMAL PAIRS QUIZ */
   .quiz-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:14px;}
-  .quiz-q{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:12px;line-height:1.5;}
+  .quiz-label{font-size:11px;color:var(--gold);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .quiz-q{font-size:14px;color:rgba(255,255,255,0.8);margin-bottom:12px;line-height:1.5;}
   .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-  .choice{padding:20px 10px;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:12px;color:var(--white);font-size:22px;font-weight:700;cursor:pointer;text-align:center;transition:all 0.2s;}
+  .choice{padding:18px 10px;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:12px;color:var(--white);font-size:22px;font-weight:700;cursor:pointer;text-align:center;transition:all 0.2s;}
   .choice.correct{border-color:var(--correct);background:rgba(39,174,96,0.2);}
   .choice.wrong{border-color:var(--wrong);background:rgba(231,76,60,0.2);}
   .choice.dis{pointer-events:none;}
@@ -72,21 +53,19 @@
   .q-fb.wrong{background:rgba(231,76,60,0.15);border:1px solid var(--wrong);color:#ffaaaa;display:block;}
   .q-next{width:100%;padding:13px;background:var(--accent);border:none;border-radius:12px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;display:none;}
 
-  /* FOOD MATCH */
-  .fm-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;}
-  .fm-word{font-size:24px;font-weight:700;color:var(--gold);margin-bottom:4px;}
-  .fm-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:12px;}
-  .fm-opts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
-  .fm-opt{padding:10px 20px;border:3px solid transparent;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
-  .fm-opt.red-opt{background:var(--red-bg);color:var(--red);border-color:var(--red);}
-  .fm-opt.green-opt{background:var(--green-bg);color:var(--green);border-color:var(--green);}
-  .fm-opt.blue-opt{background:var(--blue-bg);color:var(--blue);border-color:var(--blue);}
-  .fm-opt.chosen-correct{transform:scale(1.06);box-shadow:0 0 0 3px rgba(39,174,96,0.5);}
-  .fm-opt.chosen-wrong{opacity:0.45;}
-  .fm-opt.dis{pointer-events:none;}
-  .fm-fb{margin-top:8px;font-size:13px;display:none;padding:8px 12px;border-radius:8px;}
-  .fm-fb.correct{background:rgba(39,174,96,0.12);color:#7defa7;display:block;}
-  .fm-fb.wrong{background:rgba(231,76,60,0.12);color:#ffaaaa;display:block;}
+  /* FOOD SOUNDS MATCH */
+  .food-match-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;}
+  .fm-label{font-size:11px;color:var(--gold);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+  .food-choices{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .fc-btn{padding:8px 14px;border:2px solid var(--accent);border-radius:20px;background:none;color:var(--white);font-size:13px;cursor:pointer;transition:all 0.2s;}
+  .fc-btn.sel{background:var(--accent);color:var(--dark);font-weight:700;}
+  .fc-btn.correct{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .fc-btn.wrong{background:var(--wrong);border-color:var(--wrong);color:var(--white);}
+  .fc-btn.show-c{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .fc-btn.dis{pointer-events:none;opacity:0.6;}
+  .fm-fb{font-size:12px;margin-top:6px;display:none;}
+  .fm-fb.correct{color:#7defa7;display:block;}
+  .fm-fb.wrong{color:#ffaaaa;display:block;}
 
   /* SCORE */
   .score-wrap{display:flex;flex-direction:column;align-items:center;padding:24px 16px;text-align:center;}
@@ -95,40 +74,30 @@
   .score-lbl{font-size:12px;color:var(--dark);font-weight:600;}
   .score-title{font-size:22px;font-weight:700;margin-bottom:8px;}
   .score-msg{font-size:14px;color:rgba(255,255,255,0.7);max-width:300px;line-height:1.6;margin-bottom:18px;}
-  .go-btn{padding:14px 28px;background:var(--gold);border:none;border-radius:14px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;}
+  .retry-btn{padding:14px 28px;background:var(--gold);border:none;border-radius:14px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;}
 </style>
 </head>
 <body>
-
 <div class="hdr">
   <div class="lbl">SESSION 4  ·  PHONICS — FOOD SOUNDS</div>
   <h1>🔤 3 English Sounds</h1>
-  <p>These sounds appear in today's food words!</p>
+  <p>These sounds appear in today's food vocabulary!</p>
   <div class="pw">
     <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
     <div class="pl" id="pl">Start →</div>
   </div>
 </div>
-
 <div class="tab-bar">
   <button class="tb active" onclick="showTab('learn')" id="tabLearn">📖 Learn Sounds</button>
-  <button class="tb" onclick="showTab('quiz')" id="tabQuiz">🎯 Listening Quiz</button>
+  <button class="tb" onclick="showTab('quiz')" id="tabQuiz">🎯 Minimal Pairs</button>
   <button class="tb" onclick="showTab('food')" id="tabFood">🍕 Food Words</button>
 </div>
 
 <!-- LEARN TAB -->
 <div class="screen active" id="screenLearn">
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:var(--red-light)"></div>🔴 Short A</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--green-light)"></div>🟢 Long EE</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--blue-light)"></div>🔵 Short O</div>
-  </div>
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;text-align:center;">Learn each sound. Tap 🇨🇳 to see the Chinese description. Then try the quiz!</p>
   <div id="soundCard"></div>
-  <div class="dots" id="dots">
-    <div class="dot active-red" id="d0"></div>
-    <div class="dot" id="d1"></div>
-    <div class="dot" id="d2"></div>
-  </div>
+  <div class="dots" id="dots"></div>
   <button class="zh-btn" id="zhBtn" onclick="revealZh()">🇨🇳 Chinese description</button>
   <div class="zh-text" id="zhText"></div>
   <button class="next-btn" id="nextBtn" onclick="nextSound()">Next Sound →</button>
@@ -136,98 +105,92 @@
 
 <!-- QUIZ TAB -->
 <div class="screen" id="screenQuiz">
-  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:8px;text-align:center;">Your teacher says a word. Tap the word you hear!</p>
-  <div class="legend" style="margin-bottom:12px;">
-    <div class="legend-item"><div class="legend-dot" style="background:var(--red-light)"></div>Short A</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--green-light)"></div>Long EE</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--blue-light)"></div>Short O</div>
-  </div>
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;text-align:center;">Your teacher says a word. Tap the word you hear!</p>
   <div id="quizContainer"></div>
-  <div id="quizScoreArea"></div>
+  <div id="quizScore" style="display:none;"></div>
 </div>
 
 <!-- FOOD WORDS TAB -->
 <div class="screen" id="screenFood">
-  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:8px;text-align:center;">
-    Which colour group does each food word belong to?<br>
-    <strong style="color:var(--red-light)">🔴 Short A</strong> &nbsp;·&nbsp;
-    <strong style="color:var(--green-light)">🟢 Long EE</strong> &nbsp;·&nbsp;
-    <strong style="color:var(--blue-light)">🔵 Short O</strong>
-  </p>
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;text-align:center;">Which sound does each food word contain? Choose the correct sound!</p>
   <div id="foodContainer"></div>
 </div>
 
 <script>
 const sounds=[
   {
-    idx:0, colorClass:"red", dotClass:"active-red",
-    badge:"🔴 Short A Sound", name:"Short A",
-    tip:"Open your mouth WIDE. Your tongue sits LOW and FLAT. This is a short, quick sound — like when a doctor asks you to open wide and say 'aah'.",
-    general:["cat","hat","pan","bag"],
-    food:["sandwich","jam","salad"],
-    zh:"短促的'啊'音 — 嘴巴张大，舌头低平，快速发音",
+    ipa:"/æ/",name:"Short 'A'",
+    color:"#7A2200",
+    tip:"Open your mouth WIDE. Your tongue sits LOW and FORWARD. It is a short, flat sound.",
+    general:["cat","hat","pan","bag","man"],
+    food:["sandwich","jam","salad","can"],
+    zh:"短促的'啊'音 — 嘴巴张大，舌头低平",
   },
   {
-    idx:1, colorClass:"green", dotClass:"active-green",
-    badge:"🟢 Long EE Sound", name:"Long EE",
-    tip:"Spread your lips WIDE — like a big, bright smile! Hold the sound a little longer than usual. This sound is long and stretched.",
+    ipa:"/iː/",name:"Long 'EE'",
+    color:"#1A5C2E",
+    tip:"Spread your lips WIDE — like a big smile! Hold the sound for longer. It should feel long and bright.",
     general:["see","free","me","he"],
-    food:["tea","meat","pea"],
+    food:["tea","meat","pea","eat"],
     zh:"长'依'音 — 像微笑一样张开嘴唇，发长音",
   },
   {
-    idx:2, colorClass:"blue", dotClass:"active-blue",
-    badge:"🔵 Short O Sound", name:"Short O",
-    tip:"Make your lips ROUND — like a small circle. Open your mouth a little. This is a short, round sound. Don't hold it for long.",
+    ipa:"/ɒ/",name:"Short 'O'",
+    color:"#0D3A6B",
+    tip:"Make your lips ROUND — like a small 'O'. Your mouth opens but stays round. Short and quick.",
     general:["hot","top","pot","dog"],
-    food:["coffee","pot"],
-    zh:"圆嘴短'哦'音 — 嘴唇呈小圆形，短促发音",
+    food:["coffee","pot","hot (food)","noodle (first O)"],
+    zh:"圆嘴短'哦'音 — 嘴唇呈圆形，短促发音",
   },
 ];
 
 const quizQs=[
-  {q:"Teacher says a word — tap the one you hear:",correct:"hat",wrong:"heat",hint:"'hat' → Short A sound (🔴). Wide open mouth."},
-  {q:"Teacher says a word — tap the one you hear:",correct:"meat",wrong:"mat",hint:"'meat' → Long EE sound (🟢). Spread lips like a smile."},
-  {q:"Teacher says a word — tap the one you hear:",correct:"hot",wrong:"hat",hint:"'hot' → Short O sound (🔵). Round lips."},
-  {q:"Teacher says a word — tap the one you hear:",correct:"pan",wrong:"pen",hint:"'pan' → Short A sound (🔴). Flat open mouth."},
-  {q:"Teacher says a word — tap the one you hear:",correct:"tea",wrong:"toe",hint:"'tea' → Long EE sound (🟢). Long bright sound."},
-  {q:"Teacher says a word — tap the one you hear:",correct:"pot",wrong:"pat",hint:"'pot' → Short O sound (🔵). Round short sound."},
-  {q:"Teacher says a word — tap the one you hear:",correct:"cat",wrong:"cot",hint:"'cat' → Short A sound (🔴). Not the round O sound."},
-  {q:"Teacher says a word — tap the one you hear:",correct:"pea",wrong:"pie",hint:"'pea' → Long EE sound (🟢). It sounds like the letter P!"},
+  {sound:"/æ/ vs /iː/",q:"Teacher says: 'hat'. Which is it?",correct:"hat",wrong:"heat"},
+  {sound:"/iː/ vs /ɪ/",q:"Teacher says: 'meat'. Which is it?",correct:"meat",wrong:"mit"},
+  {sound:"/ɒ/ vs /ʌ/",q:"Teacher says: 'hot'. Which is it?",correct:"hot",wrong:"hut"},
+  {sound:"/æ/ vs /e/",q:"Teacher says: 'pan'. Which is it?",correct:"pan",wrong:"pen"},
+  {sound:"/iː/ vs /e/",q:"Teacher says: 'tea'. Which is it?",correct:"tea",wrong:"teh"},
+  {sound:"/ɒ/ vs /əʊ/",q:"Teacher says: 'pot'. Which is it?",correct:"pot",wrong:"pote"},
+  {sound:"/æ/ vs /ɒ/",q:"Teacher says: 'cat'. Which is it?",correct:"cat",wrong:"cot"},
+  {sound:"/iː/ vs /ɪ/",q:"Teacher says: 'pea'. Which is it?",correct:"pea",wrong:"pi"},
 ];
 
 const foodQs=[
-  {word:"sandwich 🥪",correct:"red",hint:"sand-WICH — the 'a' makes the Short A sound 🔴, like in 'cat'."},
-  {word:"tea ☕🍵",correct:"green",hint:"TEA — Long EE sound 🟢, like 'see' or 'free'."},
-  {word:"coffee ☕",correct:"blue",hint:"COF-fee — 'cof' has the Short O sound 🔵, like in 'hot'."},
-  {word:"salad 🥗",correct:"red",hint:"SAL-ad — the 'a' in 'sal' is the Short A sound 🔴."},
-  {word:"meat 🍗",correct:"green",hint:"MEAT — Long EE sound 🟢, just like 'eat' or 'tea'."},
-  {word:"jam 🍓",correct:"red",hint:"JAM — Short A sound 🔴, like 'hat' or 'pan'."},
-  {word:"pea 🫛",correct:"green",hint:"PEA — Long EE sound 🟢. It sounds like the letter 'P'!"},
-  {word:"pot 🫕",correct:"blue",hint:"POT — Short O sound 🔵. Round lips, like in 'hot'."},
+  {word:"sandwich",correct:"/æ/",opts:["/æ/","/iː/","/ɒ/"],hint:"Listen for the 'a' in sand-WICH → /æ/"},
+  {word:"tea",correct:"/iː/",opts:["/æ/","/iː/","/ɒ/"],hint:"Listen for the long EE sound in tEA → /iː/"},
+  {word:"coffee",correct:"/ɒ/",opts:["/æ/","/iː/","/ɒ/"],hint:"The first vowel in COFfee is round and short → /ɒ/"},
+  {word:"salad",correct:"/æ/",opts:["/æ/","/iː/","/ɒ/"],hint:"The first vowel: sALad → /æ/"},
+  {word:"meat",correct:"/iː/",opts:["/æ/","/iː/","/ɒ/"],hint:"The long EE sound: mEAt → /iː/"},
+  {word:"hot soup",correct:"/ɒ/",opts:["/æ/","/iː/","/ɒ/"],hint:"HOT has a round short sound → /ɒ/"},
+  {word:"jam",correct:"/æ/",opts:["/æ/","/iː/","/ɒ/"],hint:"JAM → short flat open sound → /æ/"},
+  {word:"pea",correct:"/iː/",opts:["/æ/","/iː/","/ɒ/"],hint:"PEA sounds like 'pee' → long /iː/ sound"},
 ];
 
 // LEARN
 let curSound=0;
-function buildCard(i){
+const dots=document.getElementById('dots');
+sounds.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');d.id='d'+i;
+  dots.appendChild(d);
+});
+function showSound(i){
   const s=sounds[i];
   document.getElementById('soundCard').innerHTML=`
-    <div class="sound-card ${s.colorClass}">
-      <div class="s-badge">${s.badge}</div>
-      <div class="s-name">${s.name} Sound</div>
+    <div class="sound-card" style="background:${s.color};">
+      <div class="s-ipa">${s.ipa}</div>
+      <div class="s-name">${s.name}</div>
       <div class="s-tip">👄 ${s.tip}</div>
-      <div class="s-section-label">Practise these words:</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:8px;">PRACTICE WORDS:</div>
       <div class="s-words">${s.general.map(w=>`<div class="s-word">${w}</div>`).join('')}</div>
-      <div class="s-section-label">🍽️ In today's food:</div>
-      <div class="s-words">${s.food.map(w=>`<div class="s-word food-word">${w}</div>`).join('')}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:6px;">🍽️ IN TODAY'S FOOD:</div>
+      <div class="s-words">${s.food.map(w=>`<div class="s-word food">${w}</div>`).join('')}</div>
     </div>`;
   document.getElementById('zhText').textContent=s.zh;
   document.getElementById('zhText').classList.remove('show');
   document.getElementById('zhBtn').style.display='block';
-  [0,1,2].forEach(j=>{
-    document.getElementById('d'+j).className='dot'+(j===i?' '+sounds[j].dotClass:'');
-  });
-  document.getElementById('nextBtn').textContent=i<2?'Next Sound →':'Start the Quiz! 🎯';
+  document.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('active',j===i));
+  document.getElementById('nextBtn').textContent=i<sounds.length-1?'Next Sound →':'Start Quiz! 🎯';
   upd();
 }
 function revealZh(){
@@ -235,28 +198,30 @@ function revealZh(){
   document.getElementById('zhBtn').style.display='none';
 }
 function nextSound(){
-  if(curSound<2){curSound++;buildCard(curSound);}
-  else showTab('quiz');
+  if(curSound<sounds.length-1){curSound++;showSound(curSound);}
+  else{showTab('quiz');}
 }
-buildCard(0);
+showSound(0);
 
 // QUIZ
-let qIdx=0,qScore=0,qAnswered=Array(quizQs.length).fill(null);
+let qAnswers=Array(quizQs.length).fill(null),qSubmitted=false,qScore=0;
 const qCont=document.getElementById('quizContainer');
 quizQs.forEach((q,qi)=>{
   const div=document.createElement('div');
   div.className='quiz-card';div.id='qc'+qi;
-  if(qi>0)div.style.display='none';
   const shuffled=[q.correct,q.wrong].sort(()=>Math.random()-0.5);
-  div.innerHTML=`<div class="quiz-q">${q.q}</div>
-    <div class="choices">${shuffled.map(ch=>`<button class="choice" onclick="ansQ(${qi},'${ch}',this)">${ch}</button>`).join('')}</div>
+  div.innerHTML=`<div class="quiz-label">${q.sound}</div>
+    <div class="quiz-q">${q.q}</div>
+    <div class="choices">${shuffled.map(ch=>`<button class="choice" onclick="answerQ(${qi},'${ch}',this)">${ch}</button>`).join('')}</div>
     <div class="q-fb" id="qfb${qi}"></div>
-    <button class="q-next" id="qnxt${qi}" onclick="nxtQ(${qi})">${qi<quizQs.length-1?'Next →':'See my score!'}</button>`;
+    <button class="q-next" id="qnxt${qi}" onclick="nextQ(${qi})">${qi<quizQs.length-1?'Next →':'See Score!'}</button>`;
   qCont.appendChild(div);
+  if(qi>0)div.style.display='none';
 });
-function ansQ(qi,ch,btn){
-  if(qAnswered[qi]!==null)return;
-  qAnswered[qi]=ch;
+let curQ=0;
+function answerQ(qi,ch,btn){
+  if(qAnswers[qi]!==null)return;
+  qAnswers[qi]=ch;
   const ok=ch===quizQs[qi].correct;
   if(ok)qScore++;
   document.getElementById('qc'+qi).querySelectorAll('.choice').forEach(b=>{
@@ -266,52 +231,53 @@ function ansQ(qi,ch,btn){
   });
   const fb=document.getElementById('qfb'+qi);
   fb.className='q-fb '+(ok?'correct':'wrong');
-  fb.textContent=ok?'✅ Correct! '+quizQs[qi].hint:'❌ The answer is "'+quizQs[qi].correct+'". '+quizQs[qi].hint;
+  fb.textContent=ok?'✅ Correct! Good listening!':'❌ The answer is "'+quizQs[qi].correct+'". Listen again carefully.';
   document.getElementById('qnxt'+qi).style.display='block';
   upd();
 }
-function nxtQ(qi){
+function nextQ(qi){
   if(qi<quizQs.length-1){
     document.getElementById('qc'+qi).style.display='none';
-    qIdx=qi+1;
-    document.getElementById('qc'+qIdx).style.display='block';
+    curQ=qi+1;
+    document.getElementById('qc'+curQ).style.display='block';
   } else {
-    const pct=qScore/quizQs.length;
-    document.getElementById('quizScoreArea').innerHTML=`<div class="score-wrap">
-      <div class="score-circle"><div class="score-num">${qScore}</div><div class="score-lbl">out of ${quizQs.length}</div></div>
-      <div class="score-title">${pct===1?'🌟 Perfect!':pct>=0.75?'🎉 Well done!':pct>=0.5?'👍 Good try!':'💪 Keep listening!'}</div>
-      <div class="score-msg">${pct>=0.75?'Your ears are getting good at hearing English sounds! Now try the Food Words tab →':'Listen to the sounds once more, then try again.'}</div>
-      <button class="go-btn" onclick="showTab('food')">Go to Food Words →</button>
-    </div>`;
+    showQuizScore();
   }
+}
+function showQuizScore(){
+  const el=document.getElementById('quizScore');
+  el.style.display='block';
+  const pct=qScore/quizQs.length;
+  el.innerHTML=`<div class="score-wrap">
+    <div class="score-circle"><div class="score-num">${qScore}</div><div class="score-lbl">out of ${quizQs.length}</div></div>
+    <div class="score-title">${pct===1?'🌟 Perfect!':pct>=0.75?'🎉 Well done!':pct>=0.5?'👍 Good try!':'💪 Keep practising!'}</div>
+    <div class="score-msg">${pct>=0.75?'Your listening is improving! Go to the Food Words tab →':'Try the quiz again or listen to the sounds once more.'}</div>
+    <button class="retry-btn" onclick="showTab('food')">Go to Food Words →</button>
+  </div>`;
   upd();
 }
 
 // FOOD MATCH
-let fAnswers=Array(foodQs.length).fill(null);
+let foodAnswers=Array(foodQs.length).fill(null),foodSubmitted=false;
 const fCont=document.getElementById('foodContainer');
 foodQs.forEach((q,fi)=>{
-  const card=document.createElement('div');card.className='fm-card';card.id='fm'+fi;
-  card.innerHTML=`
-    <div class="fm-word">${q.word}</div>
-    <div class="fm-sub">Which sound group does this word belong to?</div>
-    <div class="fm-opts">
-      <button class="fm-opt red-opt" onclick="ansFood(${fi},'red',this)">🔴 Short A</button>
-      <button class="fm-opt green-opt" onclick="ansFood(${fi},'green',this)">🟢 Long EE</button>
-      <button class="fm-opt blue-opt" onclick="ansFood(${fi},'blue',this)">🔵 Short O</button>
-    </div>
+  const div=document.createElement('div');
+  div.className='food-match-card';div.id='fm'+fi;
+  const shuffled=[...q.opts].sort(()=>Math.random()-0.5);
+  div.innerHTML=`<div class="fm-label">Which sound is in this word?</div>
+    <div style="font-size:24px;font-weight:700;color:var(--gold);margin-bottom:10px;">${q.word}</div>
+    <div class="food-choices">${shuffled.map(o=>`<button class="fc-btn" onclick="answerFood(${fi},'${o}',this)">${o}</button>`).join('')}</div>
     <div class="fm-fb" id="ffb${fi}"></div>`;
-  fCont.appendChild(card);
+  fCont.appendChild(div);
 });
-function ansFood(fi,color,btn){
-  if(fAnswers[fi]!==null)return;
-  fAnswers[fi]=color;
-  const ok=color===foodQs[fi].correct;
-  document.getElementById('fm'+fi).querySelectorAll('.fm-opt').forEach(b=>{
+function answerFood(fi,opt,btn){
+  if(foodAnswers[fi]!==null)return;
+  foodAnswers[fi]=opt;
+  const ok=opt===foodQs[fi].correct;
+  document.getElementById('fm'+fi).querySelectorAll('.fc-btn').forEach(b=>{
     b.classList.add('dis');
-    const bc=b.classList.contains('red-opt')?'red':b.classList.contains('green-opt')?'green':'blue';
-    if(bc===foodQs[fi].correct)b.classList.add('chosen-correct');
-    else if(b===btn&&!ok)b.classList.add('chosen-wrong');
+    if(b.textContent===foodQs[fi].correct)b.classList.add('show-c');
+    else if(b===btn&&!ok)b.classList.add('wrong');
   });
   const fb=document.getElementById('ffb'+fi);
   fb.className='fm-fb '+(ok?'correct':'wrong');
@@ -328,10 +294,11 @@ function showTab(tab){
 }
 function upd(){
   const sDone=curSound;
-  const qDone=qAnswered.filter(a=>a!==null).length;
-  const fDone=fAnswers.filter(a=>a!==null).length;
+  const qDone=qAnswers.filter(a=>a!==null).length;
+  const fDone=foodAnswers.filter(a=>a!==null).length;
   const total=sounds.length+quizQs.length+foodQs.length;
-  const pct=Math.round((sDone+qDone+fDone)/total*100);
+  const done=sDone+qDone+fDone;
+  const pct=Math.round(done/total*100);
   document.getElementById('pf').style.width=pct+'%';
   document.getElementById('pl').textContent=pct+'% done';
 }

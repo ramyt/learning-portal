@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Food Activity — Session 4</title>
+<style>
+  :root{--dark:#0D4F5C;--mid:#1A7A8A;--accent:#2EB8A0;--light:#E0F5F2;--gold:#D4820A;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .hdr{background:var(--dark);padding:18px 20px 14px;text-align:center;border-bottom:2px solid var(--mid);}
+  .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:4px;}
+  .hdr h1{font-size:20px;font-weight:700;}
+  .pw{display:flex;align-items:center;gap:10px;margin:12px 20px 0;}
+  .pb{flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;}
+  .pf{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
+  .pl{font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);}
+  .tb{flex:1;padding:11px 6px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tb.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .screen{display:none;padding:18px 16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+  .food-chip{background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:12px;padding:10px 14px;font-size:16px;min-width:130px;text-align:center;}
+  .match-pair{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .taste-opts{display:flex;flex-wrap:wrap;gap:6px;flex:1;}
+  .taste-btn{padding:6px 12px;border:2px solid var(--accent);border-radius:16px;background:none;color:var(--white);font-size:13px;cursor:pointer;transition:all 0.2s;}
+  .taste-btn.sel{background:var(--accent);color:var(--dark);font-weight:700;}
+  .taste-btn.correct{background:var(--correct);border-color:var(--correct);pointer-events:none;color:white;}
+  .taste-btn.wrong{background:var(--wrong);border-color:var(--wrong);color:white;}
+  .taste-btn.dis{pointer-events:none;opacity:0.5;}
+  .check-btn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:14px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;}
+  .check-btn:disabled{opacity:0.4;pointer-events:none;}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+  .menu-item{background:rgba(255,255,255,0.08);border:2px solid transparent;border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.2s;}
+  .menu-item.in-order{border-color:var(--accent);background:rgba(46,184,160,0.15);}
+  .menu-item .mi-emoji{font-size:32px;margin-bottom:4px;}
+  .menu-item .mi-name{font-size:13px;font-weight:700;}
+  .menu-item .mi-taste{font-size:11px;color:rgba(255,255,255,0.5);}
+  .order-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:14px;margin-bottom:10px;min-height:60px;}
+  .order-label{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .order-text{font-size:15px;color:var(--white);line-height:1.6;}
+  .say-btn{width:100%;padding:12px;background:none;border:2px solid var(--accent);border-radius:14px;color:var(--accent);font-size:14px;font-weight:700;cursor:pointer;}
+  .nav-btn{width:100%;padding:13px;background:var(--accent);border:none;border-radius:14px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;margin-top:10px;}
+  .describe-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:12px;}
+  .dish-emoji{font-size:36px;text-align:center;margin-bottom:6px;}
+  .dish-name{font-size:18px;font-weight:700;color:var(--white);text-align:center;margin-bottom:10px;}
+  .adj-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .adj-btn{padding:7px 14px;border:2px solid var(--gold);border-radius:20px;background:none;color:var(--gold);font-size:13px;cursor:pointer;transition:all 0.2s;}
+  .adj-btn.sel{background:var(--gold);color:white;font-weight:700;}
+  .desc-result{background:rgba(255,255,255,0.05);border-radius:10px;padding:12px;min-height:48px;font-size:15px;color:var(--white);margin-bottom:8px;border:1px solid rgba(255,255,255,0.1);}
+  .desc-result.built{border-color:var(--accent);}
+  .aloud{display:inline-flex;align-items:center;gap:6px;background:rgba(46,184,160,0.12);border:1px solid var(--accent);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="lbl">SESSION 4  ·  FOOD ACTIVITY</div>
+  <h1>🍕 Food & Ordering</h1>
+  <div class="pw">
+    <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+    <div class="pl" id="pl">0% complete</div>
+  </div>
+</div>
+<div class="tab-bar">
+  <button class="tb active" onclick="showTab('match')" id="tabMatch">Part 1: Tastes</button>
+  <button class="tb" onclick="showTab('order')" id="tabOrder">Part 2: Order</button>
+  <button class="tb" onclick="showTab('desc')" id="tabDesc">Part 3: Describe</button>
+</div>
+
+<div class="screen active" id="screenMatch">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Match each food with the best taste word. Say a sentence aloud after each!</p>
+  <div id="matchCont"></div>
+  <button class="check-btn" id="checkBtn" disabled onclick="checkMatch()">Check Answers ✓</button>
+  <div id="matchResult" style="margin-top:12px;"></div>
+</div>
+
+<div class="screen" id="screenOrder">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;text-align:center;">Tap items to add to your order. Then say the sentence aloud!</p>
+  <div class="menu-grid" id="menuGrid"></div>
+  <div class="order-box">
+    <div class="order-label">Your order:</div>
+    <div class="order-text" id="orderText">Tap items above to build your order...</div>
+  </div>
+  <button class="say-btn">🗣️ Say aloud: "Can I have ___, please?"</button>
+  <button class="nav-btn" onclick="showTab('desc')">Next: Describe a Dish →</button>
+</div>
+
+<div class="screen" id="screenDesc">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;text-align:center;">Choose adjectives to describe each dish. Say the sentence aloud!</p>
+  <div id="descCont"></div>
+</div>
+
+<script>
+// PART 1
+const matchData=[
+  {food:"☕ coffee",correct:"hot",opts:["hot","cold","sweet","sour"]},
+  {food:"🍰 cake",correct:"sweet",opts:["sweet","spicy","salty","sour"]},
+  {food:"🌶️ chilli",correct:"spicy",opts:["spicy","sweet","cold","fresh"]},
+  {food:"🥗 salad",correct:"fresh",opts:["fresh","hot","spicy","salty"]},
+  {food:"🍋 lemon",correct:"sour",opts:["sour","sweet","hot","crispy"]},
+  {food:"🍟 chips",correct:"crispy",opts:["crispy","sour","fresh","cold"]},
+];
+let mAns=Array(matchData.length).fill(null);
+let mChecked=false;
+const mc=document.getElementById('matchCont');
+const cb=document.getElementById('checkBtn');
+matchData.forEach((item,i)=>{
+  const row=document.createElement('div');row.className='match-pair';
+  const sh=[...item.opts].sort(()=>Math.random()-0.5);
+  row.innerHTML=`<div class="food-chip">${item.food}</div>
+    <div class="taste-opts">${sh.map(o=>`<button class="taste-btn" onclick="sm(${i},'${o}',this)">${o}</button>`).join('')}</div>`;
+  mc.appendChild(row);
+});
+function sm(i,opt,btn){
+  if(mChecked)return;
+  mc.children[i].querySelectorAll('.taste-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');mAns[i]=opt;
+  cb.disabled=mAns.some(a=>a===null);upd();
+}
+function checkMatch(){
+  mChecked=true;let sc=0;
+  matchData.forEach((item,i)=>{
+    const ok=mAns[i]===item.correct;if(ok)sc++;
+    mc.children[i].querySelectorAll('.taste-btn').forEach(btn=>{
+      btn.classList.add('dis');
+      if(btn.textContent===item.correct)btn.classList.add('correct');
+      else if(btn.classList.contains('sel')&&!ok)btn.classList.add('wrong');
+    });
+  });
+  cb.style.display='none';
+  document.getElementById('matchResult').innerHTML=`<div style="text-align:center;padding:16px;background:rgba(46,184,160,0.12);border-radius:14px;">
+    <div style="font-size:28px;font-weight:700;color:var(--accent);">${sc}/${matchData.length}</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:8px;">${sc>=5?'🌟 Excellent! Go to Part 2 →':'👍 Good try! Check the correct answers, then try Part 2.'}</div>
+    <button style="margin-top:10px;padding:10px 22px;background:var(--accent);border:none;border-radius:10px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;" onclick="showTab('order')">Go to Part 2 →</button>
+  </div>`;upd();
+}
+
+// PART 2
+const menuItems=[
+  {emoji:"🍕",name:"pizza",taste:"crispy and cheesy"},
+  {emoji:"🍜",name:"noodle soup",taste:"hot and salty"},
+  {emoji:"🥗",name:"fresh salad",taste:"fresh and cold"},
+  {emoji:"☕",name:"coffee",taste:"hot and strong"},
+  {emoji:"🍵",name:"green tea",taste:"fresh and warm"},
+  {emoji:"🍰",name:"chocolate cake",taste:"sweet and rich"},
+];
+let orderList=[];
+const mg=document.getElementById('menuGrid');
+menuItems.forEach((item,i)=>{
+  const div=document.createElement('div');div.className='menu-item';div.id='mi'+i;
+  div.innerHTML=`<div class="mi-emoji">${item.emoji}</div><div class="mi-name">${item.name}</div><div class="mi-taste">${item.taste}</div>`;
+  div.onclick=()=>{
+    const idx=orderList.indexOf(item.name);
+    if(idx===-1){orderList.push(item.name);div.classList.add('in-order');}
+    else{orderList.splice(idx,1);div.classList.remove('in-order');}
+    const ot=document.getElementById('orderText');
+    if(orderList.length===0){ot.textContent='Tap items above to build your order...';}
+    else if(orderList.length===1){ot.textContent=`"Can I have a ${orderList[0]}, please?"`;}
+    else{const last=orderList[orderList.length-1];const rest=orderList.slice(0,-1);ot.textContent=`"Can I have a ${rest.join(', a ')} and a ${last}, please?"`;}
+    upd();
+  };
+  mg.appendChild(div);
+});
+
+// PART 3
+const dishes=[
+  {emoji:"🍕",name:"Pizza",adjs:["crispy","cheesy","hot","salty","fresh"]},
+  {emoji:"🍣",name:"Sushi",adjs:["fresh","cold","salty","soft","light"]},
+  {emoji:"🍲",name:"Hot Soup",adjs:["hot","salty","spicy","warm","rich"]},
+  {emoji:"🍰",name:"Chocolate Cake",adjs:["sweet","rich","soft","cold","bitter"]},
+];
+let descData=dishes.map(()=>({adjs:[]}));
+const dc=document.getElementById('descCont');
+dishes.forEach((d,i)=>{
+  const card=document.createElement('div');card.className='describe-card';
+  card.innerHTML=`<div class="dish-emoji">${d.emoji}</div>
+    <div class="dish-name">${d.name}</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:8px;">Choose 2–3 adjectives:</div>
+    <div class="adj-grid">${d.adjs.map((a,j)=>`<button class="adj-btn" onclick="sa(${i},'${a}',this)">${a}</button>`).join('')}</div>
+    <div class="desc-result" id="dr${i}">Choose adjectives above...</div>
+    <div><span class="aloud">🗣️ Say the sentence aloud!</span></div>`;
+  dc.appendChild(card);
+});
+function sa(di,adj,btn){
+  const idx=descData[di].adjs.indexOf(adj);
+  if(idx===-1){if(descData[di].adjs.length>=3)return;descData[di].adjs.push(adj);btn.classList.add('sel');}
+  else{descData[di].adjs.splice(idx,1);btn.classList.remove('sel');}
+  const el=document.getElementById('dr'+di);
+  const adjs=descData[di].adjs;const dish=dishes[di];
+  if(adjs.length===0){el.textContent='Choose adjectives above...';el.classList.remove('built');return;}
+  let s;
+  if(adjs.length===1)s=`${dish.name} is ${adjs[0]}.`;
+  else if(adjs.length===2)s=`${dish.name} is ${adjs[0]} and ${adjs[1]}.`;
+  else s=`${dish.name} is ${adjs[0]}, ${adjs[1]} and ${adjs[2]}.`;
+  el.textContent=s;el.classList.add('built');upd();
+}
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');upd();
+}
+function upd(){
+  const m=mAns.filter(a=>a!==null).length;
+  const o=orderList.length>0?1:0;
+  const d=descData.filter(di=>di.adjs.length>0).length;
+  const total=matchData.length+1+dishes.length;
+  const done=m+o+d;
+  const pct=Math.round(done/total*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pl').textContent=pct+'% complete';
+}
+</script>
+</body>
+</html>
