@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>My English Handout — Session 3</title>
+<style>
+  :root{--teal:#1A7A8A;--accent:#2EB8A0;--dark:#0D4F5C;--light:#E0F5F2;--gold:#D4820A;--goldbg:#FFF8E7;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#666;--shadow:0 2px 12px rgba(0,0,0,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--offwhite);color:#1a1a1a;padding-bottom:40px;}
+  .hero{background:linear-gradient(135deg,var(--dark) 0%,var(--teal) 100%);color:white;padding:28px 20px 24px;}
+  .hero .badge{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:6px;}
+  .hero h1{font-size:24px;font-weight:700;margin-bottom:4px;}
+  .hero p{font-size:13px;color:rgba(255,255,255,0.7);}
+  .hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .hero-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
+  .content{padding:0 16px;}
+  .section{margin-top:22px;}
+  .st{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--teal);text-transform:uppercase;padding-bottom:6px;border-bottom:2px solid var(--light);margin-bottom:14px;}
+  .verb-scale{display:flex;flex-direction:column;gap:8px;}
+  .verb-row{display:flex;align-items:center;gap:12px;background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:10px 14px;}
+  .verb-emoji{font-size:22px;flex-shrink:0;}
+  .verb-name{font-size:16px;font-weight:700;color:var(--dark);min-width:110px;}
+  .verb-bar{flex:1;height:8px;background:var(--light);border-radius:4px;overflow:hidden;}
+  .verb-fill{height:100%;border-radius:4px;}
+  .verb-zh{font-size:14px;color:#8B0000;font-weight:600;min-width:70px;text-align:right;}
+  .grammar-box{background:var(--white);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:12px;}
+  .gh{background:var(--dark);padding:10px 16px;color:white;font-size:13px;font-weight:700;}
+  .gb{padding:14px 16px;}
+  .g-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light);}
+  .g-row:last-child{border-bottom:none;}
+  .g-type{font-size:12px;font-weight:700;color:var(--teal);min-width:80px;padding-top:2px;}
+  .g-ex{flex:1;}
+  .g-en{font-size:14px;color:var(--dark);font-weight:600;}
+  .g-zh{font-size:12px;color:#8B0000;margin-top:2px;}
+  .adv-scale{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .adv-chip{background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:12px 14px;text-align:center;}
+  .adv-word{font-size:16px;font-weight:700;color:var(--dark);}
+  .adv-zh{font-size:14px;color:#8B0000;margin-top:4px;}
+  .adv-ex{font-size:12px;color:var(--slate);font-style:italic;margin-top:4px;}
+  .because-box{background:var(--white);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:10px;}
+  .bc-header{background:var(--teal);padding:10px 16px;color:white;font-size:13px;font-weight:700;}
+  .bc-row{padding:10px 16px;border-bottom:1px solid var(--light);}
+  .bc-row:last-child{border-bottom:none;}
+  .bc-en{font-size:14px;color:var(--dark);font-weight:600;}
+  .bc-zh{font-size:12px;color:#8B0000;margin-top:2px;font-style:italic;}
+  .frame-box{background:var(--white);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:10px;}
+  .fh{background:var(--dark);padding:10px 16px;color:white;font-size:13px;font-weight:700;}
+  .fb{padding:14px 16px;}
+  .frame-line{font-size:16px;font-weight:700;color:var(--dark);background:var(--light);border-radius:8px;padding:10px 14px;margin-bottom:8px;text-align:center;}
+  .rb{background:var(--goldbg);border:1px solid #f5d9a8;border-radius:14px;padding:14px 16px;margin-top:6px;border-left:4px solid var(--gold);}
+  .rb strong{display:block;color:var(--gold);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .rb ul{padding-left:18px;}
+  .rb li{font-size:14px;margin-bottom:5px;color:var(--slate);}
+  .ti{background:var(--dark);color:white;padding:18px 16px;text-align:center;margin:30px -16px 0;}
+  .ti h2{font-size:18px;margin-bottom:4px;}
+  .ti p{font-size:13px;color:rgba(255,255,255,0.7);}
+  table{width:100%;border-collapse:collapse;background:var(--white);}
+  th{background:var(--teal);color:white;padding:10px 12px;text-align:left;font-size:12px;}
+  td{padding:10px 12px;border-bottom:1px solid var(--light);font-size:14px;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  tr:nth-child(even) td{background:var(--light);}
+  .en{font-weight:600;color:var(--dark);}
+  .zh{font-size:15px;color:#8B0000;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <a class="hero-home" href="../../index.html" aria-label="Go to home">
+    <span>🏠</span>
+    Home
+  </a>
+  <div class="badge">MY ENGLISH HANDOUT</div>
+  <h1>Session 3 — Likes, Dislikes & Opinions</h1>
+  <p>Your reference for today's lesson. Keep this open on your phone.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">❤️ Opinion Verbs</span>
+    <span class="hero-pill">📊 How Much?</span>
+    <span class="hero-pill">💬 Because...</span>
+  </div>
+</div>
+<div class="content">
+
+  <div class="section">
+    <div class="st">❤️ Opinion Verbs — Feeling Scale</div>
+    <div class="verb-scale">
+      <div class="verb-row"><div class="verb-emoji">😍</div><div class="verb-name">love</div><div class="verb-bar"><div class="verb-fill" style="width:100%;background:#D4380D;"></div></div><div class="verb-zh">非常喜欢</div></div>
+      <div class="verb-row"><div class="verb-emoji">😊</div><div class="verb-name">really like</div><div class="verb-bar"><div class="verb-fill" style="width:80%;background:#D46B08;"></div></div><div class="verb-zh">很喜欢</div></div>
+      <div class="verb-row"><div class="verb-emoji">🙂</div><div class="verb-name">like</div><div class="verb-bar"><div class="verb-fill" style="width:60%;background:#D4A017;"></div></div><div class="verb-zh">喜欢</div></div>
+      <div class="verb-row"><div class="verb-emoji">😕</div><div class="verb-name">don't like</div><div class="verb-bar"><div class="verb-fill" style="width:35%;background:#1A7A8A;"></div></div><div class="verb-zh">不喜欢</div></div>
+      <div class="verb-row"><div class="verb-emoji">😤</div><div class="verb-name">hate</div><div class="verb-bar"><div class="verb-fill" style="width:15%;background:#0D4F5C;"></div></div><div class="verb-zh">讨厌</div></div>
+      <div class="verb-row"><div class="verb-emoji">🤢</div><div class="verb-name">can't stand</div><div class="verb-bar"><div class="verb-fill" style="width:3%;background:#0D4F5C;"></div></div><div class="verb-zh">受不了</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="st">📐 Grammar — Two Correct Patterns</div>
+    <div class="grammar-box">
+      <div class="gh">like / love / hate  +  NOUN  or  VERB-ing</div>
+      <div class="gb">
+        <div class="g-row"><div class="g-type">+ NOUN</div><div class="g-ex"><div class="g-en">I love coffee.</div><div class="g-zh">我爱喝咖啡。</div></div></div>
+        <div class="g-row"><div class="g-type">+ NOUN</div><div class="g-ex"><div class="g-en">She hates rain.</div><div class="g-zh">她讨厌下雨。</div></div></div>
+        <div class="g-row"><div class="g-type">+ VERB-ing</div><div class="g-ex"><div class="g-en">I love swimming.</div><div class="g-zh">我喜欢游泳。</div></div></div>
+        <div class="g-row"><div class="g-type">+ VERB-ing</div><div class="g-ex"><div class="g-en">She hates cooking.</div><div class="g-zh">她讨厌做饭。</div></div></div>
+      </div>
+    </div>
+    <div class="rb"><strong>⚠️ Common Mistakes</strong><ul><li>❌ "I like swim" → ✅ "I like <strong>swimming</strong>"</li><li>❌ "I love eat" → ✅ "I love <strong>eating</strong>"</li><li>Add <strong>-ing</strong> to the verb after like/love/hate</li></ul></div>
+  </div>
+
+  <div class="section">
+    <div class="st">📊 Degree Adverbs — How Much?</div>
+    <div class="adv-scale">
+      <div class="adv-chip"><div class="adv-word">really</div><div class="adv-zh">非常</div><div class="adv-ex">"I really love cats."</div></div>
+      <div class="adv-chip"><div class="adv-word">quite</div><div class="adv-zh">挺…的</div><div class="adv-ex">"I quite like rain."</div></div>
+      <div class="adv-chip"><div class="adv-word">a bit</div><div class="adv-zh">有点</div><div class="adv-ex">"I like coffee a bit."</div></div>
+      <div class="adv-chip" style="grid-column:1/-1;"><div class="adv-word">not at all</div><div class="adv-zh">完全不</div><div class="adv-ex">"I don't like studying at all."</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="st">💬 Giving Reasons with 'Because'</div>
+    <div class="because-box">
+      <div class="bc-header">Opinion + because + reason</div>
+      <div class="bc-row"><div class="bc-en">I love coffee because it gives me energy.</div><div class="bc-zh">我爱喝咖啡，因为它给我能量。</div></div>
+      <div class="bc-row"><div class="bc-en">I hate rain because it makes me feel sad.</div><div class="bc-zh">我讨厌下雨，因为它让我感到悲伤。</div></div>
+      <div class="bc-row"><div class="bc-en">I really like swimming because it is relaxing.</div><div class="bc-zh">我很喜欢游泳，因为它很放松。</div></div>
+      <div class="bc-row"><div class="bc-en">I don't like spicy food because it hurts my stomach.</div><div class="bc-zh">我不喜欢辣的食物，因为它让我胃痛。</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="st">📝 Sentence Frames — Use These!</div>
+    <div class="frame-box">
+      <div class="fh">Full opinion sentences</div>
+      <div class="fb">
+        <div class="frame-line">I [verb] ___ because ___.</div>
+        <div class="frame-line">I really [verb] ___ because ___.</div>
+        <div class="frame-line">I [verb] ___ a bit but I [verb] ___.</div>
+        <div class="frame-line">I agree / I disagree because ___.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="ti"><h2>📖 Vocabulary Reference</h2><p>All session vocabulary with Chinese translations</p></div>
+<table>
+  <thead><tr><th>English</th><th>Example</th><th>中文</th></tr></thead>
+  <tbody>
+    <tr><td class="en">love</td><td>"I love coffee."</td><td class="zh">非常喜欢</td></tr>
+    <tr><td class="en">really like</td><td>"I really like cats."</td><td class="zh">很喜欢</td></tr>
+    <tr><td class="en">like</td><td>"I like music."</td><td class="zh">喜欢</td></tr>
+    <tr><td class="en">don't like</td><td>"I don't like rain."</td><td class="zh">不喜欢</td></tr>
+    <tr><td class="en">hate</td><td>"I hate cleaning."</td><td class="zh">讨厌</td></tr>
+    <tr><td class="en">can't stand</td><td>"I can't stand cold weather."</td><td class="zh">受不了</td></tr>
+    <tr><td class="en">really</td><td>"I really love swimming."</td><td class="zh">非常</td></tr>
+    <tr><td class="en">quite</td><td>"I quite like running."</td><td class="zh">挺…的</td></tr>
+    <tr><td class="en">a bit</td><td>"I like rain a bit."</td><td class="zh">有点</td></tr>
+    <tr><td class="en">not at all</td><td>"I don't like it at all."</td><td class="zh">完全不</td></tr>
+    <tr><td class="en">because</td><td>"...because it is relaxing."</td><td class="zh">因为</td></tr>
+    <tr><td class="en">I agree</td><td>"I agree because..."</td><td class="zh">我同意</td></tr>
+    <tr><td class="en">I disagree</td><td>"I disagree because..."</td><td class="zh">我不同意</td></tr>
+    <tr><td class="en">swimming</td><td>"I love swimming."</td><td class="zh">游泳</td></tr>
+    <tr><td class="en">cooking</td><td>"She hates cooking."</td><td class="zh">做饭</td></tr>
+    <tr><td class="en">reading</td><td>"I really like reading."</td><td class="zh">阅读</td></tr>
+    <tr><td class="en">travelling</td><td>"I love travelling."</td><td class="zh">旅行</td></tr>
+  </tbody>
+</table>
+</body>
+</html>

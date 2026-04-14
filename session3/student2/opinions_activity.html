@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Opinions Activity — S3 Session 3</title>
+<style>
+  :root{--dark:#2D1A4A;--mid:#5B3A8A;--accent:#9B6DFF;--light:#EEE8FF;--gold:#D4820A;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .hdr{background:var(--dark);padding:18px 20px 14px;text-align:center;border-bottom:2px solid var(--mid);}
+  .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:4px;}
+  .hdr h1{font-size:20px;font-weight:700;}
+  .pw{display:flex;align-items:center;gap:10px;margin:12px 20px 0;}
+  .pb{flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;}
+  .pf{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
+  .pl{font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);}
+  .tb{flex:1;padding:12px 6px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tb.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .screen{display:none;padding:18px 16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+
+  /* PART 1: ARGUMENT BUILDER */
+  .arg-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .arg-label{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+  .arg-desc{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:10px;}
+  .arg-starter{font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:6px;font-style:italic;}
+  .arg-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:15px;font-family:inherit;resize:none;min-height:56px;}
+  .arg-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .arg-input::placeholder{color:rgba(255,255,255,0.3);}
+  .aloud{display:inline-flex;align-items:center;gap:6px;background:rgba(155,109,255,0.12);border:1px solid var(--accent);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--accent);margin-top:8px;}
+  .arg-preview{background:rgba(155,109,255,0.08);border:1px solid rgba(155,109,255,0.3);border-radius:10px;padding:12px;margin-top:12px;font-size:13px;color:"DDCCFF";line-height:1.7;display:none;}
+  .arg-preview.show{display:block;}
+  .build-btn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:14px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;margin-top:12px;}
+
+  /* PART 2: HEDGING GAP-FILL */
+  .gf-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:14px;}
+  .gf-q{font-size:15px;line-height:2;color:var(--white);margin-bottom:10px;}
+  .blank{display:inline-block;min-width:160px;border-bottom:2px solid var(--accent);color:var(--accent);font-weight:700;padding:0 4px;}
+  .opts{display:flex;flex-wrap:wrap;gap:8px;}
+  .opt{padding:7px 12px;border:2px solid var(--accent);border-radius:20px;background:none;color:var(--white);font-size:12px;cursor:pointer;transition:all 0.2s;}
+  .opt.sel{background:var(--accent);color:var(--dark);font-weight:700;}
+  .opt.correct{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .opt.wrong{background:var(--wrong);border-color:var(--wrong);color:var(--white);}
+  .opt.show-c{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .opt.dis{pointer-events:none;opacity:0.6;}
+  .gf-fb{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none;}
+  .gf-fb.correct{background:rgba(39,174,96,0.15);border:1px solid var(--correct);color:#7defa7;display:block;}
+  .gf-fb.wrong{background:rgba(231,76,60,0.15);border:1px solid var(--wrong);color:#ffaaaa;display:block;}
+  .sbtn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:14px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;}
+  .sbtn:disabled{opacity:0.4;pointer-events:none;}
+
+  /* PART 3: IDIOMS REVIEW */
+  .id-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:16px;margin-bottom:12px;}
+  .id-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .id-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--dark);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .id-word{font-size:17px;font-weight:700;color:var(--accent);}
+  .id-situation{font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:8px;font-style:italic;}
+  .id-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:14px;font-family:inherit;}
+  .id-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .id-input::placeholder{color:rgba(255,255,255,0.3);}
+  .id-reveal{padding:8px 16px;background:none;border:1px solid rgba(155,109,255,0.5);color:var(--accent);border-radius:20px;cursor:pointer;font-size:12px;margin-top:8px;}
+  .id-model{background:rgba(155,109,255,0.12);border:1px solid var(--accent);border-radius:10px;padding:12px;margin-top:10px;font-size:13px;color:var(--white);display:none;}
+  .id-model.show{display:block;}
+
+  /* HERO */
+  .hero {background: linear-gradient(135deg, var(--dark) 0%, var(--teal) 100%);color: white;padding: 28px 20px 24px;}
+  .hero .badge {font-size: 10px;letter-spacing: 3px;color: var(--accent);font-weight: 700;margin-bottom: 6px;}
+  .hero h1 {font-size: 24px;font-weight: 700;margin-bottom: 4px;}
+  .hero p {font-size: 13px;color: rgba(255, 255, 255, 0.7);}
+  .hero-pills {display: flex;flex-wrap: wrap;gap: 8px;margin-top: 14px;}
+  .hero-pill {background: rgba(255, 255, 255, 0.12);border: 1px solid rgba(255, 255, 255, 0.2);border-radius: 20px;padding: 4px 12px;font-size: 12px;font-weight: 600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hero">
+    <a class="hero-home" href="../../index.html" aria-label="Go to home">
+      <span>🏠</span>
+      Home
+    </a>
+  <div class="lbl">SESSION 3  ·  OPINIONS ACTIVITY</div>
+  <h1>🎯 Complex Opinions & Debate</h1>
+  <div class="pw">
+    <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+    <div class="pl" id="pl">0% complete</div>
+  </div>
+  </div>
+</div>
+<div class="tab-bar">
+  <button class="tb active" onclick="showTab('arg')" id="tabArg">Part 1: Build Argument</button>
+  <button class="tb" onclick="showTab('gf')" id="tabGf">Part 2: Hedging</button>
+  <button class="tb" onclick="showTab('id')" id="tabId">Part 3: All 8 Idioms</button>
+</div>
+
+<!-- PART 1: ARGUMENT BUILDER -->
+<div class="screen active" id="screenArg">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Build a full argument against social media using the 4-step structure. Then say it aloud!</p>
+
+  <div class="arg-card">
+    <div class="arg-label">Your position: Social media is BAD for relationships</div>
+    <div class="arg-desc">Fill in each step. Your goal: build an argument that would convince someone who disagrees with you.</div>
+  </div>
+
+  <div class="arg-card" id="stepClaim">
+    <div class="arg-label">Step 1 — CLAIM: State your position</div>
+    <div class="arg-starter">Start with: "Social media is harmful to real relationships because..."</div>
+    <textarea class="arg-input" id="inp1" placeholder="Write your claim here..." rows="2" oninput="upd()"></textarea>
+  </div>
+
+  <div class="arg-card" id="stepReason">
+    <div class="arg-label">Step 2 — REASON: Explain WHY</div>
+    <div class="arg-starter">Use: "because / since / as..."</div>
+    <textarea class="arg-input" id="inp2" placeholder="Write your reason here..." rows="2" oninput="upd()"></textarea>
+  </div>
+
+  <div class="arg-card" id="stepExample">
+    <div class="arg-label">Step 3 — EXAMPLE: Specific evidence</div>
+    <div class="arg-starter">Use: "For example... / Consider... / Think about..."</div>
+    <textarea class="arg-input" id="inp3" placeholder="Write your example here..." rows="2" oninput="upd()"></textarea>
+  </div>
+
+  <div class="arg-card" id="stepCounter">
+    <div class="arg-label">Step 4 — COUNTER: Acknowledge the other side, then rebut</div>
+    <div class="arg-starter">Use: "Of course, some say... Having said that, / That's a fair point, however..."</div>
+    <textarea class="arg-input" id="inp4" placeholder="Write your counter-argument here..." rows="2" oninput="upd()"></textarea>
+  </div>
+
+  <button class="build-btn" onclick="buildArgument()">Build Full Argument 🏗️</button>
+  <div class="arg-preview" id="argPreview"></div>
+  <div style="margin-top:12px;"><span class="aloud">🗣️ Say your full argument aloud — aim for 2 minutes!</span></div>
+</div>
+
+<!-- PART 2: HEDGING GAP-FILL -->
+<div class="screen" id="screenGf">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Choose the best hedging phrase. Say the full sentence aloud after each answer!</p>
+  <div id="gfContainer"></div>
+</div>
+
+<!-- PART 3: ALL 8 IDIOMS -->
+<div class="screen" id="screenId">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Write a sentence using each idiom in the given situation. Reveal the model answer — then say yours aloud!</p>
+  <div id="idContainer"></div>
+</div>
+
+<script>
+// PART 2
+const gfQs=[
+  {q:"Social media is definitely destroying relationships.",blank:"It depends on",opts:["It depends on","I'm sure","Absolutely","That's obvious"],hint:"'It depends on' is perfect for introducing a condition or qualification."},
+  {q:"Everyone loves using social media.",blank:"I can see both sides, but",opts:["I can see both sides, but","I totally agree","Yes, definitely","I know"],hint:"'I can see both sides, but' lets you acknowledge complexity before giving your view."},
+  {q:"Social media only has negative effects.",blank:"It's a bit more complicated because",opts:["It's a bit more complicated because","No, that's wrong","I don't agree","Everyone knows"],hint:"'It's a bit more complicated because' adds nuance and depth to your response."},
+  {q:"Your point about connection is valid, but what about the downsides?",blank:"That's a fair point, however",opts:["That's a fair point, however","Yes you're right","I completely agree","No problem"],hint:"'That's a fair point, however' is the classic concede-then-counter structure."},
+  {q:"Is social media good or bad overall?",blank:"There are two sides to this",opts:["There are two sides to this","It's all bad","Very complicated","I don't know"],hint:"'There are two sides to this' signals a balanced, analytical response."},
+  {q:"Social media makes people more isolated.",blank:"I'd say it's more of a",opts:["I'd say it's more of a","Certainly","Always","I agree"],hint:"'I'd say it's more of a' allows you to reframe or qualify the statement."},
+];
+let gfAns=Array(gfQs.length).fill(null);
+let gfDone=false;
+const gfCont=document.getElementById('gfContainer');
+gfQs.forEach((q,qi)=>{
+  const card=document.createElement('div');
+  card.className='gf-card';
+  card.id='gc'+qi;
+  const shuffled=[...q.opts].sort(()=>Math.random()-0.5);
+  card.innerHTML=`<div class="gf-q"><span id="bl${qi}" class="blank">___</span> — "${q.q.replace(/^___\s?—\s?/,'')}"</div>
+    <div class="opts">${shuffled.map(o=>`<button class="opt" onclick="selGF(${qi},'${o.replace(/'/g,"\\'")}',this)">${o}</button>`).join('')}</div>
+    <div class="gf-fb" id="gfb${qi}"></div>`;
+  gfCont.appendChild(card);
+});
+const gfSub=document.createElement('button');
+gfSub.className='sbtn';gfSub.textContent='Check Answers ✓';gfSub.disabled=true;gfSub.onclick=submitGF;
+gfCont.appendChild(gfSub);
+
+function selGF(qi,opt,btn){
+  if(gfDone)return;
+  document.getElementById('gc'+qi).querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');gfAns[qi]=opt;
+  document.getElementById('bl'+qi).textContent=opt;
+  gfSub.disabled=gfAns.some(a=>a===null);upd();
+}
+function submitGF(){
+  gfDone=true;let sc=0;
+  gfQs.forEach((q,qi)=>{
+    const ok=gfAns[qi]===q.blank;if(ok)sc++;
+    document.getElementById('gc'+qi).querySelectorAll('.opt').forEach(btn=>{
+      btn.classList.add('dis');
+      if(btn.textContent===q.blank)btn.classList.add('show-c');
+      else if(btn.classList.contains('sel')&&!ok)btn.classList.add('wrong');
+    });
+    const fb=document.getElementById('gfb'+qi);
+    fb.className='gf-fb '+(ok?'correct':'wrong');
+    fb.textContent=ok?'✅ Correct! '+q.hint:'❌ Best answer: "'+q.blank+'". '+q.hint;
+  });
+  gfSub.style.display='none';
+  const el=document.createElement('div');
+  el.style.cssText='text-align:center;padding:18px;background:rgba(155,109,255,0.12);border-radius:14px;margin-top:14px;';
+  el.innerHTML=`<div style="font-size:30px;font-weight:700;color:var(--accent);">${sc}/${gfQs.length}</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);margin:8px 0;">${sc>=5?'🌟 Excellent! Go to Part 3 →':sc>=4?'👍 Good — review the explanations.':'💪 Review carefully, then try Part 3.'}</div>
+    <button style="margin-top:10px;padding:10px 22px;background:var(--accent);border:none;border-radius:10px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;" onclick="showTab('id')">Go to Part 3 →</button>`;
+  gfCont.appendChild(el);upd();
+}
+
+// PART 3: ALL 8 IDIOMS
+const allIdioms=[
+  {n:1,w:"hit it off",sit:"Describe meeting someone new and immediately getting along with them.",model:"We hit it off straight away at the party — it felt like we'd known each other for years."},
+  {n:2,w:"go with the flow",sit:"Describe a time you had no plan and just let things happen naturally.",model:"I had no schedule that weekend, so I just went with the flow and ended up having an amazing time."},
+  {n:3,w:"see eye to eye",sit:"Describe a situation where you agreed or disagreed with someone about something important.",model:"My colleague and I don't always see eye to eye on deadlines, but we find a way to work it out."},
+  {n:4,w:"give it a shot",sit:"Describe encouraging someone to try something new even though they're nervous.",model:"I'd never tried public speaking before, but my friend said 'just give it a shot' — so I did!"},
+  {n:5,w:"under the weather",sit:"Explain why someone couldn't come to an event or work today.",model:"She couldn't make it to the meeting — she was feeling a bit under the weather."},
+  {n:6,w:"get the hang of it",sit:"Describe learning a new skill that was difficult at first but became easier.",model:"English grammar was confusing at first, but after a few weeks I finally got the hang of it."},
+  {n:7,w:"break the ice",sit:"Describe how you started a conversation with someone you didn't know at a party or event.",model:"I told a funny story about my journey to break the ice at the start of the meeting."},
+  {n:8,w:"on the same page",sit:"Describe making sure everyone in a group has the same understanding before starting something.",model:"Before we began the project, the manager asked: 'Are we all on the same page about the deadline?'"},
+];
+const idCont=document.getElementById('idContainer');
+allIdioms.forEach(id=>{
+  const card=document.createElement('div');
+  card.className='id-card';
+  card.innerHTML=`
+    <div class="id-header"><div class="id-num">${id.n}</div><div class="id-word">${id.w}</div></div>
+    <div class="id-situation">📌 Situation: ${id.sit}</div>
+    <input type="text" class="id-input" placeholder="Write your sentence using '${id.w}'..." oninput="upd()"/>
+    <div><button class="id-reveal" onclick="revealId(this)">👁 See model answer</button></div>
+    <div class="id-model">✅ Model: "${id.model}"</div>
+    <div style="margin-top:6px;"><span class="aloud">🗣️ Say your sentence aloud!</span></div>`;
+  idCont.appendChild(card);
+});
+function revealId(btn){
+  btn.nextElementSibling.classList.add('show');
+  btn.textContent='✅ Revealed — say yours now!';btn.disabled=true;upd();
+}
+
+function buildArgument(){
+  const parts=[
+    document.getElementById('inp1').value.trim(),
+    document.getElementById('inp2').value.trim(),
+    document.getElementById('inp3').value.trim(),
+    document.getElementById('inp4').value.trim(),
+  ];
+  if(parts.some(p=>!p)){alert('Please fill in all 4 steps first!');return;}
+  const preview=document.getElementById('argPreview');
+  preview.innerHTML=`<strong style="color:var(--accent);display:block;margin-bottom:8px;">Your Full Argument:</strong>
+    <p style="margin-bottom:8px;">📌 <em>${parts[0]}</em></p>
+    <p style="margin-bottom:8px;">💡 ${parts[1]}</p>
+    <p style="margin-bottom:8px;">📋 ${parts[2]}</p>
+    <p>🔄 ${parts[3]}</p>`;
+  preview.classList.add('show');upd();
+}
+
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  const id='screen'+tab.charAt(0).toUpperCase()+tab.slice(1);
+  const bid='tab'+tab.charAt(0).toUpperCase()+tab.slice(1);
+  document.getElementById(id).classList.add('active');
+  document.getElementById(bid).classList.add('active');
+  upd();
+}
+
+function upd(){
+  const argDone=[1,2,3,4].filter(n=>document.getElementById('inp'+n)&&document.getElementById('inp'+n).value.trim()).length;
+  const gfDoneN=gfAns.filter(a=>a!==null).length;
+  const idDoneN=[...document.querySelectorAll('.id-input')].filter(i=>i.value.trim().length>0).length;
+  const total=4+gfQs.length+allIdioms.length;
+  const done=argDone+gfDoneN+idDoneN;
+  const pct=Math.round(done/total*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pl').textContent=pct+'% complete';
+}
+</script>
+</body>
+</html>
