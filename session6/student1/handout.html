@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>My English Handout — Session 6</title>
+<style>
+  :root{--teal:#1A7A8A;--accent:#2EB8A0;--dark:#0D4F5C;--light:#E0F5F2;--gold:#D4820A;--goldbg:#FFF8E7;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#666;--shadow:0 2px 12px rgba(0,0,0,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--offwhite);color:#1a1a1a;padding-bottom:40px;}
+  .hero{background:linear-gradient(135deg,var(--dark) 0%,var(--teal) 100%);color:white;padding:26px 20px 22px;}
+  .hero .badge{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:6px;}
+  .hero h1{font-size:22px;font-weight:700;margin-bottom:4px;}
+  .hero p{font-size:13px;color:rgba(255,255,255,0.7);}
+  .hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .hero-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
+  .content{padding:0 16px;}
+  .section{margin-top:20px;}
+  .st{font-size:11px;font-weight:700;letter-spacing:2.5px;color:var(--teal);text-transform:uppercase;padding-bottom:6px;border-bottom:2px solid var(--light);margin-bottom:12px;}
+  /* Regular verbs */
+  .rule-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:8px;border-left:4px solid;}
+  .rule-title{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:6px;}
+  .rule-pairs{display:flex;flex-wrap:wrap;gap:8px;}
+  .pair{background:var(--light);border-radius:8px;padding:5px 10px;font-size:13px;color:var(--dark);}
+  .pair span{font-weight:700;color:var(--teal);}
+  /* Irregular verb table */
+  .irr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .irr-card{background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:10px 12px;display:flex;align-items:center;gap:10px;}
+  .irr-base{font-size:13px;color:var(--slate);min-width:44px;}
+  .arr{color:var(--gray);font-size:12px;}
+  .irr-past{font-size:17px;font-weight:700;color:var(--dark);}
+  .irr-zh{font-size:12px;color:#8B0000;margin-left:auto;}
+  /* Structure table */
+  .str-box{background:var(--white);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:12px;}
+  .str-row{display:grid;grid-template-columns:1.2fr 2fr 2fr;border-bottom:1px solid var(--light);align-items:center;}
+  .str-row:last-child{border-bottom:none;}
+  .str-row.header{background:var(--dark);}
+  .str-cell{padding:10px 12px;font-size:13px;}
+  .str-cell.hd{color:var(--accent);font-weight:700;font-size:11px;letter-spacing:0.5px;}
+  /* Time expressions */
+  .time-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .tc{background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:10px 12px;}
+  .tw{font-size:14px;font-weight:700;color:var(--dark);}
+  .tz{font-size:13px;color:#8B0000;margin-top:2px;}
+  /* Connectors */
+  .conn-card{background:var(--white);border-radius:10px;box-shadow:var(--shadow);padding:10px 14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:10px;}
+  .conn-word{font-size:15px;font-weight:700;color:var(--teal);min-width:90px;}
+  .conn-use{font-size:12px;color:var(--slate);}
+  .conn-ex{font-size:12px;color:var(--dark);font-style:italic;margin-top:2px;}
+  .rb{background:var(--goldbg);border:1px solid #f5d9a8;border-radius:14px;padding:14px 16px;margin-top:8px;border-left:4px solid var(--gold);}
+  .rb strong{display:block;color:var(--gold);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .rb ul{padding-left:18px;}
+  .rb li{font-size:14px;margin-bottom:5px;color:var(--slate);}
+  .ti{background:var(--dark);color:white;padding:18px 16px;text-align:center;margin:28px -16px 0;}
+  .ti h2{font-size:18px;margin-bottom:4px;}
+  .ti p{font-size:13px;color:rgba(255,255,255,0.7);}
+  table{width:100%;border-collapse:collapse;background:var(--white);}
+  th{background:var(--teal);color:white;padding:10px 12px;text-align:left;font-size:12px;}
+  td{padding:10px 12px;border-bottom:1px solid var(--light);font-size:14px;}
+  tr:last-child td{border-bottom:none;}
+  tr:nth-child(even) td{background:var(--light);}
+  .en{font-weight:600;color:var(--dark);}
+  .zh{font-size:14px;color:#8B0000;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <a class="hero-home" href="../../index.html" aria-label="Go to home">
+    <span>🏠</span>
+    Home
+  </a>
+  <div class="badge">MY ENGLISH HANDOUT</div>
+  <h1>Session 6 — Simple Past & Stories</h1>
+  <p>Your reference for today's lesson. Keep this open on your phone.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">📅 Past Tense</span>
+    <span class="hero-pill">❌ Negatives</span>
+    <span class="hero-pill">❓ Questions</span>
+    <span class="hero-pill">📖 Story Connectors</span>
+  </div>
+</div>
+<div class="content">
+
+  <div class="section">
+    <div class="st">📅 Regular Past Tense — Spelling Rules</div>
+    <div class="rule-card" style="border-color:#27ae60;">
+      <div class="rule-title">Most verbs: add -ed</div>
+      <div class="rule-pairs"><div class="pair">walk → <span>walked</span></div><div class="pair">watch → <span>watched</span></div><div class="pair">cook → <span>cooked</span></div><div class="pair">talk → <span>talked</span></div></div>
+    </div>
+    <div class="rule-card" style="border-color:#1A7A8A;">
+      <div class="rule-title">Verb ends in -e: add -d only</div>
+      <div class="rule-pairs"><div class="pair">like → <span>liked</span></div><div class="pair">hope → <span>hoped</span></div><div class="pair">arrive → <span>arrived</span></div></div>
+    </div>
+    <div class="rule-card" style="border-color:#D4820A;">
+      <div class="rule-title">Verb ends in consonant + y: y → i + ed</div>
+      <div class="rule-pairs"><div class="pair">study → <span>studied</span></div><div class="pair">try → <span>tried</span></div><div class="pair">worry → <span>worried</span></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="st">⚡ 10 Irregular Verbs — Learn These!</div>
+    <div class="irr-grid">
+      <div class="irr-card"><div class="irr-base">go</div><div class="arr">→</div><div class="irr-past">went</div><div class="irr-zh">去了</div></div>
+      <div class="irr-card"><div class="irr-base">eat</div><div class="arr">→</div><div class="irr-past">ate</div><div class="irr-zh">吃了</div></div>
+      <div class="irr-card"><div class="irr-base">see</div><div class="arr">→</div><div class="irr-past">saw</div><div class="irr-zh">看见了</div></div>
+      <div class="irr-card"><div class="irr-base">have</div><div class="arr">→</div><div class="irr-past">had</div><div class="irr-zh">有了</div></div>
+      <div class="irr-card"><div class="irr-base">come</div><div class="arr">→</div><div class="irr-past">came</div><div class="irr-zh">来了</div></div>
+      <div class="irr-card"><div class="irr-base">get</div><div class="arr">→</div><div class="irr-past">got</div><div class="irr-zh">得到了</div></div>
+      <div class="irr-card"><div class="irr-base">make</div><div class="arr">→</div><div class="irr-past">made</div><div class="irr-zh">做了</div></div>
+      <div class="irr-card"><div class="irr-base">take</div><div class="arr">→</div><div class="irr-past">took</div><div class="irr-zh">拿/乘了</div></div>
+      <div class="irr-card"><div class="irr-base">say</div><div class="arr">→</div><div class="irr-past">said</div><div class="irr-zh">说了</div></div>
+      <div class="irr-card"><div class="irr-base">think</div><div class="arr">→</div><div class="irr-past">thought</div><div class="irr-zh">想了</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="st">📐 Three Past Structures</div>
+    <div class="str-box">
+      <div class="str-row header"><div class="str-cell hd">Type</div><div class="str-cell hd">Formula</div><div class="str-cell hd">Example</div></div>
+      <div class="str-row"><div class="str-cell" style="font-weight:700;color:var(--teal);">✅ Positive</div><div class="str-cell">subject + past verb</div><div class="str-cell" style="font-style:italic;">"I went to the market."</div></div>
+      <div class="str-row" style="background:var(--light);"><div class="str-cell" style="font-weight:700;color:#c0392b;">❌ Negative</div><div class="str-cell">subject + didn't + BASE</div><div class="str-cell" style="font-style:italic;">"I didn't go." (not went!)</div></div>
+      <div class="str-row"><div class="str-cell" style="font-weight:700;color:var(--dark);">❓ Question</div><div class="str-cell">Did + subject + BASE?</div><div class="str-cell" style="font-style:italic;">"Did you go yesterday?"</div></div>
+    </div>
+    <div class="rb"><strong>⚠️ Common Mistake</strong><ul><li>❌ "I didn't went" → ✅ "I didn't <strong>go</strong>" — always BASE after didn't</li><li>❌ "Did she went?" → ✅ "Did she <strong>go</strong>?" — always BASE after Did</li></ul></div>
+  </div>
+
+  <div class="section">
+    <div class="st">⏰ Past Time Expressions</div>
+    <div class="time-grid">
+      <div class="tc"><div class="tw">yesterday</div><div class="tz">昨天</div></div>
+      <div class="tc"><div class="tw">last week</div><div class="tz">上周</div></div>
+      <div class="tc"><div class="tw">last month</div><div class="tz">上个月</div></div>
+      <div class="tc"><div class="tw">last year</div><div class="tz">去年</div></div>
+      <div class="tc"><div class="tw">3 days ago</div><div class="tz">3天前</div></div>
+      <div class="tc"><div class="tw">this morning</div><div class="tz">今天早上</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="st">📖 Story Connectors</div>
+    <div class="conn-card"><div class="conn-word">First,</div><div><div class="conn-use">To begin the story</div><div class="conn-ex">"First, I woke up at 7am."</div></div></div>
+    <div class="conn-card"><div class="conn-word">Then,</div><div><div class="conn-use">What happened next</div><div class="conn-ex">"Then, I made coffee."</div></div></div>
+    <div class="conn-card"><div class="conn-word">After that,</div><div><div class="conn-use">The next event</div><div class="conn-ex">"After that, I took the bus."</div></div></div>
+    <div class="conn-card"><div class="conn-word">Later,</div><div><div class="conn-use">Some time passed</div><div class="conn-ex">"Later, I met my friend."</div></div></div>
+    <div class="conn-card"><div class="conn-word">Finally,</div><div><div class="conn-use">The last event</div><div class="conn-ex">"Finally, I came home and slept."</div></div></div>
+    <div class="conn-card"><div class="conn-word">Suddenly,</div><div><div class="conn-use">A surprise</div><div class="conn-ex">"Suddenly, it started to rain!"</div></div></div>
+  </div>
+
+</div>
+<div class="ti"><h2>📖 Vocabulary Reference</h2><p>Session 6 key language with Chinese translations</p></div>
+<table>
+  <thead><tr><th>English</th><th>Example</th><th>中文</th></tr></thead>
+  <tbody>
+    <tr><td class="en">went</td><td>"I went to the park."</td><td class="zh">去了</td></tr>
+    <tr><td class="en">ate</td><td>"She ate sushi."</td><td class="zh">吃了</td></tr>
+    <tr><td class="en">saw</td><td>"We saw a film."</td><td class="zh">看见了</td></tr>
+    <tr><td class="en">had</td><td>"He had coffee."</td><td class="zh">有了/喝了</td></tr>
+    <tr><td class="en">came</td><td>"She came home late."</td><td class="zh">来了</td></tr>
+    <tr><td class="en">got</td><td>"I got a message."</td><td class="zh">收到了/得到了</td></tr>
+    <tr><td class="en">made</td><td>"They made dinner."</td><td class="zh">做了</td></tr>
+    <tr><td class="en">took</td><td>"He took the bus."</td><td class="zh">乘了/拿了</td></tr>
+    <tr><td class="en">said</td><td>"She said it was good."</td><td class="zh">说了</td></tr>
+    <tr><td class="en">thought</td><td>"I thought it was funny."</td><td class="zh">认为/觉得</td></tr>
+    <tr><td class="en">didn't + verb</td><td>"I didn't go to work."</td><td class="zh">没有做…</td></tr>
+    <tr><td class="en">Did you...?</td><td>"Did you eat breakfast?"</td><td class="zh">你…了吗？</td></tr>
+  </tbody>
+</table>
+</body>
+</html>

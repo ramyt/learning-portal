@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Phonics — Session 6 (5 min warm-up)</title>
+<style>
+  :root{--dark:#0D4F5C;--mid:#1A7A8A;--accent:#2EB8A0;--light:#E0F5F2;--gold:#D4820A;--white:#fff;--gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);--red:#C0392B;--redL:#FFC9C9;--green:#1A7A3A;--greenL:#A8E6BC;--blue:#1A5C8A;--blueL:#A8C8E8;--orange:#C45E00;--orangeL:#FFD8A8;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .hdr{padding:14px 20px 10px;text-align:center;border-bottom:3px solid var(--gold);}
+  .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--gold);font-weight:700;margin-bottom:4px;}
+  .hdr h1{font-size:18px;font-weight:700;}
+  .hdr p{font-size:12px;color:rgba(255,255,255,0.5);margin-top:3px;}
+  .timer-bar{background:rgba(212,130,10,0.15);border-bottom:1px solid rgba(212,130,10,0.3);padding:8px 16px;display:flex;align-items:center;justify-content:space-between;}
+  .timer-lbl{font-size:12px;color:var(--gold);font-weight:600;}
+  .timer-btn{padding:6px 16px;background:var(--gold);border:none;border-radius:20px;color:var(--dark);font-size:12px;font-weight:700;cursor:pointer;}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);}
+  .tb{flex:1;padding:10px 6px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tb.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .screen{display:none;padding:14px 16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+  /* Sound cards — compact */
+  .sound-card{border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer;box-shadow:var(--shadow);transition:transform 0.1s;}
+  .sound-card:active{transform:scale(0.98);}
+  .sound-card.red{background:var(--red);border:2px solid var(--redL);}
+  .sound-card.green{background:var(--green);border:2px solid var(--greenL);}
+  .sound-card.blue{background:var(--blue);border:2px solid var(--blueL);}
+  .sound-card.orange{background:var(--orange);border:2px solid var(--orangeL);}
+  .sc-header{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .sc-badge{font-size:15px;font-weight:700;color:var(--white);}
+  .sc-new{background:var(--gold);color:var(--dark);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:auto;}
+  .sc-words{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+  .sc-word{background:rgba(0,0,0,0.2);border-radius:8px;padding:5px 12px;font-size:14px;font-weight:700;}
+  .sc-story-words{font-size:11px;color:rgba(255,255,255,0.7);margin-top:4px;}
+  /* Sort activity */
+  .sort-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:10px;}
+  .sort-word{font-size:28px;font-weight:700;color:var(--gold);margin-bottom:4px;}
+  .sort-hint{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;}
+  .sort-opts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+  .so{padding:9px 16px;border:3px solid transparent;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+  .so.red-o{background:#FDECEA;color:var(--red);border-color:var(--red);}
+  .so.green-o{background:#EAF7EE;color:var(--green);border-color:var(--green);}
+  .so.blue-o{background:#EAF2FB;color:var(--blue);border-color:var(--blue);}
+  .so.orange-o{background:#FFF3E0;color:var(--orange);border-color:var(--orange);}
+  .so.chosen-c{transform:scale(1.06);box-shadow:0 0 0 3px rgba(39,174,96,0.5);pointer-events:none;}
+  .so.chosen-w{opacity:0.35;pointer-events:none;}
+  .sort-fb{margin-top:6px;font-size:13px;display:none;padding:7px 12px;border-radius:8px;}
+  .sort-fb.correct{background:rgba(39,174,96,0.12);color:#7defa7;display:block;}
+  .sort-fb.wrong{background:rgba(231,76,60,0.12);color:#ffaaaa;display:block;}
+
+  /* HERO */
+  .hero {background: linear-gradient(135deg, var(--dark) 0%, var(--teal) 100%);color: white;padding: 28px 20px 24px;}
+  .hero .badge {font-size: 10px;letter-spacing: 3px;color: var(--accent);font-weight: 700;margin-bottom: 6px;}
+  .hero h1 {font-size: 24px;font-weight: 700;margin-bottom: 4px;}
+  .hero p {font-size: 13px;color: rgba(255, 255, 255, 0.7);}
+  .hero-pills {display: flex;flex-wrap: wrap;gap: 8px;margin-top: 14px;}
+  .hero-pill {background: rgba(255, 255, 255, 0.12);border: 1px solid rgba(255, 255, 255, 0.2);border-radius: 20px;padding: 4px 12px;font-size: 12px;font-weight: 600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
+
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hero">
+    <a class="hero-home" href="../../index.html" aria-label="Go to home">
+      <span>🏠</span>
+      Home
+    </a>
+  <div class="lbl">SESSION 6  ·  PHONICS WARM-UP  ·  5 MINUTES</div>
+  <h1>🔤 Quick Sound Review</h1>
+  <p>Tap each sound card → say 2 words → then do the story sort!</p>
+  </div>
+</div>
+<div class="timer-bar">
+  <span class="timer-lbl">⏱ 5-minute warm-up</span>
+  <span style="font-size:12px;color:rgba(255,255,255,0.6);">Tap sounds → then go to Story Sort tab</span>
+</div>
+<div class="tab-bar">
+  <button class="tb active" onclick="showTab('sounds')" id="tabSounds">📖 All Sounds</button>
+  <button class="tb" onclick="showTab('sort')" id="tabSort">🎯 Story Sort</button>
+</div>
+
+<div class="screen active" id="screenSounds">
+  <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:12px;text-align:center;">Tap each card · say 2 words aloud · check the story words at the bottom</p>
+
+  <div class="sound-card red">
+    <div class="sc-header"><span class="sc-badge">🔴 Short A Sound</span></div>
+    <div class="sc-words"><div class="sc-word">cat</div><div class="sc-word">hat</div><div class="sc-word">pan</div><div class="sc-word">bag</div></div>
+    <div class="sc-story-words">📖 In today's story words: walked · had · sang</div>
+  </div>
+
+  <div class="sound-card green">
+    <div class="sc-header"><span class="sc-badge">🟢 Long EE Sound</span></div>
+    <div class="sc-words"><div class="sc-word">tea</div><div class="sc-word">eat</div><div class="sc-word">see</div><div class="sc-word">free</div></div>
+    <div class="sc-story-words">📖 In today's story words: went · read · ate</div>
+  </div>
+
+  <div class="sound-card blue">
+    <div class="sc-header"><span class="sc-badge">🔵 Short O Sound</span></div>
+    <div class="sc-words"><div class="sc-word">hot</div><div class="sc-word">pot</div><div class="sc-word">top</div><div class="sc-word">got</div></div>
+    <div class="sc-story-words">📖 In today's story words: got · stopped · cooked</div>
+  </div>
+
+  <div class="sound-card orange">
+    <div class="sc-header"><span class="sc-badge">🟠 Short U Sound</span><span class="sc-new">New if not done in S5!</span></div>
+    <div class="sc-words"><div class="sc-word">cup</div><div class="sc-word">bus</div><div class="sc-word">run</div><div class="sc-word">fun</div></div>
+    <div class="sc-story-words">📖 In today's story words: studied · cooked · lunch</div>
+  </div>
+
+  <p style="font-size:12px;color:rgba(255,255,255,0.4);text-align:center;margin-top:8px;">Done? → Go to Story Sort tab! ⏩</p>
+</div>
+
+<div class="screen" id="screenSort">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;text-align:center;">Your teacher says each word. Tap the correct colour group!</p>
+  <div id="sortContainer"></div>
+</div>
+
+<script>
+const storyWords=[
+  {word:"walked",correct:"red",hint:"walked → Short A sound, like 'hat'"},
+  {word:"studied",correct:"orange",hint:"studied → Short U sound, like 'cup'"},
+  {word:"ate",correct:"green",hint:"ate → Long EE sound at the start, like 'eat'"},
+  {word:"got",correct:"blue",hint:"got → Short O sound, like 'hot'"},
+  {word:"cooked",correct:"blue",hint:"cooked → Short O sound in the root, like 'hot'"},
+  {word:"went",correct:"green",hint:"went → the 'e' is stretched slightly, like 'eat' family"},
+  {word:"came",correct:"green",hint:"came → the 'a-e' makes a long sound, similar to Long EE brightness"},
+  {word:"had",correct:"red",hint:"had → Short A sound, like 'cat' or 'hat'"},
+];
+let sortAnswers=Array(storyWords.length).fill(null);
+const sc=document.getElementById('sortContainer');
+storyWords.forEach((q,fi)=>{
+  const card=document.createElement('div');card.className='sort-card';
+  card.innerHTML=`
+    <div class="sort-word">${q.word}</div>
+    <div class="sort-hint">Which sound group?</div>
+    <div class="sort-opts">
+      <button class="so red-o" onclick="ans(${fi},'red',this)">🔴 Short A</button>
+      <button class="so green-o" onclick="ans(${fi},'green',this)">🟢 Long EE</button>
+      <button class="so blue-o" onclick="ans(${fi},'blue',this)">🔵 Short O</button>
+      <button class="so orange-o" onclick="ans(${fi},'orange',this)">🟠 Short U</button>
+    </div>
+    <div class="sort-fb" id="sfb${fi}"></div>`;
+  sc.appendChild(card);
+});
+function ans(fi,col,btn){
+  if(sortAnswers[fi]!==null)return;
+  sortAnswers[fi]=col;
+  const ok=col===storyWords[fi].correct;
+  btn.closest('.sort-opts').querySelectorAll('.so').forEach(b=>{
+    const bc=b.classList.contains('red-o')?'red':b.classList.contains('green-o')?'green':b.classList.contains('blue-o')?'blue':'orange';
+    if(bc===storyWords[fi].correct)b.classList.add('chosen-c');
+    else if(b===btn&&!ok)b.classList.add('chosen-w');
+  });
+  const fb=document.getElementById('sfb'+fi);
+  fb.className='sort-fb '+(ok?'correct':'wrong');
+  fb.textContent=ok?'✅ '+storyWords[fi].hint:'❌ '+storyWords[fi].hint;
+}
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+}
+</script>
+</body>
+</html>

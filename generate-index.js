@@ -4,7 +4,7 @@ const path = require("path");
 const rootDir = __dirname;
 
 // ⭐ Define new sessions here
-const newSessions = ["session5"]; // leave empty [] if none
+const newSessions = ["session6"]; // leave empty [] if none
 
 // Session titles
 const sessionTitles = {

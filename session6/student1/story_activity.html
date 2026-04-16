@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Story Activity — Session 6</title>
+<style>
+  :root{--dark:#0D4F5C;--mid:#1A7A8A;--accent:#2EB8A0;--light:#E0F5F2;--gold:#D4820A;--white:#fff;--slate:#445566;--gray:#888;--correct:#27ae60;--wrong:#e74c3c;--shadow:0 4px 16px rgba(0,0,0,0.10);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .hdr{padding:16px 20px 12px;text-align:center;border-bottom:2px solid var(--mid);}
+  .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:4px;}
+  .hdr h1{font-size:20px;font-weight:700;}
+  .pw{display:flex;align-items:center;gap:10px;margin:10px 20px 0;}
+  .pb{flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;}
+  .pf{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
+  .pl{font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);}
+  .tb{flex:1;padding:12px 6px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tb.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .screen{display:none;padding:16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+  /* PART 1: VERB TRANSFORM */
+  .vt-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;}
+  .vt-label{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .vt-present{font-size:16px;color:var(--white);margin-bottom:12px;font-style:italic;padding:10px;background:rgba(255,255,255,0.05);border-radius:8px;}
+  .verb-opts{display:flex;flex-wrap:wrap;gap:8px;}
+  .vo{padding:8px 14px;border:2px solid var(--accent);border-radius:20px;background:none;color:var(--white);font-size:14px;cursor:pointer;transition:all 0.2s;}
+  .vo.sel{background:var(--accent);color:var(--dark);font-weight:700;}
+  .vo.correct{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .vo.wrong{background:var(--wrong);border-color:var(--wrong);color:var(--white);}
+  .vo.show-c{background:var(--correct);border-color:var(--correct);color:var(--white);}
+  .vo.dis{pointer-events:none;opacity:0.6;}
+  .vt-fb{margin-top:8px;padding:8px 12px;border-radius:10px;font-size:13px;display:none;}
+  .vt-fb.correct{background:rgba(39,174,96,0.12);border:1px solid var(--correct);color:#7defa7;display:block;}
+  .vt-fb.wrong{background:rgba(231,76,60,0.12);border:1px solid var(--wrong);color:#ffaaaa;display:block;}
+  .sbtn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:14px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;}
+  .sbtn:disabled{opacity:0.4;pointer-events:none;}
+  /* PART 2: STORY ORDERING */
+  .story-intro{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;}
+  .draggable-area{margin-bottom:12px;}
+  .story-item{background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:grab;display:flex;align-items:center;gap:10px;transition:all 0.2s;user-select:none;touch-action:none;}
+  .story-item.dragging{opacity:0.5;border-color:var(--accent);}
+  .story-item.correct-pos{border-color:var(--correct);background:rgba(39,174,96,0.1);}
+  .drag-handle{color:rgba(255,255,255,0.3);font-size:18px;flex-shrink:0;}
+  .story-text{font-size:14px;flex:1;}
+  .check-btn{width:100%;padding:14px;background:var(--gold);border:none;border-radius:14px;color:var(--dark);font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;}
+  .order-fb{background:rgba(46,184,160,0.1);border:1px solid var(--accent);border-radius:14px;padding:14px;margin-top:12px;font-size:13px;display:none;}
+  /* PART 3: STORY WRITING */
+  .sw-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:12px;}
+  .sw-prompt{font-size:14px;color:var(--accent);font-weight:600;margin-bottom:8px;}
+  .sw-starter{font-size:15px;color:var(--white);font-weight:700;margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.05);border-radius:8px;}
+  .sw-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:15px;font-family:inherit;resize:none;min-height:60px;}
+  .sw-input:focus{outline:2px solid var(--accent);border-color:transparent;}
+  .sw-input::placeholder{color:rgba(255,255,255,0.3);}
+  .aloud{display:inline-flex;align-items:center;gap:6px;background:rgba(46,184,160,0.1);border:1px solid var(--accent);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--accent);margin-top:6px;}
+
+  /* HERO */
+  .hero {background: linear-gradient(135deg, var(--dark) 0%, var(--teal) 100%);color: white;padding: 28px 20px 24px;}
+  .hero .badge {font-size: 10px;letter-spacing: 3px;color: var(--accent);font-weight: 700;margin-bottom: 6px;}
+  .hero h1 {font-size: 24px;font-weight: 700;margin-bottom: 4px;}
+  .hero p {font-size: 13px;color: rgba(255, 255, 255, 0.7);}
+  .hero-pills {display: flex;flex-wrap: wrap;gap: 8px;margin-top: 14px;}
+  .hero-pill {background: rgba(255, 255, 255, 0.12);border: 1px solid rgba(255, 255, 255, 0.2);border-radius: 20px;padding: 4px 12px;font-size: 12px;font-weight: 600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
+
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hero">
+    <a class="hero-home" href="../../index.html" aria-label="Go to home">
+      <span>🏠</span>
+      Home
+    </a>
+  <div class="lbl">SESSION 6  ·  STORY ACTIVITY</div>
+  <h1>📖 Simple Past & Storytelling</h1>
+  <div class="pw">
+    <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+    <div class="pl" id="pl">0% complete</div>
+  </div>
+  </div>
+</div>
+<div class="tab-bar">
+  <button class="tb active" onclick="showTab('verb')" id="tabVerb">Part 1: Past Verbs</button>
+  <button class="tb" onclick="showTab('order')" id="tabOrder">Part 2: Story Order</button>
+  <button class="tb" onclick="showTab('write')" id="tabWrite">Part 3: My Story</button>
+</div>
+
+<!-- PART 1: VERB TRANSFORMATION -->
+<div class="screen active" id="screenVerb">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Choose the correct past form. Say the full sentence aloud after each answer!</p>
+  <div id="verbContainer"></div>
+</div>
+
+<!-- PART 2: STORY ORDERING -->
+<div class="screen" id="screenOrder">
+  <p class="story-intro">Drag the sentences into the correct order to make a story. Use the connectors as clues!</p>
+  <div class="draggable-area" id="draggableArea"></div>
+  <button class="check-btn" onclick="checkOrder()">Check My Story ✓</button>
+  <div class="order-fb" id="orderFb"></div>
+</div>
+
+<!-- PART 3: MY STORY WRITING -->
+<div class="screen" id="screenWrite">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Write your own past tense story! Use all 4 connectors and say each sentence aloud.</p>
+  <div id="writeContainer"></div>
+</div>
+
+<script>
+// PART 1
+const verbQs=[
+  {present:"Every day I walk to school.",sentence:"Yesterday I ___ to school.",opts:["walked","walk","walking","walks"],correct:"walked",hint:"Regular verb + ed: walk → walked"},
+  {present:"She eats noodles for lunch.",sentence:"Last week she ___ noodles for lunch.",opts:["eat","eated","ate","eaten"],correct:"ate",hint:"Irregular: eat → ate"},
+  {present:"He goes to the gym on Monday.",sentence:"Last Monday he ___ to the gym.",opts:["goes","goed","go","went"],correct:"went",hint:"Irregular: go → went"},
+  {present:"We watch a film every Friday.",sentence:"Last Friday we ___ a film.",opts:["watched","watch","watching","watch"],correct:"watched",hint:"Regular verb + ed: watch → watched"},
+  {present:"I study English in the evening.",sentence:"Yesterday evening I ___ English.",opts:["study","studying","studied","studyed"],correct:"studied",hint:"y → i + ed: study → studied"},
+  {present:"She takes the bus to work.",sentence:"This morning she ___ the bus.",opts:["taked","take","took","takes"],correct:"took",hint:"Irregular: take → took"},
+  {present:"They cook dinner together.",sentence:"Last night they ___ dinner.",opts:["cook","cooked","cookt","cooking"],correct:"cooked",hint:"Regular verb + ed: cook → cooked"},
+  {present:"I see my friends at the weekend.",sentence:"Last weekend I ___ my friends.",opts:["see","seed","sawed","saw"],correct:"saw",hint:"Irregular: see → saw"},
+];
+let vAnswers=Array(verbQs.length).fill(null),vDone=false;
+const vCont=document.getElementById('verbContainer');
+verbQs.forEach((q,qi)=>{
+  const card=document.createElement('div');card.className='vt-card';card.id='vc'+qi;
+  const shuffled=[...q.opts].sort(()=>Math.random()-0.5);
+  card.innerHTML=`<div class="vt-label">Change to past tense:</div>
+    <div class="vt-present">${q.sentence}</div>
+    <div class="verb-opts">${shuffled.map(o=>`<button class="vo" onclick="selV(${qi},'${o}',this)">${o}</button>`).join('')}</div>
+    <div class="vt-fb" id="vfb${qi}"></div>`;
+  vCont.appendChild(card);
+});
+const vSub=document.createElement('button');
+vSub.className='sbtn';vSub.textContent='Check Answers ✓';vSub.disabled=true;vSub.onclick=submitV;
+vCont.appendChild(vSub);
+
+function selV(qi,opt,btn){
+  if(vDone)return;
+  document.getElementById('vc'+qi).querySelectorAll('.vo').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');vAnswers[qi]=opt;
+  vSub.disabled=vAnswers.some(a=>a===null);upd();
+}
+function submitV(){
+  vDone=true;let sc=0;
+  verbQs.forEach((q,qi)=>{
+    const ok=vAnswers[qi]===q.correct;if(ok)sc++;
+    document.getElementById('vc'+qi).querySelectorAll('.vo').forEach(b=>{
+      b.classList.add('dis');
+      if(b.textContent===q.correct)b.classList.add('show-c');
+      else if(b.classList.contains('sel')&&!ok)b.classList.add('wrong');
+    });
+    const fb=document.getElementById('vfb'+qi);
+    fb.className='vt-fb '+(ok?'correct':'wrong');
+    fb.textContent=ok?'✅ Correct! '+q.hint:'❌ Answer: "'+q.correct+'". '+q.hint;
+  });
+  vSub.style.display='none';
+  const el=document.createElement('div');
+  el.style.cssText='text-align:center;padding:16px;background:rgba(46,184,160,0.1);border-radius:14px;margin-top:12px;';
+  el.innerHTML=`<div style="font-size:28px;font-weight:700;color:var(--accent);">${sc}/${verbQs.length}</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);margin:8px 0;">${sc>=7?'🌟 Excellent! Go to Part 2 →':sc>=5?'👍 Good work! Review hints, then try Part 2.':'💪 Review each hint carefully.'}</div>
+    <button style="margin-top:8px;padding:10px 22px;background:var(--accent);border:none;border-radius:10px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;" onclick="showTab('order')">Go to Part 2 →</button>`;
+  vCont.appendChild(el);upd();
+}
+
+// PART 2
+const correctOrder=[
+  "Last Saturday morning, I woke up at 8 o'clock.",
+  "First, I made a cup of coffee and had breakfast.",
+  "Then, I took the bus to the city centre.",
+  "After that, I went shopping and bought some clothes.",
+  "Later, I met my friend at a café and we had lunch together.",
+  "Finally, I came home, cooked dinner, and watched a film.",
+];
+let storyItems=[...correctOrder].sort(()=>Math.random()-0.5);
+let dragSrc=null;
+const da=document.getElementById('draggableArea');
+function buildStory(){
+  da.innerHTML='';
+  storyItems.forEach((text,i)=>{
+    const item=document.createElement('div');item.className='story-item';item.dataset.idx=i;
+    item.innerHTML=`<span class="drag-handle">⠿</span><span class="story-text">${text}</span>`;
+    item.draggable=true;
+    item.addEventListener('dragstart',()=>{dragSrc=i;item.classList.add('dragging');});
+    item.addEventListener('dragend',()=>item.classList.remove('dragging'));
+    item.addEventListener('dragover',e=>{e.preventDefault();});
+    item.addEventListener('drop',e=>{
+      e.preventDefault();
+      if(dragSrc!==null&&dragSrc!==i){
+        const arr=[...storyItems];[arr[dragSrc],arr[i]]=[arr[i],arr[dragSrc]];
+        storyItems=arr;dragSrc=null;buildStory();
+      }
+    });
+    // Touch support
+    item.addEventListener('touchstart',e=>{
+      dragSrc=i;
+      item.classList.add('dragging');
+      e.preventDefault();
+    },{ passive:false });
+    item.addEventListener('touchmove',e=>{
+      e.preventDefault();
+    },{ passive:false });
+    item.addEventListener('touchend',e=>{
+      item.classList.remove('dragging');
+      const touch=e.changedTouches[0];
+      const target=document.elementFromPoint(touch.clientX,touch.clientY);
+      const targetItem=target?.closest('.story-item');
+      if(targetItem){
+        const ti=parseInt(targetItem.dataset.idx);
+        if(dragSrc!==null&&dragSrc!==ti){
+          const arr=[...storyItems];[arr[dragSrc],arr[ti]]=[arr[ti],arr[dragSrc]];
+          storyItems=arr;
+        }
+      }
+      dragSrc=null;
+      buildStory();
+    },{ passive:false });
+    item.addEventListener('touchcancel',()=>{
+      item.classList.remove('dragging');
+      dragSrc=null;
+    });
+    da.appendChild(item);
+  });
+}
+buildStory();
+function checkOrder(){
+  const correct=storyItems.every((t,i)=>t===correctOrder[i]);
+  const fb=document.getElementById('orderFb');
+  if(correct){
+    fb.style.display='block';
+    fb.innerHTML='🎉 <strong>Perfect order!</strong> Your story makes sense.<br><br><em>"'+correctOrder.join(' ')+'"</em>';
+    fb.style.borderColor='var(--correct)';
+    document.querySelectorAll('.story-item').forEach(i=>i.classList.add('correct-pos'));
+  } else {
+    const score=storyItems.filter((t,i)=>t===correctOrder[i]).length;
+    fb.style.display='block';
+    fb.innerHTML=`<strong>${score}/6 sentences in the right place.</strong> Look at the connectors (First, Then, After that, Finally) — they show the order! Try again.`;
+    fb.style.borderColor='var(--wrong)';
+  }
+  upd();
+}
+
+// PART 3
+const writePrompts=[
+  {connector:"First,",starter:"First, I woke up at ___ and ___"},
+  {connector:"Then,",starter:"Then, I ___"},
+  {connector:"After that,",starter:"After that, I ___"},
+  {connector:"Finally,",starter:"Finally, I ___ and felt ___"},
+];
+const wc=document.getElementById('writeContainer');
+writePrompts.forEach((p,i)=>{
+  const card=document.createElement('div');card.className='sw-card';
+  card.innerHTML=`
+    <div class="sw-prompt">Step ${i+1} of your story — use: <strong>${p.connector}</strong></div>
+    <div class="sw-starter">${p.starter}</div>
+    <textarea class="sw-input" placeholder="Write your sentence here using past tense..." rows="2" oninput="upd()"></textarea>
+    <div><span class="aloud">🗣️ Say this sentence aloud!</span></div>`;
+  wc.appendChild(card);
+});
+
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');upd();
+}
+function upd(){
+  const vDoneN=vAnswers.filter(a=>a!==null).length;
+  const orderDone=document.querySelector('.correct-pos')?6:0;
+  const writeDone=[...document.querySelectorAll('.sw-input')].filter(i=>i.value.trim().length>0).length;
+  const total=verbQs.length+6+writePrompts.length;
+  const pct=Math.round((vDoneN+orderDone+writeDone)/total*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pl').textContent=pct+'% complete';
+}
+</script>
+</body>
+</html>

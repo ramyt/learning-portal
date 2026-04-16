@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Homework — S6 Session 6</title>
+<style>
+  :root{--dark:#2D1A4A;--mid:#5B3A8A;--accent:#9B6DFF;--light:#EEE8FF;--gold:#D4820A;--goldbg:#FFF8E7;--white:#fff;--offwhite:#F7F5F0;--slate:#445566;--gray:#666;--shadow:0 2px 12px rgba(0,0,0,0.08);--done:#27ae60;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--offwhite);color:#1a1a1a;padding-bottom:50px;}
+  .hero{background:linear-gradient(135deg,var(--dark) 0%,var(--mid) 100%);padding:26px 20px 20px;color:white;}
+  .hero .badge{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:6px;}
+  .hero h1{font-size:22px;font-weight:700;margin-bottom:4px;}
+  .hero p{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5;}
+  .hero-time{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border-radius:20px;padding:5px 14px;margin-top:12px;font-size:13px;font-weight:600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
+  .content{padding:0 16px;}
+  .intro{background:var(--goldbg);border:1px solid #f5d9a8;border-radius:14px;padding:14px 16px;margin:16px 0 0;font-size:14px;color:var(--slate);line-height:1.6;border-left:4px solid var(--gold);}
+  .intro strong{color:var(--gold);}
+  .task{background:var(--white);border-radius:16px;box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+  .th{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--dark);}
+  .tn{width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--dark);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .tht{flex:1;}.tt{font-size:15px;font-weight:700;color:white;}.ts{font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px;}
+  .tb2{background:rgba(255,255,255,0.12);border-radius:10px;padding:3px 10px;font-size:11px;color:white;font-weight:600;white-space:nowrap;}
+  .tb{padding:16px;}
+  .ci{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--light);cursor:pointer;}
+  .ci:last-child{border-bottom:none;}
+  .cb{width:26px;height:26px;border-radius:6px;border:2px solid var(--accent);background:var(--white);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;margin-top:1px;}
+  .ci.done .cb{background:var(--done);border-color:var(--done);}
+  .ci.done .cb::after{content:'✓';color:white;font-weight:700;}
+  .ci.done .ct{text-decoration:line-through;color:var(--gray);}
+  .ct{font-size:15px;flex:1;line-height:1.5;}
+  .ct em{display:block;font-size:12px;color:var(--gray);font-style:normal;margin-top:3px;}
+  .sl{list-style:none;}
+  .si{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light);font-size:14px;color:var(--slate);line-height:1.5;}
+  .si:last-child{border-bottom:none;}
+  .sico{font-size:18px;flex-shrink:0;width:26px;text-align:center;}
+  .hbox{background:rgba(155,109,255,0.08);border:1px solid rgba(155,109,255,0.3);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:14px;color:var(--dark);}
+  .pb{background:var(--light);border-radius:12px;padding:14px;margin-top:8px;}
+  .pt{font-size:12px;font-weight:700;color:var(--mid);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .pb ul{padding-left:18px;}
+  .pb li{font-size:14px;color:var(--slate);margin-bottom:6px;line-height:1.5;}
+  .pr{background:rgba(214,130,10,0.1);border:1px solid rgba(214,130,10,0.3);border-radius:8px;padding:8px 12px;margin-top:10px;font-size:13px;color:var(--gold);font-weight:600;}
+  .ps{background:var(--dark);border-radius:16px;padding:20px 16px;margin-top:22px;text-align:center;color:white;}
+  .ps h3{font-size:16px;margin-bottom:8px;color:var(--accent);}
+  .dc{font-size:28px;font-weight:700;color:var(--accent);margin:10px 0 4px;}
+  .stars{font-size:26px;letter-spacing:4px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <a class="hero-home" href="../../index.html" aria-label="Go to home">
+    <span>🏠</span>
+    Home
+  </a>
+  <div class="badge">HOMEWORK · S6 SESSION 6</div>
+  <h1>📱 Tonight's English Tasks</h1>
+  <p>Today you listened to real, unscripted English. Tonight — do it again, on your own.</p>
+  <div class="hero-time">⏱ Total time: about 1.5 hours</div>
+</div>
+<div class="content">
+  <div class="intro"><strong>🌟 Key task tonight:</strong> Choose your own authentic clip and produce a full summary + reaction voice note. This is independent listening — no teacher, no guidance. Just you and real English.</div>
+
+  <div class="task">
+    <div class="th"><div class="tn">1</div><div class="tht"><div class="tt">🎧 Independent Listening + Voice Note</div><div class="ts">Your choice of clip · gist → detail → react → record</div></div><div class="tb2">30 min</div></div>
+    <div class="tb">
+      <div class="hbox"><strong>Find a clip yourself</strong> — search YouTube for any of these:<br>• "BBC News short report [any topic you like]"<br>• "TED Talk 3 minutes [topic you care about]"<br>• "BBC Learning English 6 minute English"</div>
+      <ul class="sl">
+        <li class="si"><span class="sico">1️⃣</span><strong>First listen:</strong> gist only — what is it about? What is the main point?</li>
+        <li class="si"><span class="sico">2️⃣</span><strong>Second listen:</strong> hunt for 3 specific details — numbers, names, examples</li>
+        <li class="si"><span class="sico">💭</span><strong>Inference:</strong> what is the speaker's attitude? How can you tell?</li>
+        <li class="si"><span class="sico">🎤</span><strong>Record a 90-second voice note:</strong> summarise the clip in 2–3 sentences (YOUR words, not the speaker's), then give your opinion on the main argument</li>
+        <li class="si"><span class="sico">💼</span>Use at least 1 Week 2 idiom naturally in your reaction</li>
+        <li class="si"><span class="sico">📤</span>Send the voice note to your teacher via WhatsApp</li>
+      </ul>
+      <div class="ci" onclick="toggleCheck(this)" style="margin-top:12px;">
+        <div class="cb"></div><div class="ct">I found a clip, listened twice, and sent my summary + reaction voice note<em>Own words · 1 idiom · no script</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="th"><div class="tn">2</div><div class="tht"><div class="tt">🪞 Shadowing Practice — 10 Minutes</div><div class="ts">Use a clip from today or your own clip</div></div><div class="tb2">10 min</div></div>
+    <div class="tb">
+      <ul class="sl">
+        <li class="si"><span class="sico">🎧</span>Pick a 15–20 second segment from any English clip</li>
+        <li class="si"><span class="sico">👂</span>Listen once — absorb the rhythm, don't speak</li>
+        <li class="si"><span class="sico">🗣</span>Play again and shadow immediately — start speaking a half-second after the speaker</li>
+        <li class="si"><span class="sico">🔁</span>Do this 5 times with the same segment until the rhythm feels natural</li>
+        <li class="si"><span class="sico">➕</span>Then find a second segment and repeat</li>
+      </ul>
+      <div class="ci" onclick="toggleCheck(this)" style="margin-top:12px;">
+        <div class="cb"></div><div class="ct">I shadowed at least 2 segments for 5 repetitions each</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="th"><div class="tn">3</div><div class="tht"><div class="tt">📻 BBC Global News — Tonight's Episode</div><div class="ts">Prepare summary for Session 7</div></div><div class="tb2">20 min</div></div>
+    <div class="tb">
+      <ul class="sl">
+        <li class="si"><span class="sico">🎙</span>Listen to today's full BBC Global News Podcast episode</li>
+        <li class="si"><span class="sico">📝</span>Prepare your 3-sentence summary for the start of Session 7</li>
+        <li class="si"><span class="sico">🎯</span>Challenge: use the gist strategy for the whole episode — identify the main story and 2 supporting stories</li>
+        <li class="si"><span class="sico">💬</span>Note 1 new word or phrase from the episode to share with your teacher</li>
+      </ul>
+      <div class="ci" onclick="toggleCheck(this)" style="margin-top:12px;">
+        <div class="cb"></div><div class="ct">I listened to BBC Global News and prepared my summary<em>3 sentences · 1 new word to share</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="th"><div class="tn">4</div><div class="tht"><div class="tt">🤝 Tell Your Partner About the Clips</div><div class="ts">English only · you explain, she asks</div></div><div class="tb2">15 min</div></div>
+    <div class="tb">
+      <div class="pb">
+        <div class="pt">📋 Tonight's paired practice</div>
+        <ul>
+          <li>Tell your partner about the 2 clips from today's session — in English</li>
+          <li>Summarise each one: "The first clip was about... The journalist argued that..."</li>
+          <li>She listens and asks 1 question about each clip</li>
+          <li>Then tell her about your own clip from Task 1 — she asks: "Do you agree with that?"</li>
+          <li>Give her a hypothetical reaction using second conditional: "If what they said is true, it would mean that..."</li>
+        </ul>
+        <div class="pr">⚠️ Resist the urge to quote the speakers directly. Paraphrase — that is the skill.</div>
+      </div>
+      <div class="ci" onclick="toggleCheck(this)" style="margin-top:12px;">
+        <div class="cb"></div><div class="ct">I explained today's clips to my partner in English</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="th"><div class="tn">5</div><div class="tht"><div class="tt">📝 3 Words to Remember</div><div class="ts">From today's clips · add to your vocabulary</div></div><div class="tb2">5 min</div></div>
+    <div class="tb">
+      <ul class="sl">
+        <li class="si"><span class="sico">📱</span>Open <strong>S6_S2_Listening_Activity.html</strong> → Vocab + Shadow tab</li>
+        <li class="si"><span class="sico">📷</span>Screenshot the vocabulary harvest section with your 3 words</li>
+        <li class="si"><span class="sico">✍️</span>Write 1 original sentence using each new word</li>
+        <li class="si"><span class="sico">🗣</span>Say each sentence aloud — your new words are active now, not just written</li>
+      </ul>
+      <div class="ci" onclick="toggleCheck(this)" style="margin-top:12px;">
+        <div class="cb"></div><div class="ct">I saved and used my 3 vocabulary harvest words</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ps">
+    <h3>🏆 Tonight's Progress</h3>
+    <div class="dc" id="dc">0 / 5</div>
+    <div class="stars" id="st">⭐⭐⭐⭐⭐</div>
+    <p style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.7);" id="msg">Start with your independent listening task — find a clip you're curious about! 🎧</p>
+  </div>
+  <div style="text-align:center;margin-top:22px;font-size:13px;color:var(--gray);padding:0 20px;line-height:1.7;">
+    Next class: <strong>Session 7 — Workplace English &amp; Professional Communication</strong><br>
+    <em>Emails · meetings · professional language · how to sound confident in English at work</em>
+  </div>
+</div>
+<script>
+let total=0,done=0;
+document.addEventListener('DOMContentLoaded',()=>{total=document.querySelectorAll('.ci').length;update();});
+function toggleCheck(el){el.classList.toggle('done');done=document.querySelectorAll('.ci.done').length;update();}
+function update(){
+  document.getElementById('dc').textContent=done+' / '+total;
+  const p=done/total,s=document.getElementById('st'),m=document.getElementById('msg');
+  if(p===0){s.textContent='⭐⭐⭐⭐⭐';m.textContent='Find your clip and start listening! 🎧';}
+  else if(p<0.5){s.textContent='⭐⭐⭐⭐⭐';m.textContent='Good start — keep going! 💪';}
+  else if(p<1){s.textContent='🌟🌟🌟🌟🌟';m.textContent='Almost there — great independent work! 🎉';}
+  else{s.textContent='🏆🏆🏆🏆🏆';m.textContent='All done! Excellent autonomous learning. See you in Session 7! 🚀';}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Listening Activity — S6 Session 6</title>
+<style>
+  :root{--dark:#2D1A4A;--mid:#5B3A8A;--accent:#9B6DFF;--light:#EEE8FF;--gold:#D4820A;--white:#fff;--slate:#445566;--gray:#888;--correct:#27ae60;--shadow:0 4px 16px rgba(0,0,0,0.10);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;display:flex;flex-direction:column;}
+  .hdr{padding:14px 20px 10px;text-align:center;border-bottom:2px solid var(--mid);}
+  .hdr .lbl{font-size:10px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:4px;}
+  .hdr h1{font-size:19px;font-weight:700;}
+  .hdr p{font-size:12px;color:rgba(255,255,255,0.5);margin-top:3px;}
+  .tab-bar{display:flex;border-bottom:2px solid var(--mid);}
+  .tb{flex:1;padding:11px 6px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+  .tb.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .screen{display:none;padding:16px;flex:1;flex-direction:column;}
+  .screen.active{display:flex;}
+  .clip-badge{display:inline-flex;align-items:center;gap:8px;background:var(--mid);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:700;margin-bottom:14px;}
+  .listen-section{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:14px;border-left:4px solid;}
+  .ls-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+  .ls-q{font-size:14px;color:rgba(255,255,255,0.85);margin-bottom:8px;display:flex;align-items:flex-start;gap:8px;}
+  .ls-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px;}
+  .ls-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:9px 12px;color:var(--white);font-size:14px;font-family:inherit;resize:none;min-height:48px;margin-top:4px;}
+  .ls-input:focus{outline:2px solid var(--accent);}
+  .ls-input::placeholder{color:rgba(255,255,255,0.3);}
+  /* Vocab harvest */
+  .vocab-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:10px;}
+  .vocab-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;}
+  .vocab-label{font-size:11px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;}
+  /* Shadow notes */
+  .shadow-card{background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;margin-bottom:10px;}
+  .shadow-phrase{font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px;padding:10px 12px;background:rgba(255,255,255,0.05);border-radius:8px;font-style:italic;}
+  .shadow-rate{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  .sr-btn{padding:7px 14px;border:2px solid var(--mid);border-radius:20px;background:none;color:rgba(255,255,255,0.6);font-size:12px;cursor:pointer;transition:all 0.2s;}
+  .sr-btn.sel{border-color:var(--accent);color:var(--accent);background:rgba(155,109,255,0.1);}
+  .aloud{display:inline-flex;align-items:center;gap:6px;background:rgba(155,109,255,0.1);border:1px solid var(--accent);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--accent);margin-top:6px;}
+
+  /* HERO */
+  .hero {background: linear-gradient(135deg, var(--dark) 0%, var(--teal) 100%);color: white;padding: 28px 20px 24px;}
+  .hero .badge {font-size: 10px;letter-spacing: 3px;color: var(--accent);font-weight: 700;margin-bottom: 6px;}
+  .hero h1 {font-size: 24px;font-weight: 700;margin-bottom: 4px;}
+  .hero p {font-size: 13px;color: rgba(255, 255, 255, 0.7);}
+  .hero-pills {display: flex;flex-wrap: wrap;gap: 8px;margin-top: 14px;}
+  .hero-pill {background: rgba(255, 255, 255, 0.12);border: 1px solid rgba(255, 255, 255, 0.2);border-radius: 20px;padding: 4px 12px;font-size: 12px;font-weight: 600;}
+  .hero-home {position: absolute;top: 18px;right: 18px;display: inline-flex;align-items: center;gap: 8px;padding: 10px 14px;background: rgba(255,255,255,0.16);border: 1px solid rgba(255,255,255,0.28);border-radius: 999px;color: white;text-decoration: none;font-size: 13px;font-weight: 700;transition: background 0.2s ease;}
+  .hero-home:hover {background: rgba(255,255,255,0.28);}
+  .hero-home span {font-size: 1.05rem;}
+
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hero">
+    <a class="hero-home" href="../../index.html" aria-label="Go to home">
+      <span>🏠</span>
+      Home
+    </a>
+  <div class="lbl">SESSION 6  ·  LISTENING ACTIVITY</div>
+  <h1>🎧 Authentic Listening Notes</h1>
+  <p>Note your answers here as you listen. No pressure — gist first!</p>
+  </div>
+</div>
+<div class="tab-bar">
+  <button class="tb active" onclick="showTab('c1')" id="tabC1">📰 Clip 1</button>
+  <button class="tb" onclick="showTab('c2')" id="tabC2">🎤 Clip 2</button>
+  <button class="tb" onclick="showTab('vocab')" id="tabVocab">📝 Vocab + Shadow</button>
+</div>
+
+<!-- CLIP 1 -->
+<div class="screen" id="screenC1">
+  <div class="clip-badge">🎤 Clip 1</div>
+
+  <div class="listen-section" style="border-color:var(--correct);">
+    <div class="ls-title" style="color:var(--correct);">🎯 LISTEN 1 — GIST</div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--correct);color:var(--dark);">1</div>
+      <div style="flex:1;">What is the story mainly about?<textarea class="ls-input" rows="2"></textarea></div>
+    </div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--correct);color:var(--dark);">2</div>
+      <div style="flex:1;">What problem did Dave Carroll have?<textarea class="ls-input" rows="2"></textarea></div>
+    </div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--correct);color:var(--dark);">3</div>
+      <div style="flex:1;">How did the situation end (in general)?<textarea class="ls-input" rows="2"></textarea></div>
+    </div>
+  </div>
+
+  <div class="listen-section" style="border-color:var(--accent);">
+    <div class="ls-title" style="color:var(--accent);">🔍 LISTEN 2 — DETAIL</div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--accent);color:var(--dark);">3</div>
+      <div style="flex:1;">What exactly happened to Dave’s guitar, and how much did it cost to fix?<textarea class="ls-input" rows="3"></textarea></div>
+    </div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--accent);color:var(--dark);">4</div>
+      <div style="flex:1;">What did Dave do after United Airlines refused to help him?<textarea class="ls-input" rows="2"></textarea></div>
+    </div>
+  </div>
+
+  <div class="listen-section" style="border-color:var(--gold);">
+    <div class="ls-title" style="color:var(--gold);">💭 INFERENCE + COMPARISON</div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--gold);color:var(--dark);">5</div>
+      <div style="flex:1;">Why does the speaker say United Airlines were “the bigger losers”?<textarea class="ls-input" rows="1"></textarea></div>
+    </div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--gold);color:var(--dark);">6</div>
+      <div style="flex:1;">Do you think social media is powerful? Why?<textarea class="ls-input" rows="2"></textarea></div>
+    </div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--gold);color:var(--dark);">7</div>
+      <div style="flex:1;">What would you do in Dave’s situation? (for production phase)<textarea class="ls-input" rows="3"></textarea></div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIP 2 -->
+<div class="screen active" id="screenC2">
+  <div class="clip-badge">📰 Clip 2</div>
+
+  <div class="listen-section" style="border-color:var(--correct);">
+    <div class="ls-title" style="color:var(--correct);">🎯 LISTEN 1 — GIST (big picture only!)</div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--correct);color:var(--dark);">1</div>
+      <div style="flex:1;">What is the main idea of the talk? (topic in 3–5 words)<textarea class="ls-input" rows="1"></textarea></div>
+    </div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--correct);color:var(--dark);">2</div>
+      <div style="flex:1;">What does the speaker suggest people should do for 30 days?<textarea class="ls-input" rows="2"></textarea></div>
+    </div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--correct);color:var(--dark);">3</div>
+      <div style="flex:1;">How does the speaker feel about these 30-day challenges overall?<textarea class="ls-input" rows="1"></textarea></div>
+    </div>
+  </div>
+
+  <div class="listen-section" style="border-color:var(--accent);">
+    <div class="ls-title" style="color:var(--accent);">🔍 LISTEN 2 — DETAIL (hunt for specifics)</div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--accent);color:var(--dark);">4</div>
+      <div style="flex:1;">What are two things the speaker learned from doing 30-day challenges?<textarea class="ls-input" rows="2"></textarea></div>
+    </div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--accent);color:var(--dark);">5</div>
+      <div style="flex:1;">Why does the speaker say his book is “awful”?<textarea class="ls-input" rows="2"></textarea></div>
+    </div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--accent);color:var(--dark);">6</div>
+      <div style="flex:1;">What does the speaker mean by “small sustainable changes are more likely to stick”?<textarea class="ls-input" rows="2"></textarea></div>
+    </div>
+  </div>
+
+  <div class="listen-section" style="border-color:var(--gold);">
+    <div class="ls-title" style="color:var(--gold);">💭 INFERENCE (what is NOT said directly)</div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--gold);color:var(--dark);">7</div>
+      <div style="flex:1;">Is he saying big challenges are bad, or just harder to continue?<textarea class="ls-input" rows="1"></textarea></div>
+    </div>
+    <div class="ls-q">
+      <div class="ls-num" style="background:var(--gold);color:var(--dark);">8</div>
+      <div style="flex:1;">How can you tell? What words or tone gave it away?<textarea class="ls-input" rows="2"></textarea></div>
+    </div>
+  </div>
+</div>
+
+<!-- VOCAB + SHADOW -->
+<div class="screen" id="screenVocab">
+  <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:14px;text-align:center;">Harvest new vocabulary · rate your shadowing</p>
+
+  <div class="vocab-card">
+    <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:10px;">📝 Vocabulary Harvest — 3 words you want to remember</div>
+    <div class="vocab-row">
+      <div><div class="vocab-label">Word / Phrase</div><input style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-size:14px;font-family:inherit;" placeholder="e.g. unprecedented"/></div>
+      <div><div class="vocab-label">What it means</div><input style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-size:14px;font-family:inherit;" placeholder="never happened before"/></div>
+    </div>
+    <div class="vocab-row">
+      <div><input style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-size:14px;font-family:inherit;" placeholder="word 2..."/></div>
+      <div><input style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-size:14px;font-family:inherit;" placeholder="meaning..."/></div>
+    </div>
+    <div class="vocab-row">
+      <div><input style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-size:14px;font-family:inherit;" placeholder="word 3..."/></div>
+      <div><input style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-size:14px;font-family:inherit;" placeholder="meaning..."/></div>
+    </div>
+    <div><span class="aloud">📸 Screenshot this tab to save your vocabulary!</span></div>
+  </div>
+
+  <div class="shadow-card">
+    <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;">🪞 Shadowing — How did it go?</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px;">After shadowing each segment, rate how well you matched the speaker's rhythm:</div>
+
+    <div style="margin-bottom:12px;">
+      <div style="font-size:12px;color:var(--accent);font-weight:700;margin-bottom:6px;">Segment 1 (from Clip 1):</div>
+      <div class="shadow-rate" id="sr1">
+        <button class="sr-btn" onclick="rateShadow(1,'Easy — I matched it')">😊 Easy</button>
+        <button class="sr-btn" onclick="rateShadow(1,'I got the rhythm but missed some words')">🙂 Mostly</button>
+        <button class="sr-btn" onclick="rateShadow(1,'Hard — I was a beat behind')">😤 Hard</button>
+        <button class="sr-btn" onclick="rateShadow(1,'Very hard — completely lost the rhythm')">😰 Very hard</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;color:var(--accent);font-weight:700;margin-bottom:6px;">Segment 2 (from Clip 2):</div>
+      <div class="shadow-rate" id="sr2">
+        <button class="sr-btn" onclick="rateShadow(2,'Easy — I matched it')">😊 Easy</button>
+        <button class="sr-btn" onclick="rateShadow(2,'I got the rhythm but missed some words')">🙂 Mostly</button>
+        <button class="sr-btn" onclick="rateShadow(2,'Hard — I was a beat behind')">😤 Hard</button>
+        <button class="sr-btn" onclick="rateShadow(2,'Very hard — completely lost the rhythm')">😰 Very hard</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="shadow-card">
+    <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;">🧠 Metacognitive Note</div>
+    <textarea style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 12px;color:var(--white);font-size:14px;font-family:inherit;resize:none;min-height:70px;" placeholder="What was the hardest part of today's listening? What strategy helped most? What would you do differently?"></textarea>
+  </div>
+</div>
+
+<script>
+function rateShadow(seg,rating){
+  document.querySelectorAll('#sr'+seg+' .sr-btn').forEach(b=>b.classList.remove('sel'));
+  event.target.classList.add('sel');
+}
+function showTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+}
+</script>
+</body>
+</html>
